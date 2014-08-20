@@ -1,0 +1,104 @@
+% !TEX root =../LibroTipoETSI.tex
+\chapter{PF\_RING}\LABCHAP{CAPEJ}
+\pagestyle{esitscCD}
+% TODO Falta epígrafe
+\epigraph{ Una de las virtudes del ingeniero es la eficiencia.  }{Guang Tse}
+
+%\lettrine[lraise=0.7, lines=1, loversize=-0.25]{E}{l} 
+\lettrine[lraise=-0.1, lines=2, loversize=0.25]{E}l \emph{formato de capítulo }\index{formato!de 
+capítulo} abarca diversos factores. Un capítulo puede incluir, además de texto, los siguientes 
+elementos:
+%http://en.wikibooks.org/wiki/LaTeX/List_Structures#Customizing_Lists
+
+% \begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
+% \item \indexit{Figuras}
+% \item \indexit{Tablas}
+% \item \indexit{Ecuaciones}
+% \item \indexit{Ejemplos}
+% \item \indexit{Resúmenes}, con recuadros en gris, por ejemplo
+% \item \indexit{Lemas}, \indexit{corolarios}, \indexit{teoremas},... y sus demostraciones
+% \item \indexit{Cuestiones}
+% \item \indexit{Problemas} propuestos
+% \item ...
+% \end{itemize}
+% 
+% En este capítulo se propone incluir ejemplos de todos estos elementos, para que el usuario pueda 
+% modificarlos fácilmente para su uso. Consulte el código suministrado, para ver cómo se escriben en 
+% \LaTeX.
+
+\section{Proceso de paquetes por el núcleo linux}
+\LABSEC{sec:Proceso de paquetes por el nucleo linux}
+\subsection{NAPI}
+
+\subsection{Procesamiento normal. Estructura sk\_buff}
+\section{La alternativa: PF\_RING}\LABSEC{sec:La alternativa: PF RING}
+% TODO Qué significa PF_RING??
+%\lettrine[lraise=-0.1, lines=2, loversize=0.25]{L}a tecnología \emph{PF\_RING}\index{PF\_RING}
+%El significado de \gls{PFRING} blabla
+
+\endinput
+
+
+En la \FIG{FIG} se incluye a modo de ejemplo la imagen del logo de la \gls{ETSI} \footnote{Se usa 
+aquí el package de acrónimos, que la primera vez define el acrónimo y ya luego sólo incluye el 
+mismo. Esto facilita luego generar de forma automática la lista de acrónimos.}. El código para que 
+aparezca dicha imagen se muestra en el cuadro siguiente:
+
+Si nos detenemos en los comandos que hemos utilizado, con \ttcolor{width} se controla el ancho, y 
+se escala así el tamaño de la imagen. En \LaTeX existen diversas opciones para situar la figura en 
+la página: con \ttcolor{t} o \ttcolor{b} se le indica que las incluya arriba o abajo (top/bottom) y 
+con \ttcolor{!} se le pide que la deje dónde está, tras el texto anterior.
+
+\begin{lstlisting}[language=TeX,caption={Código para incluir una figura}, breaklines=true, label=prg01-01]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=3 cm]{capituloLibroETSI/figuras/logoESI.pdf}
+\caption{Logo de la ETSI}
+\label{fig:figura1}
+\end{figure}
+\end{lstlisting}
+
+
+\begin{figure}[htbp]
+\centering
+%\includegraphics[width=0.2\linewidth]{capituloLibroETSI/figuras/logoESI.pdf}
+\includegraphics[width=3 cm]{capituloLibroETSI/figuras/logoESI.pdf}
+\caption{Logo de la ETSI}
+\LABFIG{FIG} %Esto es una forma propia de los autores de gestionar las etiquetas y referencias
+\end{figure}
+%
+
+
+%
+\subsection{Ejemplo de subsección}\LABSSEC{EjSS}
+%
+Si se usaba \ttcolorc{section} para indicar una sección, se utiliza \ttcolorc{subsection} para una subsección.
+
+
+\section{Elementos del texto}
+%
+
+\subsection{Figuras}
+
+Además del tipo de figura que vimos anteriormente, el normal, podemos desear incluir una figura en modo apaisado ocupando toda la página. Para ello utilizamos el entorno de figura siguiente \comandos{begin}{sidewaysfigure}, cuyo resultado se puede observar en la \FIG{FigApaisada}. 
+
+\begin{sidewaysfigure}
+\centering
+%\includegraphics[width=0.2\linewidth]{capituloLibroETSI/figuras/logoESI.pdf}
+\includegraphics[width=3 cm]{capituloLibroETSI/figuras/logoESI.pdf}
+\caption{Logo de la ETSI}
+\LABFIG{FigApaisada}
+\end{sidewaysfigure}
+
+Aunque puede optar por la forma que desee, en el fichero \ttcolor{notacion.sty} se incluyen definiciones para que pueda usar \comandos{LABFIG}{etiqueta} y \comandos{FIG}{etiqueta} para poner una etiqueta y hacer referencia a la misma luego. Además, está definido para que \comandos{FIG}{etiqueta} incluya por delante el término Figura.
+
+\section{Resúmenes}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Para incluir un resumen de una sección o un conjunto de secciones o en cualquier otro punto que consideremos interesante, se utiliza el entorno \comando{begin\{Resumen\}}, que admite como parámetro opcional un nombre que queramos asignarle al resumen. Por defecto, se denomina ``Resumen''. Observar que se ha modificado la cabecera de las páginas impares. Una vez finalizado el resumen, con el comando \comando{end\{Resumen\}}, se recupera la anterior cabecera automáticamente. Los resúmenes que se deseen incluir aparecen en la tabla de contenidos como una sección sin numeración, con el nombre elegido o el nombre por defecto de Resumen. En el siguiente ejemplo hemos utilizado este parámetro opcional de nombre.
+
+\begin{Resumen}[Resumen de PF RING]
+
+
+\subsection*{S1}
+
+\end{Resumen}
+
