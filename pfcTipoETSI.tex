@@ -59,6 +59,7 @@
 %\addbibresource{bibliografiaLibroETSI.bib}
 
 % Ejemplo de Glosario
+\newacronym[type=main]{DoS}{DoS}{Denial of Service, Denegación de Servicio}
 \newacronym[type=main]{PFRING}{PFRING}{Packet Filter RING}
 \newacronym[type=main]{API}{API}{Application Programming Interface, Interfaz de programación de 
 aplicaciones}
@@ -89,7 +90,8 @@ twoside}
 \setlist{itemsep=.1em}
 \setlength{\parindent}{1.0 em}
 
-\setcounter{tocdepth}{4}						% El nivel hasta el que se muestra el índice 
+\setcounter{tocdepth}{4}  % El nivel hasta el que se muestra el índice 
+\newcommand{\redborderddos}{RedBorder DDoS}
 
 
 %:Empieza el documento
@@ -165,6 +167,10 @@ twoside}
 \pagestyle{esitscCD}
 
 %:Los diferentes capítulos, en carpetas separadas
+% TODO prefacio
+%
+\include{introduccion/introduccion}
+%
 \include{CapituloPF_RING/CapituloPF_RING}
 % 
 %%:Empezamos con los apéndices, que irían en uno o más ficheros. Es necesario incluir estos ficheros entre el entorno \begin{appendices}....\end{appendices} debido a que se ha deseado utilizar un formato diferente para el título de los apéndices, incluyendo la palabra apéndice, para la numeración de los apéndices, alfabético, y para las cabeceras de las páginas.
