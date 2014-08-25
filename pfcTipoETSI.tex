@@ -59,10 +59,16 @@
 %\addbibresource{bibliografiaLibroETSI.bib}
 
 % Ejemplo de Glosario
-\newacronym[type=main]{DoS}{DoS}{Denial of Service, Denegación de Servicio}
+\newacronym[type=main]{DoS}{DoS}{Denial of Service}
+\newacronym[type=main]{DDoS}{DDoS}{Distributed DoS}
+\newacronym[type=main]{IP}{IP}{Internet Protocol}
+\newacronym[type=main]{TCP}{TCP}{Transmission Control Protocol}
+\newacronym[type=main]{UCP}{UCP}{User Datagram Protocol}
+\newacronym[type=main]{ICMP}{ICMP}{Internet Control Message Protocol}
+\newacronym[type=main]{ITU-T}{ITU-T}{International Telecommunications Union}
+\newacronym[type=main]{CNSS}{CNSS}{Committee on National Security Systems}
 \newacronym[type=main]{PFRING}{PFRING}{Packet Filter RING}
-\newacronym[type=main]{API}{API}{Application Programming Interface, Interfaz de programación de 
-aplicaciones}
+\newacronym[type=main]{API}{API}{Application Programming Interface}
 \newacronym[type=main]{NAPI}{NAPI}{New API, nueva API}
 
 
@@ -171,6 +177,8 @@ twoside}
 %
 \include{introduccion/introduccion}
 %
+\include{CapituloDDoS/CapituloDDoS}
+%
 \include{CapituloPF_RING/CapituloPF_RING}
 % 
 %%:Empezamos con los apéndices, que irían en uno o más ficheros. Es necesario incluir estos ficheros entre el entorno \begin{appendices}....\end{appendices} debido a que se ha deseado utilizar un formato diferente para el título de los apéndices, incluyendo la palabra apéndice, para la numeración de los apéndices, alfabético, y para las cabeceras de las páginas.
@@ -216,7 +224,7 @@ twoside}
 \addcontentsline{toc}{listasb}{\bibname}
 \pagestyle{especial}
 %BIBER
-%\printbibliography[heading=etsi]
+%\printbibliography[heading=etsi]La mecánica del a
 %BIBTEX
 %\bibliographystyle{IEEEtran}
 \bibliographystyle{amsplain} %flexbib amsplain alpha
