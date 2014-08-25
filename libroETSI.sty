@@ -24,7 +24,8 @@
 %:Para fijar algunas incompatibilidades de paquetes previos
 \usepackage{fixltx2e}
 
-%:Un problema interno de Tex equivalente al allocated de C para asignar espacio de memoria. En esta dirección está explicado: http://tex.stackexchange.com/questions/38607/no-room-for-a-new-dimen
+%:Un problema interno de Tex equivalente al allocated de C para asignar espacio de memoria. En esta dirección está 
+% explicado: http://tex.stackexchange.com/questions/38607/no-room-for-a-new-dimen
 \usepackage{etex}
 \reserveinserts{28}
 
@@ -810,8 +811,8 @@
 %:Para incluir una marca de agua dónde interese
 \usepackage[some,bottom]{background}
 
-%:Para que se numeren hasta las subsecciones
-\setcounter{secnumdepth}{4}
+%:Para que se numeren hasta las subsubsecciones
+\setcounter{secnumdepth}{5}
 
 %:Control de índices y superíndices
 \ifluatex
@@ -1127,13 +1128,13 @@ di-fe-ren-tes re-a-li-za-do ma-ne-ra}
 \usepackage{hyperref}
 \hypersetup
 	{
-  	bookmarks=true,
+%  	bookmarks=true, %Already used warning
       bookmarksnumbered=false,
       bookmarksopen=false,	
       unicode = true,
 	colorlinks=true,
 	linktoc=all,
-	hyperfootnotes=true,
+% 	hyperfootnotes=true, %Already used warning
 	urlbordercolor=black,
 	plainpages=false,
 	pdfpagemode=UseOutlines,
