@@ -58,9 +58,8 @@ No es raro ver que los atacantes son cientos o miles, y se han llegado a registr
 La mayoría de los atacante son simplemente nodos infectados con algún tipo de virus o gusano informático, controlados 
 y sincronizados remotamente. Estos ordenadores, entonces, pasan a denominarse ordenadores zombis o \emph{bots} 
 \index{Bot} \index{Zombi}, controlados por un nodo maestro, y pasan a formar parte de la llamada 
-\emph{botnet}\index{Botnet}.
-
-Se da una descripción más detallada de las botnets en la \SEC{BOTNET}.
+\emph{botnet}\index{Botnet}. Este tipo de ataques se describirán también, más detalladamente, en el \SSSEC{DoS por 
+inundacion}.
 
 \section{Taxonomía de un ataque de denegación de servicio}
 Las definiciones dadas hasta ahora de ataque de denegación de servicio han sido bastante amplias: Hemos acotado qué 
@@ -86,7 +85,7 @@ servicio preparado para atender muchos clientes.
 Actualmente, se ofrecen en Internet muchísimos servicios de botnets, haciendo que llevar a cabo un ataque de fuerza 
 bruta por inundación sea fácilmente realizable.
 
-Un ejemplo clásico de este tipo de ataque es la inundación de paquetes SYN TCP \index{SYN} \index{TCP}. Para que una 
+Un ejemplo clásico de este tipo de ataque es la inundación de paquetes SYN\index{SYN} TCP\index{TCP}. Para que una 
 conexión TCP llegue a ser válida, es necesario que el cliente envíe al servidor \index{Servidor} un paquete TCP de 
 sincronía (esto es, con la bandera SYN activa), el servidor le responda con un paquete SYN+ACK \index{ACK} (esto es, con 
 las dos banderas activas, SYN y ACK) y el cliente \index{Cliente} devuelva un primer ACK.
@@ -127,7 +126,7 @@ que ocurre en este ataque.
 \end{figure}
 %
 
-Normalmente, este tipo de ataques utilizan la dirección de difusión o broadcast \index{broadcast} \index{difusión}. La 
+Normalmente, este tipo de ataques utilizan la dirección de difusión o broadcast \index{Broadcast} \index{Difusión}. La 
 dirección de difusión es una dirección especial en las redes en las que todos los nodos recibirán el paquete. Si ese 
 paquete es una petición que requiere una respuesta, y tiene como dirección origen la dirección IP de la víctima (IP 
 spoofing\index{IP Spoofing}), todos los nodos de la red responderán el mensaje, saturando la máquina objetivo.
@@ -176,13 +175,13 @@ la difusión.
 \paragraph{Ataques basados en botnets}\mbox{\newline}
 
 \noindent Un bot o zombi es un equipo infectado y controlado remotamente por un maestro. Éste puede ser usado para 
-enviar correo no deseado, distribuir malware, espiar (esnifar\index{esnifar tráfico}) tráfico o, en nuestro caso de 
+enviar correo no deseado, distribuir malware, espiar (esnifar\index{Esnifar tráfico}) tráfico o, en nuestro caso de 
 estudio, para perpetrar un ataque de denegación de servicio. 
 
 Gracias a la red de zombis, el atacante real es mucho más difícil de localizar, además de servir como una primera etapa 
 de amplificación del ataque.
 
-\subsubsection{DoS Semánticos}
+\subsubsection{DoS Semánticos}\LABSSSEC{DDoS semanticos}
 Esta segunda forma de ataque no se basa en la fuerza bruta o en la extenuación de recursos, sino en 
 provocar que el servidor\footnote{O algún elemento de la infraestructura de la comunicación} entre en un estado 
 \emph{ilegal}, de forma que no pueda ofrecer el servicio. No es necesario un atacante (o varios) con mucha fuerza, sino 
@@ -192,7 +191,8 @@ adecuada configuración o actualización de componentes.
  
 Uno de los principales ataques de este estilo consiste en enviar información concreta que sabemos de antemano que 
 provocará una caída o malfuncionamiento en el servidor, es decir, aprovechando un fallo de seguridad. Por ejemplo, hasta 
-hace relativamente poco (1997), el famoso \emph{ping de la muerte} \cite{Bidou} era capaz de tumbar un servidor con tan 
+hace relativamente poco (1997), el famoso \emph{ping de la muerte}\index{Ping de la Muerte} \cite{Bidou} era capaz de 
+tumbar un servidor con tan 
 sólo un comando: \texttt{ping <objetivo>\ -l 65511}, el cual viene integrado en todos los sistemas operativos. Éste 
 aprovechaba que la pila ICMP asumía que el paquete tenía una longitud determinada. Al procesar el paquete, y superarse 
 esta longitud, se producía un desbordamiento de buffer que hacía que el servidor colapsase.
@@ -200,33 +200,251 @@ esta longitud, se producía un desbordamiento de buffer que hacía que el servid
 Otro ejemplo de ataque de este tipo es el ataque \emph{land\index{Land attack}}. En él, la victima recibe un paquete 
 TCP cuya dirección origen y destino es él mismo, por lo que intenta contactar consigo mismo hasta que colapsa. 
 
-El ataque \emph{\index{teardrop}} también es muy famoso, consistente en enviar mensajes IP fragmentados y malformados a 
+El ataque \emph{\index{Teardrop}} también es muy famoso, consistente en enviar mensajes IP fragmentados y malformados a 
 la muina objetivo. De esta forma, al intentar des-fragmentarlos, la máquina colapsa.
 
 Las nuevas tecnologías tampoco son inmunes a este tipo de ataque. IPv6, por ejemplo, puede sufrir de \emph{Anuncio de 
-vecino envenenado\index{neighbour advertisement spoofing attack}}. En él, un equipo intermedio se anuncia como poseedor 
+vecino envenenado\index{Neighbour Advertisement Spoofing Attack}}. En él, un equipo intermedio se anuncia como poseedor 
 de una dirección en el camino del cliente al servidor (o bien, la dirección del propio servidor), y anuncia su 
 dirección MAC para que todos los paquetes destinados al servidor le lleguen a él. Esto es, es la versión IPv6 del ARP 
 spoofing.
 
 \subsection{Objetivo del ataque}
+Si queremos ser capaces de defendernos ante un ataque DDoS, es necesario conocer a qué objetivos van destinados. De esa 
+forma, podremos centrarnos en defender los activos vulnerables de una forma eficiente.
+
+Podemos clasificar los ataques según el nivel de la capa OSI que atacan en ataques a los routers, a la red, al SSOO o a 
+la propia aplicación. Obviamente, un ataque a un nivel inferior afectará a todos los niveles superiores.
 
 \subsubsection{Ataque a dirigido a redes}
-% \subsubsection{Ataque a redes de telefonía móvil} TODO lo meto?
-\subsubsection{Ataque a Sistemas Operativos}
+La red es el componente más básicos de los ataques DDoS. Si el cliente es incapaz de conectar con la red del servicio, 
+es imposible que éste pueda ser ofrecido. Por su parte, si la red del servicio está saturada, ningún cliente será capaz 
+de acceder a la misma.
+
+Para agravar las cosas, las aplicaciones confían cada vez más en servicios dependientes de la red. Ejemplo de ello es 
+la proliferación de servicios web\index{Servicio web} (aquellos que usan el protocolo \acrshort{HTTP} para su 
+funcionamiento), o los servicios en la nube\index{Servicio en la nube} (esto es, aquellos en los que el almacenamiento 
+y procesado de datos se realiza en ordenadores remotos, a los que se accede por Internet). 
+
+No solo las redes corporativas exponen sus servicios a Internet. Poco a poco, sistemas críticos, tales como plantas 
+generadoras de energía o de procesado de agua, están dentro de una red que, a su vez, en unos pocos saltos están 
+conectadas a Internet. De esta forma, estos servicios podrían ser víctimas de un ataque DDoS. Es posible, incluso, que 
+el lanzar un ataque hacia otro servicio en esta red intermedia afecte a dicho servicio crítico \cite{Raghavan}.
+
+Así pues, un ataque de denegación de servicio que afectase a dicha infraestructura crítica podría tener repercusiones 
+muy serias, tales como dejar sin energía o agua una zona del mapa, y que pocos sistemas escapan actualmente de la 
+posibilidad de un ataque DDoS: En el momento que lo conectas a Internet, estás expuesto a ello.
+
+Uno de los protocolos más usados para el transporte de información es \gls{TCP}, por lo que un gran porcentaje de 
+ataques van dirigidos contra esta tecnología.
+
+\paragraph{Reseteo de conexiones}\mbox{\newline}
+
+Un ataque muy simple consiste en, una vez que el atacante conoce una conexión existente, resetear dicha conexión. Una 
+conexión en \gls{TCP} está identificada por una dirección origen, una dirección destino, un puerto origen y un puerto 
+destino. Existe un bit RST\index{TCP RST} en la cabecera \gls{TCP} que permite resetear una conexión inmediatamente. 
+Esto es usado, por ejemplo, si uno de los dos extremos detecta un problema en la conexión. Para terminar de empeorar 
+las cosas, RST no necesita ACK, por lo que el cliente no llega a saber que la conexión ha terminado
+
+Tras recibir el servidor el RST, el cliente continúa enviando paquetes, y se encontrará con un socket cerrado. El 
+servidor enviará otro RST, y será imposible mantener la conexión durante un largo periodo de tiempo. 
+
+Si el atacante ha conseguido localizar una conexión, y es capaz de enviar un paquete TCP con dicho bit activo, el 
+receptor de dicho paquete no aceptará más paquetes de esa conexión, y, por tanto, se habrá conseguido que la conexión 
+quede invalidada. Podemos ver una descripción gráfica de este ataque en la \FIG{RST attack}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.8\textwidth]{CapituloDDoS/Figuras/RST_attack}
+\caption{Ataque RST}
+\LABFIG{RST attack} 
+\end{figure}
+%
+
+\paragraph{Asentimientos optimistas}\mbox{\newline}
+
+Otra característica comúnmente explotada de las conexiones \gls{TCP} es su control de congestión\index{Control de 
+congestión TCP}. Para calcular la saturación del enlace, un extremo considera como paquete perdido (y, por tanto, el 
+enlace está saturado) aquel paquete que tarda más de $T$ segundos en recibir el ACK. Al iniciar la conexión TCP, el 
+algoritmo de arranque lento\index{TCP slow start} incrementará el número de paquetes enviados de una forma exponencial.
+
+Si el atacante envía ACK optimistas, esto es, ACK de un paquete que realmente no ha recibido aún, el atacante enviará 
+cada vez más y más paquetes salientes, hasta saturar su conexión. Teniendo en cuenta que un TCP ACK sólo ocupa 54 
+bytes, el efecto amplificador de este tipo de ataque es bastante importante. Algunos estudios hablan de que, con una 
+conexión de 56kbps, es posible generar en el lado del atacante unos 8.9mbps \cite{sherwood}.
+
+Podemos ver un ejemplo de este tipo de ataques en la \FIG{optim ACK attack}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloDDoS/Figuras/optim_ACK_attack}
+\caption{Ataque por ACK optimista}
+\LABFIG{optim ACK attack} 
+\end{figure}
+%
+
+\paragraph{Temporizador de retransmisión}\mbox{\newline}
+
+Cuando un paquete se pierde en una conexión \gls{TCP}, el protocolo dice que es necesario reenviarlo. Como ya hemos 
+explicado, un paquete perdido es aquel que no recibe el ACK correspondiente.
+
+El atacante podría saturar los dispositivos de comunicación si envía una gran inundación de paquetes a los mismos. Sin 
+embargo, esto sería fácilmente detectable por dispositivos que monitorizan la red.
+
+En su lugar, el atacante enviará una ráfaga de corta duración pero de mucha intensidad, lo suficiente para saturar los 
+dispositivos y hacer perder paquetes. En este caso, \gls{TCP} alcanzará el estado de \emph{timeout} en todas las 
+comunicaciones, y necesitará comenzar a retransmitir los paquetes por donde iba la conexión.
+
+Siguiendo el procedimiento de \gls{TCP}, se debe comenzar a retransmitir los paquetes en ráfagas, empezando por un 
+paquete por ráfaga e ir aumentando progresivamente. En poco tiempo, se debería volver a alcanzar un buen rutmo para la 
+conexión.
+
+Sin embargo, si el atacante, al acabar el temporizador de retransmisión, vuelve a lanzar otro ataque intensivo pero de 
+corta intensidad y vuelve a saturar los elementos de comunicación, las conexiones no serán capaces de recuperarse.
+
+Así pues, el atacante ha aprovechado el propio tiempo de retransmisión \gls{TCP} para dejar incomunicado el servidor, y 
+de esa forma amplificar su ataque: Con ráfagas cortas, es capaz de producir el mismo efecto que si saturase el canal 
+continuamente. Menos ancho de banda consumido, y menos probabilidades de detección.
+
+En la \FIG{RTO attack} podemos ver el perfil que tendría el tráfico atacante para bloquear la comunicación. En ella, 
+$I_p$ es la intensidad del pico del ataque, $T_p$ es la duración del pico atacante, y $T_{timeout}$ es el temporizador 
+de retransmisión que tiene \gls{TCP}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloDDoS/Figuras/RTO_attack}
+\caption{Ataque por retransmisión TCP}
+\LABFIG{RTO attack} 
+\end{figure}
+%
+
+\subsubsection{Ataque a Sistemas Operativos}\LABSSSEC{Ataques a SSOO}
+
+El encargado de transportar correctamente los paquetes desde la red hasta la aplicación. Si el atacante es capaz de 
+hacer que este intermediario no sea capaz de llevar los paquetes desde o hacia la aplicación, habrá logrado llevar a 
+cabo un ataque \gls{DoS}.
+
+En este tipo de ataque se busca explotar una vulnerabilidad en el modo que el \gls{SO} gestiona los paquetes. Por 
+ejemplo, si a la hora de recibir un paquete, el \gls{SO} lo escribe en memoria sin comprobar los límites de la memoria 
+reservada para ello, el atacante podría enviar un paquete lo suficientemente largo como para provocar un \emph{buffer 
+overflow}\index{Buffer Overflow}, esto es, se escribirá en una zona de memoria indebida, provocando que el sistema 
+colapse. Esta técnica es la empleada por el llamado \emph{ping de la muerte}\index{Ping de la Muerte}, ya explicado en 
+el \SSSEC{DDoS semanticos}.
+
+Otro ataque, también dirigido a saturar el \gls{SO}, sería un SYN flood (inundación SYN). Esta vez, con la inundación, 
+no provocamos saturar la red, sino la capacidad de conexiones simultaneas que aguante el sistema.
+
 \subsubsection{Ataques dirigidos a aplicaciones (Ataques capa 7)}
 
-\section{Arquitectura de una botnet} \LABSEC{BOTNET}
-\section{Técnicas de detección de un ataque DDoS}
-\section{Técnicas de mitigación de un ataque DDoS}
+Muchas aplicaciones están desarrollando sus aplicaciones sobre una arquitectura tipo servicio web, esto es, programas 
+distribuídos que funcionan mediante el paso de mensajes sobre el protocolo HTTP. Para que este servicio funcione, si 
+está expuesto a internet, es necesario que el cortafuegos permita el tráfico hacia esa aplicación. Por tanto, el 
+atacante es capaz también de alcanzar dicho servicio, aunque quizás no pueda usarlo por necesitar, por ejemplo, unas 
+credenciales válidas.
+
+Al igual que los servicios web, la aplicación distribuída puede estar confiando en cualquier otro tipo de tecnología 
+subyacente. Mientras que esta se encuentre en espacio de usuario, se considerará un ataque de capa 7.
+
+Los métodos para realizar este ataque son muy parecidos a los de la \SSSEC{Ataques a SSOO}. Por la parte semántica, se 
+puede intentar enviar información corrupta que haga al servidor entrar en un estado incorrecto, que no pueda continuar 
+sirviendo. Por otra parte, tenemos los ataques por inundación, que buscarían saturar la capacidad del servidor, y que 
+a la máquina le sea imposible seguir respondiendo peticiones.
+
+
+\section{Técnicas de detección y mitigacinó de un ataque DDoS}
+\subsection{Ataques por inundación}
+La principal señal que indica que un servicio está sufriendo un ataque por inundación es que reciben una cantidad de 
+tráfico anormalmente grande. Sin embargo, para una detección correcta deberíamos definir qué supone \emph{anormal}. 
+
+A lo largo de este trabajo intentaremos definir un sistema de detección de anomalías (CUSUM, \CHAP{TODO}), y qué 
+parámetros debemos usar para buscar un compromiso entre velocidad de detección y no aparición de falsos positivos.
+
+%TODO aún falta el tunning: Dificuktad de definir normal y anormal. Problemas de refinamiento.
+
+Para mitigar el ataque, no basta con cortar el acceso al servicio, ya que entonces el \gls{DDoS} habría triunfado. Es 
+necesario discernir entre las direcciones IP maliciosas o atacantes, y cortar el tráfico sólo a ellas, permitiendo que 
+las direcciones benignas sigan navegando como hasta ahora.
+
+\subsection{Ataques semánticos}
+Para la detección de ataque ssemánticos, el método más usado es la detección de patrones. Esto es, analizar el paquete 
+en busca de características del mismo que detecten que estamos ante un paquete, al menos sospechoso. Al patrón que 
+siguen esos paquetes maliciosos y que, por tanto lo hace detectable, se le denomina \emph{firma}\index{Firma}.
+
+Por ejemplo, en el caso del \emph{ping de la muerte}, un sistema intermedio podría analizar todos los paquetes que van 
+hacia el servidor y, en caso de ser de un tamaño superior o igual a $2^16=65536$, bloquar el paso de dicho paquete.
+
+Comparativamente hablando, tienen la desventaja de necesitar la constante actualización de la base de datos de firmas, 
+y la posibilidad de que esta base de datos crezca, haciendose más inmanejable. Su refinamiento consiste en la selección 
+de reglas adecuadas a los activos protegidos, esto es: Si no tengo un servidor web, no necesito estar analizando 
+paquetes contra firmas que comprometen servidores web, es un gaso inútil.
+
+Este es el sistema de detección usado por IPS tales como snort \cite{snort} o suricata \cite{suricata}. A lo largo de 
+este trabajo no pretenderemos abarcar este tipo de soluciones.
 
 \section{Resumen}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Para incluir un resumen de una sección o un conjunto de secciones o en cualquier otro punto que consideremos interesante, se utiliza el entorno \comando{begin\{Resumen\}}, que admite como parámetro opcional un nombre que queramos asignarle al resumen. Por defecto, se denomina ``Resumen''. Observar que se ha modificado la cabecera de las páginas impares. Una vez finalizado el resumen, con el comando \comando{end\{Resumen\}}, se recupera la anterior cabecera automáticamente. Los resúmenes que se deseen incluir aparecen en la tabla de contenidos como una sección sin numeración, con el nombre elegido o el nombre por defecto de Resumen. En el siguiente ejemplo hemos utilizado este parámetro opcional de nombre.
 
 \begin{Resumen}[Resumen del capítulo]
+\subsection*{Definición}
+Acción(es) que impiden que un sistema de información funcione normalmente.
 
+\subsection*{Taxonomía}
+\begin{align*}
+ \begin{cases}
+   \text{Por inundación.}
+   \begin{cases}
+     \text{Coordinados por seres humanos / manuales.}\\
+     \qquad\text{\emph{Ningún elemento automático}}\\
+     \text{Amplificados.}\\
+     \qquad{\text{\emph{El atacante sólo envía N y el ataque se amplifica}}}\\
+     \qquad{\text{\emph{Ejemplo: ping a direcciones broadcast}}}\\
+     \text{Reflejados.}\\
+     \qquad{\text{\emph{El atacante tiene una lista de IP que pueden reflejar su ataque}}}\\
+     \qquad{\text{\emph{Ejemplo: Peticiones DNS con dirección origen de la víctima}}}\\
+     \text{Botnets o redes Zombi.}\\
+     \qquad{\text{\emph{Efecto amplificador y ocultador}}}
+     \text{Combinación de las anteriores.}
+   \end{cases}\\
+   \text{Semántico.}\\
+   \qquad{\text{\emph{Se busca explotar fallos}}}
+ \end{cases}
+\end{align*}
 
-\subsection*{S1}
+\subsection*{Objetivo del ataque}
+\begin{align*}
+ \begin{cases}
+   \text{Dirigido a redes.}\\
+   \qquad{\text{\emph{Ejemplos:}}}
+   \begin{cases}
+     \text{Reseteo de conexiones.} \\
+     \text{Asentimientos optimistas.} \\
+     \text{temporizador de retransmisión.} \\
+   \end{cases}\\
+   \text{Ataques a SSOO.} \\
+   \text{Ataques de capa 7.}\\
+ \end{cases}
+\end{align*}
+
+\subsection*{Técnicas de detección y mitigación}
+\begin{align*}
+ \begin{cases}
+   \text{Por inundación.}
+   \begin{cases}
+     \text{Detección de comportamiento \emph{anómalo} en la red.} \\
+     \qquad\rightarrow\text{¿Definición de anómalo?} \\
+     \text{Bloqueo de direcciones con comportamientos anómalos}\\
+     \qquad\rightarrow\text{Posibilidad de falsos negativos y falsos positivos}\\
+     \text{Tuneado consistente en definir \emph{normal}}
+   \end{cases}\\
+   \text{Semánticos}
+   \begin{cases}
+     \text{Detección de patrones (firmas) en el tráfico.} \\
+     \qquad\rightarrow\text{Necesidad de actualización} \\
+     \text{Bloqueo de paquetes que cumplan dichos patrones}\\
+     \qquad\rightarrow\text{Posibilidad de falsos negativos y falsos positivos} \\
+     \text{Tuneado consiste en seleccionar reglas en base a los activos a proteger}
+   \end{cases}\\
+ \end{cases}
+\end{align*}
 
 \end{Resumen}
 
