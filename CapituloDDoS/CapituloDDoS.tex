@@ -5,7 +5,6 @@
 operations''. }{ITU-T recommendation X.800}
 
 % TODO terminar introducción del capítulo
-% TODO cambiar todos los TCP, UDP, ICMP, SYN, ACK, DNS por sus acrónimos
 %\lettrine[lraise=0.7, lines=1, loversize=-0.25]{E}{l} 
 \lettrine[lraise=-0.1, lines=2, loversize=0.25]{E}n este capítulo trataremos de definir qué es un \gls{DoS} 
 \index{DoS}, qué significa que un ataque de denegación de servicio sea distribuido \acrshort{DDoS} \index{DDoS}, por 
@@ -85,10 +84,10 @@ servicio preparado para atender muchos clientes.
 Actualmente, se ofrecen en Internet muchísimos servicios de botnets, haciendo que llevar a cabo un ataque de fuerza 
 bruta por inundación sea fácilmente realizable.
 
-Un ejemplo clásico de este tipo de ataque es la inundación de paquetes SYN\index{SYN} TCP\index{TCP}. Para que una 
-conexión TCP llegue a ser válida, es necesario que el cliente envíe al servidor \index{Servidor} un paquete TCP de 
-sincronía (esto es, con la bandera SYN activa), el servidor le responda con un paquete SYN+ACK \index{ACK} (esto es, con 
-las dos banderas activas, SYN y ACK) y el cliente \index{Cliente} devuelva un primer ACK.
+Un ejemplo clásico de este tipo de ataque es la inundación de paquetes \gls{SYN}\index{SYN} \gls{TCP}\index{TCP}. Para que una 
+conexión TCP llegue a ser válida, es necesario que el cliente envíe al servidor \index{Servidor} un paquete \gls{TCP} de 
+sincronía (esto es, con la bandera \gls{SYN} activa), el servidor le responda con un paquete \gls{SYN}+\gls{ACK}\index{ACK} (esto es, con 
+las dos banderas activas, \gls{SYN} y \gls{ACK}) y el cliente \index{Cliente} devuelva un primer \gls{ACK}.
 
 Si un cliente sólo envía paquetes SYN, el servidor se ve obligado a mantener una serie de conexiones medio abiertas, lo 
 cual terminará por agotar los recursos del servidor (la víctima).
@@ -132,14 +131,14 @@ paquete es una petición que requiere una respuesta, y tiene como dirección ori
 spoofing\index{IP Spoofing}), todos los nodos de la red responderán el mensaje, saturando la máquina objetivo.
 
 Un ejemplo sencillo de este tipo de ataque es el denominado Ataque \emph{Smurf} \index{Smurf}, que utiliza un 
-simple ICMP\index{ICMP} PING\index{ICMP}\index{PING}. Si a todos los nodos de la red les llega una petición de PING 
+simple \gls{ICMP}\index{ICMP} PING\index{ICMP}\index{PING}. Si a todos los nodos de la red les llega una petición de PING 
 proveniente de la dirección de la víctima, la víctima se encontrará con tantas respuestas como nodos configurados para 
 responder tenga la red. Dichas respuestas tendrán que ser, al menos, procesadas por el sistema operativo de la máquina 
 objetivo, que terminará saturando. Por otro lado, el contenido de la respuesta será una copia del contenido de la 
 petición, por lo que es sencillo multiplicar (amplificar) el ancho de banda consumido por la víctima emitiendo un 
 paquete grande.
 
-Una variante del anterior es el ataque \emph{Fraggle}. El protocolo UDP\index{UDP} tiene su propio sistema de PING, en 
+Una variante del anterior es el ataque \emph{Fraggle}. El protocolo \gls{UDP}\index{UDP} tiene su propio sistema de PING, en 
 el puerto 7. Además, tiene un sistema de generación de cadenas aleatorias en el puerto 19, el cual envía cadenas de 
 texto aleatorias de longitud aleatoria (pero reducida) cualquiera que las pida. De nuevo, la mecánica del ataque es 
 falsear la dirección de origen para que estos servicios respondan a la víctima, saturando así la capacidad de sus 
@@ -148,7 +147,7 @@ recursos.
 \paragraph{Ataques reflejados}\mbox{\newline} \index{Ataques reflejados}
 
 \noindent Para este apartado, un reflector es un nodo que responde a un paquete con otro paquete destinado a la 
-dirección origen del primer paquete. Así, podríamos englobar en este apartado, por ejemplo, servidores DNS\index{DNS}. 
+dirección origen del primer paquete. Así, podríamos englobar en este apartado, por ejemplo, servidores \gls{DNS}\index{DNS}. 
 Ver \FIG{reflexion}.
 
 \begin{figure}[htbp]
@@ -161,12 +160,12 @@ Ver \FIG{reflexion}.
 
 El atacante, entonces, crea una lista de IP reflectoras, y envía para el ataque una petición a cada una de las 
 direccionas, con dirección origen la de la vícima. De esta forma, localizar y detener el ataque se vuelve mucho más 
-difícil, ya que, siguiendo el ejemplo, cada servidor DNS tiene un dirección IP que no tiene nada que ver con el resto.
+difícil, ya que, siguiendo el ejemplo, cada servidor \gls{DNS} tiene un dirección IP que no tiene nada que ver con el resto.
 
 Sin embargo, nada impide, en principio, combinar este ataque con el tipo amplificación (por ejemplo, si se 
-disponen de muchos DNS en la misma subred). Por otra parte, es posible hacer una petición recursiva a un servidor DNS, 
-de forma que en la respuesta viaja el resultado de cada servidor DNS. Esto es, con una pequeña petición (cabecera UDP, 
-DNS y nombre de dominio pedido) obtenemos una respuesta mucho mayor, y ya dirigida a la dirección de la victima. 
+disponen de muchos \gls{DNS} en la misma subred). Por otra parte, es posible hacer una petición recursiva a un servidor \gls{DNS}, 
+de forma que en la respuesta viaja el resultado de cada servidor \gls{DNS}. Esto es, con una pequeña petición (cabecera \gls{UDP}, 
+\gls{DNS} y nombre de dominio pedido) obtenemos una respuesta mucho mayor, y ya dirigida a la dirección de la victima. 
 
 Así pues, la diferencia entre este tipo y el anterior es que el atacante necesita de una lista de direcciones de host, 
 e ir iterando para conseguir el efecto deseado, mientras que en la otra cada paquete se amplificaba mediante el uso de 
@@ -194,11 +193,11 @@ provocará una caída o malfuncionamiento en el servidor, es decir, aprovechando
 hace relativamente poco (1997), el famoso \emph{ping de la muerte}\index{Ping de la Muerte} \cite{Bidou} era capaz de 
 tumbar un servidor con tan 
 sólo un comando: \texttt{ping <objetivo>\ -l 65511}, el cual viene integrado en todos los sistemas operativos. Éste 
-aprovechaba que la pila ICMP asumía que el paquete tenía una longitud determinada. Al procesar el paquete, y superarse 
+aprovechaba que la pila \gls{ICMP} asumía que el paquete tenía una longitud determinada. Al procesar el paquete, y superarse 
 esta longitud, se producía un desbordamiento de buffer que hacía que el servidor colapsase.
 
 Otro ejemplo de ataque de este tipo es el ataque \emph{land\index{Land attack}}. En él, la victima recibe un paquete 
-TCP cuya dirección origen y destino es él mismo, por lo que intenta contactar consigo mismo hasta que colapsa. 
+\gls{TCP} cuya dirección origen y destino es él mismo, por lo que intenta contactar consigo mismo hasta que colapsa. 
 
 El ataque \emph{\index{Teardrop}} también es muy famoso, consistente en enviar mensajes IP fragmentados y malformados a 
 la muina objetivo. De esta forma, al intentar des-fragmentarlos, la máquina colapsa.
@@ -244,12 +243,12 @@ Un ataque muy simple consiste en, una vez que el atacante conoce una conexión e
 conexión en \gls{TCP} está identificada por una dirección origen, una dirección destino, un puerto origen y un puerto 
 destino. Existe un bit RST\index{TCP RST} en la cabecera \gls{TCP} que permite resetear una conexión inmediatamente. 
 Esto es usado, por ejemplo, si uno de los dos extremos detecta un problema en la conexión. Para terminar de empeorar 
-las cosas, RST no necesita ACK, por lo que el cliente no llega a saber que la conexión ha terminado
+las cosas, RST no necesita \gls{ACK}, por lo que el cliente no llega a saber que la conexión ha terminado
 
 Tras recibir el servidor el RST, el cliente continúa enviando paquetes, y se encontrará con un socket cerrado. El 
 servidor enviará otro RST, y será imposible mantener la conexión durante un largo periodo de tiempo. 
 
-Si el atacante ha conseguido localizar una conexión, y es capaz de enviar un paquete TCP con dicho bit activo, el 
+Si el atacante ha conseguido localizar una conexión, y es capaz de enviar un paquete \gls{TCP} con dicho bit activo, el 
 receptor de dicho paquete no aceptará más paquetes de esa conexión, y, por tanto, se habrá conseguido que la conexión 
 quede invalidada. Podemos ver una descripción gráfica de este ataque en la \FIG{RST attack}.
 
@@ -265,11 +264,11 @@ quede invalidada. Podemos ver una descripción gráfica de este ataque en la \FI
 
 Otra característica comúnmente explotada de las conexiones \gls{TCP} es su control de congestión\index{Control de 
 congestión TCP}. Para calcular la saturación del enlace, un extremo considera como paquete perdido (y, por tanto, el 
-enlace está saturado) aquel paquete que tarda más de $T$ segundos en recibir el ACK. Al iniciar la conexión TCP, el 
+enlace está saturado) aquel paquete que tarda más de $T$ segundos en recibir el ACK. Al iniciar la conexión \gls{TCP}, el 
 algoritmo de arranque lento\index{TCP slow start} incrementará el número de paquetes enviados de una forma exponencial.
 
-Si el atacante envía ACK optimistas, esto es, ACK de un paquete que realmente no ha recibido aún, el atacante enviará 
-cada vez más y más paquetes salientes, hasta saturar su conexión. Teniendo en cuenta que un TCP ACK sólo ocupa 54 
+Si el atacante envía \gls{ACK} optimistas, esto es, \gls{ACK} de un paquete que realmente no ha recibido aún, el atacante enviará 
+cada vez más y más paquetes salientes, hasta saturar su conexión. Teniendo en cuenta que un \gls{TCP} \gls{ACK} sólo ocupa 54 
 bytes, el efecto amplificador de este tipo de ataque es bastante importante. Algunos estudios hablan de que, con una 
 conexión de 56kbps, es posible generar en el lado del atacante unos 8.9mbps \cite{sherwood}.
 
@@ -286,7 +285,7 @@ Podemos ver un ejemplo de este tipo de ataques en la \FIG{optim ACK attack}.
 \paragraph{Temporizador de retransmisión}\mbox{\newline}
 
 Cuando un paquete se pierde en una conexión \gls{TCP}, el protocolo dice que es necesario reenviarlo. Como ya hemos 
-explicado, un paquete perdido es aquel que no recibe el ACK correspondiente.
+explicado, un paquete perdido es aquel que no recibe el \gls{ACK} correspondiente.
 
 El atacante podría saturar los dispositivos de comunicación si envía una gran inundación de paquetes a los mismos. Sin 
 embargo, esto sería fácilmente detectable por dispositivos que monitorizan la red.
@@ -331,7 +330,7 @@ overflow}\index{Buffer Overflow}, esto es, se escribirá en una zona de memoria 
 colapse. Esta técnica es la empleada por el llamado \emph{ping de la muerte}\index{Ping de la Muerte}, ya explicado en 
 el \SSSEC{DDoS semanticos}.
 
-Otro ataque, también dirigido a saturar el \gls{SO}, sería un SYN flood (inundación SYN). Esta vez, con la inundación, 
+Otro ataque, también dirigido a saturar el \gls{SO}, sería un \gls{SYN} flood (inundación \gls{SYN}). Esta vez, con la inundación, 
 no provocamos saturar la red, sino la capacidad de conexiones simultaneas que aguante el sistema.
 
 \subsubsection{Ataques dirigidos a aplicaciones (Ataques capa 7)}
