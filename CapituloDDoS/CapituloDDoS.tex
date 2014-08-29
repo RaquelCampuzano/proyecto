@@ -4,7 +4,6 @@
 \epigraph{ Denial of Service: ``The prevention of authorized access to resources or the delaying of time critical 
 operations''. }{ITU-T recommendation X.800}
 
-% TODO terminar introducción del capítulo
 %\lettrine[lraise=0.7, lines=1, loversize=-0.25]{E}{l} 
 \lettrine[lraise=-0.1, lines=2, loversize=0.25]{E}n este capítulo trataremos de definir qué es un \gls{DoS} 
 \index{DoS}, qué significa que un ataque de denegación de servicio sea distribuido \acrshort{DDoS} \index{DDoS}, por 
@@ -12,10 +11,16 @@ qué es importante su prevención, por qué es tan difícil su identificación y
 proyecto.
 
 Las diferentes secciones seguirán la misma clasificación que siguen S.V. Raghavan y E. Dawson en su libro ``An 
-Investigation into the Detection and Mitigation of Denial of Service (DoS) Attacks'' \cite{Raghavan}.
+Investigation into the Detection and Mitigation of Denial of Service (DoS) Attacks'' \cite{Raghavan}. Trataremos de 
+definir qué es un ataque \gls{DoS} en la \SEC{Definicion DoS}, y qué significa que un ataque \gls{DoS} sea 
+distribuído en la sección \gls{DDoS}. Tras ello, diseccionaremos los distintos tipos, a fin de obtener una visión 
+general pero suficiente de las formas de llevarlo a cabo, en la \SEC{Taxonomia DoS}.
+
+Por último, con toda la información adquirida en los apartados nombrados, seremos capaces de estudiar la detección y 
+posible mitigación de los distintos tipos en la sección \SEC{Deteccion y mitigacion DoS}.
 
 %http://en.wikibooks.org/wiki/LaTeX/List_Structures#Customizing_Lists
-\section{Definición y consecuencias de un ataque de denegación de servicio} \label{sec:Tipos de ataques DoS}
+\section{Definición y consecuencias de un ataque de denegación de servicio} \LABSEC{Definicion DoS}
 La seguridad de la información se puede dividir en tres sectores: confidencialidad, esto es, la 
 información sólo es vista por los destinatarios; integridad, esto es, la información no ha sido 
 alterada desde que se registró y, por último, disponibilidad: El destinatario puede obtener la 
@@ -45,7 +50,7 @@ alguna debilidad del protocolo de red o la aplicación usada, o cualquier otro s
 De esa forma, la empresa que posee el recurso se queda sin los beneficios que el mismo genera durante un periodo de 
 tiempo. 
 
-\section{Divide y vencerás: DoS distribuidos}
+\section{Divide y vencerás: DoS distribuidos}\LABSEC{DDoS}
 La principal clasificación que se puede hacer de los ataques de denegación de servicio es en base al número de 
 ordenadores atacantes. Si hay más de uno, entonces estamos hablando de un ataque de denegación de servicio distribuido. 
 No se debe confundir con los tipos \emph{Spoofing}\footnote{Se definirán mejor estos ataques en el 
@@ -60,7 +65,7 @@ y sincronizados remotamente. Estos ordenadores, entonces, pasan a denominarse or
 \emph{botnet}\index{Botnet}. Este tipo de ataques se describirán también, más detalladamente, en el \SSSEC{DoS por 
 inundacion}.
 
-\section{Taxonomía de un ataque de denegación de servicio}
+\section{Taxonomía de un ataque de denegación de servicio}\LABSEC{Taxonomia DoS}
 Las definiciones dadas hasta ahora de ataque de denegación de servicio han sido bastante amplias: Hemos acotado qué 
 queremos defender, pero no cómo pueden atacarlo, ni qué parte del sistema de comunicación atacarán. Y esto es necesario 
 si queremos definir un sistema de defensa efectivo.
@@ -350,15 +355,17 @@ sirviendo. Por otra parte, tenemos los ataques por inundación, que buscarían s
 a la máquina le sea imposible seguir respondiendo peticiones.
 
 
-\section{Técnicas de detección y mitigacinó de un ataque DDoS}
+\section{Técnicas de detección y mitigacinó de un ataque DDoS}\LABSEC{Deteccion y mitigacion DoS}
 \subsection{Ataques por inundación}
 La principal señal que indica que un servicio está sufriendo un ataque por inundación es que reciben una cantidad de 
 tráfico anormalmente grande. Sin embargo, para una detección correcta deberíamos definir qué supone \emph{anormal}. 
 
-A lo largo de este trabajo intentaremos definir un sistema de detección de anomalías (CUSUM, \CHAP{TODO}), y qué 
-parámetros debemos usar para buscar un compromiso entre velocidad de detección y no aparición de falsos positivos.
+La necesidad de esa definición de lo que supone un tráfico normal y lo que no se ve claramente con el ataque tipo 
+\emph{Efecto slashdot}. Lo que para el tráfico del servidor de noticias es algo normal, es un volumen completamente 
+inadmisible para un servidor pequeño, y logrará tumbarlo rápidamente.
 
-%TODO aún falta el tunning: Dificuktad de definir normal y anormal. Problemas de refinamiento.
+A lo largo de este trabajo intentaremos definir un sistema de detección de anomalías (CUSUM, \CHAP{Algoritmo CUSUM}), y 
+qué parámetros debemos usar para buscar un compromiso entre velocidad de detección y no aparición de falsos positivos.
 
 Para mitigar el ataque, no basta con cortar el acceso al servicio, ya que entonces el \gls{DDoS} habría triunfado. Es 
 necesario discernir entre las direcciones IP maliciosas o atacantes, y cortar el tráfico sólo a ellas, permitiendo que 
