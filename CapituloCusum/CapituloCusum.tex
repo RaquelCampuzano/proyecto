@@ -310,7 +310,20 @@ los paquetes \gls{TCP} \gls{SYN} y aquellos marcados con los bits \gls{SYN} y \g
 Tras intervalos de tiempo regulares, se extraerá de ese conteo los parámetros enumerados anteriormente, lo que supondrá 
 una muestra de cada estadístico por cada IP, más una muestra global.
 
-\subsection{Periodo de aprendizaje}\LABSSEC{Periodo de aprendizaje}\index{Periodo de Aprendizaje}
+Según los datos aprendidos a lo largo del tiempo, y los datos que aprendamos en este intervalo de tiempo, el programa 
+puede estar en estado \emph{Aprendizaje}, en estado \emph{Defensa} o en estado \emph{Alarma} (ver 
+\FIG{diagrama_estados}). En qué consiste cada estado, y las causas de las transiciones se encuentran en las siguiente 
+secciones.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{CapituloCusum/Figuras/DiagramaEstados-crop}
+\caption{Diagrama de estados del sensor}
+\LABFIG{diagrama_estados} 
+\end{figure}
+%
+
+\subsection{Periodo de Aprendizaje}\LABSSEC{Periodo de aprendizaje}\index{Periodo de Aprendizaje}
 Para poder aplicar el algoritmo CUSUM, es necesario conocer la media y la desviación cuadrática de cada parámetro en el 
 tráfico que estamos analizando. Sin embargo, como ya hemos dicho en la introducción de esta sección, es imposible saber 
 a priori qué media o qué desviación deben tener dichos parámetros. Se hace necesario un periodo de aprendizaje, en el 
@@ -341,6 +354,9 @@ no bajo ataque por alguna IP concreta. Por otra parte, se lleva la cuenta de est
 lo que también se podrán detectar ataques realizados a base de clonar el comportamiento normal en muchas direcciones 
 \gls{IP} distintas.
 
+Si se produce una alarma, esto es, $C_{i,\text{IP}} > H$ para alguna \gls{IP} o los contadores generales, se pasará al 
+Modo Alarma\index{Modo Alarma}\index{Modo Alarma}. 
+
 \subsubsection{El aprendizaje durante el periodo de defensa}
 
 Durante el periodo de defensa, es necesario seguir aprendiendo. Por ejemplo, si la media da un valor bajo para los 
@@ -354,7 +370,7 @@ identificado rápidamente como un ataque. Así pues, tras el periodo de aprendiz
 de aprendizaje provisional. Si no se producen alarmas durante este periodo, los nuevos valores \emph{normales} pasarán 
 a ser los aprendidos.
 
-\subsubsection{Protocolo de actuación ante un ataque}
+\subsubsection{Protocolo de actuación ante un ataque. Modo Alarma}
 
 Ante un ataque, podríamos actuar de tres formas distintas \cite{Raghavan}:
 \begin{enumerate}
