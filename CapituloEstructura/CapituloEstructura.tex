@@ -1,0 +1,627 @@
+% !TEX root =../LibroTipoETSI.tex
+\chapter{Estructura de \redborderddos}\LABCHAP{CAPEstructura}
+\pagestyle{esitscCD}
+% TODO Falta epígrafe
+\epigraph{  FaltaFalta }{FaltaFalta}
+
+%\lettrine[lraise=0.7, lines=1, loversize=-0.25]{E}{l} 
+\lettrine[lraise=-0.1, lines=2, loversize=0.25]{R}edBorder DDoS\index{RedBorder DDoS} es el nombre del producto en el 
+que, mediante el análisis del tráfico en tiempo real a través del algoritmo \gls{CUSUM}, nos permite detectar ataques 
+\gls{DDoS} en tiempo real.
+
+A lo largo de este capítulo, %TODO
+
+\section{Alcance de \redborderddos} %TODO hablar de la escalabilidad.
+Como vimos en el \CHAP{Denegacion de Servicio}, podemos diferencias los ataques de \gls{DDoS} en dos grandes bloques: 
+Ataques por inundación, que buscan saturar los recursos de los que depende el servicio, y ataques semánticos. que 
+buscan explotar una vulnerabilidad conocida.
+
+\redborderddos{} intenta detectar y, en la medida de lo posible, mitigar el primer tipo de ataque, mediante el 
+algoritmo \gls{CUSUM} visto en el capítulo \CHAP{Algoritmo CUSUM}. 
+
+%TODO Falta. Relacioanr con los tipos de ataques de DDoS
+\section{Nociones previas}
+
+%TODO por qué basado en C
+
+A lo largo de este capítulo se describirá la estructura de \redborderddos. \redborderddos{} está basado en el lenguaje 
+de programación C, y usa alguna característica avanzada que no todos los usuarios de C tienen por qué conocer antes de 
+leer este capítulo.
+
+Por tanto, describiremos en esta sección las técnicas usadas, a fin de que podamos hacer referencia a ellas al 
+describir el funcionamiento del programa sin necesidad de mezclar detalles de bajo y alto nivel.
+
+\subsection{Estructuras de datos básicas}
+Para almacenar el funcionamiento de cada flujo de tráfico, y ser capaz de compararlo con el supuesto funcionamiento 
+normal de la red, es necesario contar con unos sistemas de almacenamiento rápidos y eficientes. Si se pierde demasiado 
+tiempo en el manejo de la memoria, \redborderddos{} no será capaz de leer y modelar el tráfico a una velocidad 
+correcta, y a la larga no será capaz de detectar nada.
+
+A lo largo de esta subsección describiremos las estructuras de almacenamiento de datos usadas en el programa. Una vez 
+que conozcamos el funcionamiento de estas, será más fácil ver el sistema como un todo, y abstraer correctamente cada 
+una de sus partes.
+
+\subsubsection{Vector de memoria}\index{Vector}\LABSSSEC{VectorMemoria}
+Un vector consiste en una o más celdas de memoria situadas de una forma contigua. Esto es, si cada elemento del vector 
+ocupa $L$ bytes, y el vector comienza en la dirección de memoria $M$, podemos acceder al tercer elemento del vector en 
+la dirección $M+3L$.
+
+El vector tiene un tamaño fijo conocido en el momento de su creación, y, a lo largo de este trabajo, no variará. Hemos 
+de tener precaución al acceder a las distintas posiciones del vector: si hemos reservado memoria para $K$ elementos, y 
+accedemos al elemento número $J>=K$\footnote{En C, las posiciones del vector empiezan en 0. Si accedemos al elemento 
+$K$, ya estamos accediendo a memoria fuera del vector}, esa zona de memoria no está dentro del vector, y no se puede 
+saber qué habrá.
+
+\subsubsection{Listas enlazadas}\index{Lista Enlazada}\LABSSSEC{ListaEnlazada}
+Si, tras haber definido un tamaño de vector, queremos añadir nuevos elementos, deberíamos redimensionar el espacio 
+reservado del vector en memoria. Esta es una operación costosa, ya que puede no existir espacio contiguo al final o 
+principio del vector, y necesitar buscar un espacio contiguo más grande. Tras encontrarlo, se necesitará copiar todos 
+los elementos del vector, y pueden ser muchos.
+
+Aún peor, ¿qué ocurre cuando queremos insertar un elemento en mitad del vector? Es necesario mover todos los elementos 
+desde la posición requerida hasta el final del vector una unidad, y después insertar ese último elemento, lo que 
+resulta inadmisible.
+
+% TODO describir NULL en el glosario?
+Para solucionar este problema, podemos usar una lista tipo enlazada. En ella, cada elemento tiene un puntero que apunta 
+al siguiente elemento, mientras que el último elemento de la lista siempre apuntará a NULL. Por lo tanto, insertar o 
+eliminar un elemento en mitad de la lista sólo requeriría localizar el elemento anterior, y modificar dos puntero. Como 
+caso especial está el insertado de elementos a la cabeza de la lista, que sólo requiere modificar dos punteros.
+
+Podemos ver en la \FIG{EstructuraLinkedList} la estructura que tendría.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{CapituloEstructura/Figuras/EstructuraListaEnlazada-crop}
+\caption{Estructura de una lista enlazada}
+\LABFIG{EstructuraLinkedList} %Esto es una forma propia de los autores de gestionar las etiquetas y referencias
+\end{figure}
+%
+
+Sin embargo, el acceso aleatorio a un elemento de la lista enlazada es algo más costoso, ya que para acceder la 
+posición $N$ es necesario iterar por todos los $N-1$ elementos. Existen otras variantes, que incluyen usar un puntero 
+al anterior y posterior nodo, listas circulares, listas con puntero a la cabeza y a cola, etc. Pero por el momento, nos 
+basta con esta visión de las listas enlazadas.
+
+\subsubsection{Tabla HASH}\index{Tabla HASH}
+Resumiendo los apartados \SSSEC{VectorMemoria} y \SSSEC{ListaEnlazada}:
+\begin{itemize}
+ \item Es muy rápido acceder a una posición dada de un vector, pero la inserción de elementos es potencialmente muy 
+lenta. Además, mientras el vector no está lleno, desperdicias memoria
+ \item El acceso aleatorio a un elemento de una lista enlazada es lento. Sin embargo, la inserción de elementos en 
+cualquier punto es rápida, especialmente al principio, y no se desperdicia memoria.
+\end{itemize}
+
+La tabla HASH pretende aunar lo mejor de ambas estructuras. Una tabla HASH es un mapa asociativo, en el que cada 
+\emph{valor} $V$ tiene asociada una \emph{clave} $K$ por la que puede ser buscado, y dicha clave determina una posición 
+en un vector de memoria.
+
+Internamente, el vector de memoria tiene $S$ posiciones, donde $S$ es una potencia de 2.Cada posición es una lista de 
+elementos del mismo tipo que el valor que queremos almacenar.
+
+\begin{figure}[hbtp]
+\centering
+%\hfill
+\subfloat[Diagrama de Actividad de Inserción]%
+   {\LABFIG{InsertarTablaHash}%
+   \includegraphics[width=0.48\textwidth]{CapituloEstructura/Figuras/ActividadFuncionInsertarTablaHash-crop}}%
+\hfill
+\subfloat[Diagrama de actividad de Búsqueda]%
+ {\LABFIG{BuscarTablaHash}%
+ \includegraphics[width=0.48\textwidth]{CapituloEstructura/Figuras/ActividadFuncionBuscarTablaHash-crop}}%
+%
+\caption{Diagrama de Actividad de las operaciones a realizar sobre una tabla HASH}
+\end{figure}
+%
+
+A la hora de almacenar un elemento $E_0$ con clave $K_0$, a la clave se le aplica una máscara que asegure un número 
+inferior a $S$: Por ejemplo, si $S$ es $2^8$, la máscara debe ser $M=0xff$, de forma que la operación \emph{AND} bit a 
+bit de siempre $P_0=K_0\&S<2^8$. El elemento $E_0$ es entonces insertado en la lista que ocupa la posición $P_0$ del 
+vector de memoria. El diagrama de actividad de esta función se puede ver en \FIG{InsertarTablaHash}.
+
+Por su parte, a la hora de recuperar el elemento, volvemos a aplicar la máscara a la clave, $P_0=K_0\&M$, y buscamos en 
+la lista enlazada que ocupa la posición $P_0$ del vector. Esta vez, sí deberemos comparar los elementos con la clave 
+$K$, ya que en ella existen todos los elementos insertados cuyas claves $K$ cumplan $K\&M=P_0$. Podemos ver su diagrama 
+de actividad en \FIG{BuscarTablaHash}.
+
+Para conseguir la mínima probabilidad de colisión, se le aplica a las diferentes claves una función HASH\index{Función 
+HASH}, esto es una, función que ante la misma entrada de siemrpe la misma salida, pero que pequeñas diferencias de los 
+valores de la entrada provoca grandes diferencias en los valores de salida. Como nota, es probable que una función HASH 
+produzca colisiones, esto es, diferentes entradas producen la misma salida.
+
+Por ejemplo, supongamos que queremos almacenar unos contadores, cuyo flujo está asociado a la \gls{IP} \emph{10.0.1.1}, 
+en una tabla hash de longitud $S=2^8$. Tras aplicarle nuestra función HASH, vemos que 
+$\text{hash}(\text{10.0.0.1})=476$. Buscamos en la tabla HASH la lista enlazada de la posición 
+$476\&0xff=220$, y la añadimos a la cola. Ver \FIG{EstadoTablaHashInsercion} para visualizar graficamente qué ocurre 
+con la tabla HASH.
+
+\begin{figure}[hbtp]
+\centering
+\subfloat[Estado antes de la inserción]%
+   {\begin{minipage}[t]{0.47\textwidth}\vspace{0pt}
+    \includegraphics[width=\textwidth]{CapituloEstructura/Figuras/TablaHashAntesInsercion-crop}%
+    \end{minipage}}
+\hfill
+\subfloat[Estado después de la inserción]%
+ {\begin{minipage}[t]{0.47\textwidth}\vspace{0pt}
+ \includegraphics[width=\textwidth]{CapituloEstructura/Figuras/TablaHashDespuesInsercion-crop}%
+  \end{minipage}}
+%
+\caption{Inserción de un elemento en la tabla HASH}
+\LABFIG{EstadoTablaHashInsercion}
+\end{figure}
+
+\subsection{Programación multihilo}\LABSSEC{ProgramacionMultihilo}
+Un hilo de un proceso\index{Hilo}, también llamado proceso ligero\index{Proceso Ligero}, es una forma que tienen las 
+aplicaciones de ejecutar código de manera concurrente. 
+
+Al crear un hilo, se crea una nueva entrada en el planificador\index{Planificador} del \gls{SO}, y ésta instancia se 
+ejecutará con la misma prioridad que otros procesos. Tendrá su propio contador de programa\footnote{Indicador del punto 
+de ejecución actual.}, su propia pila de llamada a funciones y su propio estado de CPU, lo que permite que el hilo 
+llamante y el llamado se ejecuten por separado.
+
+Sin embargo, los distintos hilos de un proceso comparten el espacio de direcciones y ficheros abiertos. Esto es útil 
+para compartir memoria entre ellos, pero genera la necesidad de un mecanismo de sincronización.
+
+Por ejemplo, supongamos una función que realiza las siguientes acciones sobre un entero de valor 0:
+\begin{enumerate}
+ \item Copia un entero a un registro\label{item:EjemploHilosGetInt}.
+ \item Incrementa ese entero.
+ \item Vuelve a guardar ese entero en su ubicación original, ya incrementado.
+\end{enumerate}
+
+Esta función se está llamando concurrentemente desde dos hilos distintos. Se debería esperar que, tras la ejecución de 
+los dos hilos, el entero valga 2.
+
+Sin embargo, si hilamos mas fino, descubrimos un problema. Pongamos el caso de que, en el momento de terminar la 
+instrucción \ref{item:EjemploHilosGetInt}, el planificador decide que es hora de pasar el control al hilo dos. 
+Éste lee la variable (de valor 0), la incrementa, y guarda un 1. Ahora, cuando el control vuelve al hilo 1, este 
+simplemente tiene en su registro un 0, lo incrementará a 1, y guardará un 1. Y no podemos saber cuando el planificador 
+decidirá cambiar el hilo en ejecución, por lo que este problema se puede reproducir de manera aleatoria.
+
+Es necesaria una \emph{variable cerrojo}\index{Variable Cerrojo}\index{Mutex}. Una variable especial que sólo puede ser 
+modificada por un proceso al mismo tiempo en todo el sistema y, por tanto, proteja la \emph{sección 
+crítica}\index{Sección Crítica}, esto es, aquella susceptible de ser indeterminada si el procesador cambia de hilo de 
+ejecución en el momento que está siendo ejecutada.
+
+Por tanto, la función pasaría a ser:
+\begin{enumerate}
+ \item Cerramos la variable cerrojo
+ \item Copia un entero a un registro
+ \item Incrementa ese entero.
+ \item Vuelve a guardar ese entero en su ubicación original, ya incrementado.
+ \item Abrimos la variable cerrojo
+\end{enumerate}
+
+De esta forma, ambos hilos de ejecución saben cuando otro proceso está modificando la \emph{región crítica}.
+
+No obstante, esto tiene una desventaja: el hilo que espera a que la variable cerrojo sea abierta no puede hacer otra 
+cosa que no sea esperar. Por tanto, una mala elección de secciones críticas hará el programa lento.
+
+\subsection{Señales en linux. La señal SIGALRM.}\LABSSEC{SIGALRM}\index{SIGALRM}
+Un mecanismo de comunicación entre procesos o \gls{IPC} es el envío de señales. Por ejemplo, cuando un programa intenta 
+escribir en un área de memoria restringida, el \gls{SO} le envía una señal \gls{SIGSEGV}, y el proceso puede actuar en 
+consecuencia.
+
+Cuando un proceso la recibe, pueden ocurrir tres cosas según la señal. Por defecto, o es ignorada, o abortará el 
+programa. No obstante, también es posible escribir código para manejar algunas señales.
+
+En este caso, cuando el proceso decida crear un manejador para una señal concreta, y reciba dicha señal, será 
+interrumpido y será como si en ese momento hubiese llamado al manejador. Cuando el manejador termine, el programa 
+seguirá su ejecución normal. Si el programa estaba en un \texttt{sleep}, este será interrumpido, y el programa no 
+dormirá los segundos restantes.
+
+Por ejemplo, si pulsamos \texttt{Ctrol-Z} en un programa, este detendrá su ejecución y podremos o bien enviarlo a 
+segundo plano con el comando \texttt{bg} o reanudar su ejecución con \texttt{fg}. Esto es notificado al programa con 
+una señal \gls{SIGTSTP}, y es posible manejarla.
+
+Por ejemplo, el \lstlistingname{} \ref{code:dumbSignalStopHandling} muestra un ejemplo de manejo de esta señal. Sin 
+embargo si varias señales llegan muy rápido, comenzaremos a manejar una señal mientras aún estábamos manejando la 
+anterior, por lo que tenemos el mismo problema que en \SSEC{ProgramacionMultihilo}. Para colmo, no podemos solucionarlo 
+con una variable cerrojo: \gls{pthreads} establece que el resultado de bloquear una señal bloqueada por tu mismo hilo 
+de ejecución es indeterminado. Y esto podría pasar si el manejador de la señal salta en la región crítica.
+
+\begin{lstlisting}[language=C++,caption={Manejo ingenuo de la señal \gls{SIGTSTP}}, 
+breaklines=true, label=code:dumbSignalStopHandling,numbers=left,float=htbp]
+#include <signal.h>
+#include <stdio.h>
+
+#define N 10
+static int i = 0;
+static int salir = 0;
+
+static void manejador(int signo){
+    if(i++<N)
+        printf("¡No quiero parar!\n");
+    else
+        salir = 1;
+}
+
+int main(void) {
+     signal(SIGTSTP, manejador);
+     while (!salir)
+         sleep(1);
+     return 0;
+}
+\end{lstlisting}
+
+Así pues, la solución pasa por reducir al mínimo la responsabilidad del manejador de la señal: Este sólo establecerá un 
+indicador global de que la señal ha sido recibida, y el manejador real estará en un hilo y, por tanto, en un entorno 
+controlado. Vemos un ejemplo de este modo de proceder en \lstlistingname{} \ref{code:SignalStopHandling}
+
+\begin{lstlisting}[language=C++,caption={Manejo de la señal \gls{SIGTSTP}}, 
+breaklines=true, label=code:SignalStopHandling,numbers=left,float=htbp]
+#include <signal.h>
+#include <stdio.h>
+
+#define N 10
+static int sig = 0;
+
+static void manejador(int signo){
+    sig = 1;
+}
+
+int main(void) {
+     int i = 0;
+     signal(SIGTSTP, manejador);
+     while (i<N){
+        sleep(1);
+        if(sig){
+            printf("¡No quiero salir!\n");
+            ++i;
+            sig = 0;
+        }
+    }
+    return 0;
+}
+\end{lstlisting}
+
+Por último, una señal interesante, y que usaremos en el proyecto, es la señal \gls{SIGALRM}. Mediante la función 
+\texttt{alarm(int s)}, se le notifica al \gls{SO} de que se desea recibir una señal \gls{SIGALRM} pasados \texttt{s} 
+segundos. Por tanto, se podría usar para realizar tareas periódicas. Por ejemplo, el \lstlistingname{} 
+\ref{code:AlarmSignal} imprimirá la fecha actual\footnote{En formato UNIX time, esto es, segundos transcurridos desde 
+el 1 de Enero de 1970} y un mensaje indicativo de que se está realizando alguna tarea.
+
+\begin{lstlisting}[language=C++,caption={Ejemplo de uso de \gls{SIGALRM}}, 
+breaklines=true, label=code:AlarmSignal,numbers=left,float=htbp]
+#include <signal.h>
+#include <stdio.h>
+#include <time.h>   // time()
+#include <unistd.h> // alarm()
+
+static int alarma = 0;
+
+static void manejador(int signo){
+    alarma = 1;
+    alarm(1); // Programamos la siguiente alarma
+}
+
+int main(void) {
+     signal(SIGALRM, manejador);
+     alarm(1);
+     while (1){
+        sleep(1);
+        if(alarma){
+            printf("[%d] Estoy haciendo cosas...\n",time(NULL));
+            // Sleep(100)
+            alarma = 0;
+        }
+    }
+    return 0;
+}
+\end{lstlisting}
+
+Sin embargo, este programa vuelve a ignorar la concurrencia. ¿Qué ocurre si el programa tarda mas de la cuenta en 
+ejecutarse? Si descomentamos el \texttt{sleep(100)} entre el \texttt{printf(...)} y el \texttt{alarma = 0}, vemos que 
+el programa imprime el mensaje cada dos segundos, en lugar de cada segundo. Esto es debido a que se ha lanzado la 
+alarma mientras se estaba ejecutando el trabajo (el \texttt{sleep}), y nada ha cambiado tras ello (ya que sólo hemos 
+establecido \texttt{alarma} a 1, pero ya estaba a 1). Debido a ello, es posible que el trabajo no se esté ejecutando 
+con la periodicidad que nosotros creemos.
+
+Para solucionarlo, se hace necesario otra variable que indique que una señal ha llegado mas tarde de la cuenta. En 
+\lstlistingname{} \ref{code:AlarmSignalAcumulados}. 
+
+Por último, no se debe confiar en hacer de \texttt{acumulados} un contador, ya que la alarma podría saltar en cualquier 
+momento entre el \texttt{if(acumulados)} y el \texttt{acumulados=0}. Es necesario confiar en otros sistemas, como 
+almacenar la marca de tiempo en la que el proceso fue lanzado.
+
+\begin{lstlisting}[language=C++,caption={Ejemplo de uso de \gls{SIGALRM} con detección de pérdidas}, breaklines=true, 
+label=code:AlarmSignalAcumulados,numbers=left,float=htbp]
+#include <signal.h>
+#include <stdio.h>
+#include <time.h>   // time()
+#include <unistd.h> // alarm()
+
+static int alarma = 0;
+static int acumulados = 0;
+
+static void manejador(int signo){
+    if(alarma)
+        acumulados = 1; // Aún no ha acabado el anterior trabajo
+    alarma = 1;
+    alarm(1); // Programamos la siguiente alarma
+}
+
+int main(void) {
+     signal(SIGALRM, manejador);
+     alarm(1);
+     while (1){
+        sleep(1);
+        if(alarma){
+            if(acumulados){
+                printf("[%d] Nos hemos saltado alguna iteración.",time(NULL));
+                printf(" Se actuará en consecuencia.\n");
+                acumulados = 0;
+            }
+            printf("[%d] Estoy haciendo cosas...\n",time(NULL));
+            sleep(100);
+            alarma = 0; // Todo vuelve a la normalidad
+        }
+    }
+    return 0;
+}
+\end{lstlisting}
+
+\section{Vista externa}\LABSEC{Vista Externa}
+\subsection{Situación fisica de \redborderddos}
+Desde el punto de vista de la arquitectura de red, \redborderddos{} debe colocarse en dos puertos SPAN\index{Puerto 
+SPAN} del conmutador que llegue al activo protegido, tal y como muestra la \FIG{diagramaArquitectura}. Cada uno de los 
+puertos SPAN clonará los paquetes dirigidos hacia el activo a proteger, y los paquetes desde el activo a proteger 
+respectivamente, y los enviará hacia \redborderddos.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/DiagramaArquitectura-crop}
+\caption{Diagrama de Arquitectura de \redborderddos}
+\LABFIG{diagramaArquitectura} %Esto es una forma propia de los autores de gestionar las etiquetas y referencias
+\end{figure}
+%
+
+Tras el conmutador, se debería colocar un cortafuegos o \gls{IPS}, que se usa para:
+\begin{enumerate}
+ \item Detener el tráfico detectado como atacante por \redborderddos.
+ \item Detener ataques semánticos o usuarios no autorizados.
+\end{enumerate}
+
+\redborderddos{} puede funcionar sin el cortafuegos. No obstante, e ese caso sólo detectaremos los ataques, en lugar de 
+detenerlos efectivamente.
+
+Es necesario que \redborderddos{} se coloque delante del elemento que corta el tráfico. De otra forma, sería imposible 
+para el sistema conocer cuándo ha cesado el ataque, y cuándo podemos dejar el Modo Alerta.
+
+Podemos ver en el diagrama que podríamos multiplicar los puertos de SPAN. Esto es, si tenemos demasiado tráfico y no es 
+posible enviarlo todo por un sólo puerto, podemos dedicar a \redborderddos{} dos puertos de entrada y dos de salida. 
+Incluso, podríamos dedicar dos o más puertos de entrada, y sólo uno de tráfico saliente, si el tráfico que tenemos es 
+altamente asimétrico. Cualquier combinación es posible, siempre y cuando tengamos al menos un puerto destinado a cada 
+dirección. De esta forma, \redborderddos{} es completamente escalable desde un punto de vista de admisión de datos.
+
+\subsubsection{Pilas}\index{Pila}
+Una pila es una estructura de datos con sólo dos operaciones: añadir elementos a la pila (operación \emph{push}) y 
+extraer el último elemento de la pila (operación \emph{pop}). Si insertamos un elemento $E$, insertamos tras él $N$ 
+elementos, será necesario extraer (\emph{pop}) los $N$ elementos antes de volver a acceder al elemento $E$. Es, por 
+tanto, una cola \gls{LIFO}.
+
+Podemos simular una pila con un vector de memoria, si llevamos la cuenta de los elementos que hemos insertado con una 
+variable \emph{cuenta} con valor inicial a cero, podemos hacer \emph{push} salvando en dicha posición e incrementando 
+esa variable, y \emph{pop} decrementandola y devolviendo la posición.
+
+\subsection{Registro y alerta del ataque. El protocolo Apache Kafka}
+% TODO ver formato del registro: Disco duro y por kafka
+Cuando un ataque se produce, \redborderddos{} es capaz de registrarlo en un fichero de texto plano del disco duro y 
+enviarlo por la plataforma Apache Kafka\index{Apache Kafka}.
+
+Apache Kafka es un protocolo de transferencia de mensajes que sigue un modelo de intercambiador o 
+\emph{broker}\index{Kafka Broker}. Está diseñado para ser distribuido y extensible \cite{ApacheKafka}, por lo que si 
+encontramos mucha carga de trabajo, es posible aumentar, de manera horizontal\footnote{Esto es, doblar el número de 
+nodos debe doblar, aproximadamente, el rendimiento obtenido.}, la capacidad de procesamiento, siempre y cuando 
+dispongamos de máquinas (reales o virtuales) que sirvan de nodos Kafka.
+
+Así, \redborderddos{} es un productor Kafka, que envía el registro de ataques a una cola de mensajes a un 
+\emph{broker}, que los almacenará y entregará al consumidor que los solicite.
+
+Muchos sistemas de procesamiento de eventos usan Apache Kafka como base para su funcionamiento. Por ejemplo, es posible 
+enriquecer los eventos con Apache Storm\index{Apache Storm} \cite{ApacheStorm}, o bien almacenarlos en una base de 
+datos orientada a documentos como MongoDB\index{MongoDB} \cite{MongoDB}, mucho más rápida a la hora de almacenar este 
+tipo de eventos que las bases de datos relacionales usadas tradicionalmente.
+
+\subsection{Mitigación del ataque}
+Para mitigar el ataque, es necesario que exista un cortafuegos\index{Cortafuegos} o un \gls{IPS}\index{Intrusion 
+Prevention System} que bloquee el tráfico dirigido al activo a proteger. Una vez que éste existe, es necesaria una vía 
+de comunicación con el mismo. Actualmente, \redborderddos{} simplemente alerta de los ataques, por lo que sería 
+necesario que el \gls{IPS} o algún sistema intermedio leyese de la cola Kakfa y modificase su comportamiento en base a 
+dicha lectura.
+
+\section{Estructura general}\LABSEC{EsctructuraGeneral}
+Internamente, \redborderddos{} intenta aprovechar al máximo la potencia de procesamiento del sensor, haciendo todas las 
+tareas posibles de una manera concurrente.
+
+Para ello, separaremos en distintos núcleos\footnote{Entendidos como núcleos de procesadores físicos.} del sensor los 
+distintos bloques funcionales en los que se divide el proyecto, representados en la figura \FIG{diagramaActividad}. A 
+saber:
+
+\begin{description}
+ \item [Clúster] La función del clúster es agrupar los paquetes entrantes y salientes de las distintas 
+interfaces, indicar el sentido del mismo, y dirigirlos a las distintas colas que los sub-contadores leen.
+ \item [Sub-contadores] Los sub-contadores agrupan todos los paquetes entrantes por flujos según IP externa, y 
+contabilizan los distintos valores necesarios para ejecutar el algoritmo \gls{CUSUM} por cada flujo.
+ \item [Contador Maestro y Decisor] El contador maestro, cada periodo de tiempo definido, recoge los contadores de cada 
+sub-contador y aplica el algoritmo \gls{CUSUM} sobre ellos. Por su parte, el decisor se encarga de comparar dichos 
+valores con los valores límite, identificando la IP como atacante si encontramos que una de ellas los sobrepasa.
+\end{description}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/DiagramaFlow-crop}
+\caption{Diagrama de Actividad de \redborderddos}
+\LABFIG{diagramaActividad}
+\end{figure}
+%
+
+\subsection{Clúster}\index{PF\_RING Cluster}\LABSSEC{EstructuraCluster}
+Un clúster \acrshort{PFRING}\footnote{En el capítulo \CHAP{@TODO} se detallará qué es \acrshort{PFRING}. Por el 
+momento, es sólo el nombre concreto de este tipo de clúster.} es capaz de dividir todo el troncal de tráfico recogido 
+por una o varias interfaces en una o más colas, de forma que cada cola vea sólo una porción del tráfico, de una manera 
+coherente.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{CapituloEstructura/Figuras/Cluster-crop}
+\caption{Funcionamiento del clúster}
+\LABFIG{Cluster}
+\end{figure}
+%
+
+La función de distribución es completamente definible: Podríamos haber decidido enviar los paquetes en 
+\emph{round-robbin}, esto es, uno a cada cola cada vez.
+
+La forma de reenvío que hemos elegido es por tupla (\emph{IP origen},\emph{IP destino}) de manera simétrica, esto es, 
+la petición y la respuesta de un mismo flujo siempre irá dirigido a la misma cola. De esta forma, como se verá más 
+adelante, cada hilo contador (ver \SSEC{subcontadores}) sólo ve una parte del flujo coherente, y el contador maestro, a 
+la hora de agrupar todos los flujos, tendrá que hacer muchas menos operaciones, ya que nunca se tendrán que sumar dos 
+registros.
+
+Por otra parte, la función de distribución marcará el paquete como entrante o saliente, según haya llegado por una 
+interfaz definida como tal.
+
+Al multiplexar de esta forma las colas, conseguimos reducir el número de inter-bloqueos, ya que en 
+logar de tener un modelo en el que muchos hilos atacan una misma cola, cada hilo sólo mirará su propia cola,, y en cada 
+cola sólo podrán actuar dos bloqueantes (el cluster y el hilo).
+
+De esta forma, conseguimos transparencia y escalabilidad en el número de interfaces de entrada de datos, e 
+incrementamos el rendimiento a la hora de agrupar los paquetes.
+
+Se puede ver el gráficamente el algoritmo seguido por la función de distribución en el diagrama de actividad de la 
+\FIG{ActividadDistribFunc}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/ActividadFuncionDistribucionCluster-crop}
+\caption{Función de distribución}
+\LABFIG{ActividadDistribFunc}
+\end{figure}
+%
+
+\subsection{Subcontadores}\index{Subcontador}\LABSSEC{subcontadores}
+\subsubsection{Pool de contadores}\LABSEC{Pool de contadores}
+Los subcontadores son los encargados de contar las distintas características de los paquetes entrantes, y deben hacerlo 
+de una forma muy rápida para evitar que el tráfico se acumule.
+
+Por ello, necesitan:
+\begin{itemize}
+ \item Memoria suficiente para almacenar las características de cada flujo independiente
+ \item Una forma eficiente de localizar, en la memoria reservada anteriormente, el contador asociado a cada flujo.
+\end{itemize}
+
+Un Pool o Piscina de Contadores\index{Piscina de Contadores}, llamado en el código \emph{Counters Pool} es una 
+estructura capaz de almacenar y organizar los contadores basandose en su dirección IP externa, según venga por la 
+interfaz definida como entrante o saliente.
+
+Consta de dos sub-clases:
+\begin{itemize}
+ \item Un gran vector de contadores, al cual se le puede pedir nuevos contadores (\emph{push}) o bien los que ya 
+contiene (\emph{pop}). Este es lineal, esto es, las posiciones del vector se asignan por orden de llamada a la función 
+\emph{push}.
+ \item Una tabla hash, cuya clave es la dirección IP externa, para localizar eficientemente los contadores 
+anteriormente almacenados.
+\end{itemize}
+
+En \FIG{ClasesPoolContadores} podemos ver el diagrama de clases asociado a esta estructura\footnote{Si bien C no es un 
+lenguaje orientado a objetos, sigue siendo capaz de encapsular comportamiento, por lo que podemos hablar de clases 
+con métodos públicos y atributos ocultos o no accesibles.}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/DiagramaClasesContadores-crop}
+\caption{Diagrama de clases de la piscina de contadores}
+\LABFIG{ClasesPoolContadores}
+\end{figure}
+%
+
+\subsubsection{Mapa de contadores}
+%TODO Falta descripión
+% TODO hablar de la política no malloc
+% TODO hablar de la relación (pool size)/(hashtable size)
+
+\subsubsection{Algoritmo del subcontador}
+Tras ser enviado el paquete a una cola, le tocará ser procesado por un hilo contador. Cada hilo contador tiene 
+asociadas dos piscinas de contadores\footnote{ver \SEC{Pool de contadores}.}. 
+
+Cuando un nuevo paquete llega, la Función de Distribución\footnote{ver \SSEC{EstructuraCluster}.} lo habrá marcado como 
+entrante o saliente, según la interfaz por la que ha entrado al Cluster. A partir de ahí, se extrae su \gls{IP} externa:
+
+\begin{enumerate}
+ \item Si el paquete es entrante al activo a proteger, la \gls{IP} externa es la \gls{IP} origen.
+ \item En cualquier otro caso, la IP externa es la \gls{IP} destino del paquete.
+\end{enumerate}
+
+Tras ello, se pide a la piscina de contadores el contador asociado a la IP externa, y se actualiza la información 
+pertinente, controlando siempre los errores como que la piscina esté llena y no pueda albergar ningún contador más.
+
+En la \FIG{ActividadSubcontador} podemos ver el diagrama de actividad de esta función.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/ActividadFuncionContador-crop}
+\caption{Función de sub-contador}
+\LABFIG{ActividadSubcontador}
+\end{figure}
+%
+
+\subsection{Contador Maestro}\index{Contrador Maestro}
+\subsubsection{Señal SIGALRM}
+%TODO seguro?? Revisar...
+% TODO Si es así, explicar \item qué se hace en el caso de que salte SIGALRM mientras se está ejecutando esta función.
+Para conseguir que la función del contador maestro se ejecute de una manera periódica, se usa la señal 
+SIGALRM\index{Señales de GNU/Linux}\index{SIGALRM} de GNU/Linux (ver sección \SSEC{SIGALRM}.
+
+\subsubsection{Cerrojos de la librería \gls{pthreads}}
+\subsubsection{Pool CUSUM}
+\subsubsection{Mínima interrupción de los sub-contadores.}
+Los sub-contadores son la parte de \redborderddos que más carga de trabajo llevan. Es por eso por lo que se ha enfocado 
+todo el diseño de la aplicación en hacerlos lo más escalable posible.
+
+Sin embargo, es necesario recolectar los contadores y procesarlos en algún momento, con el fin de extraer los distintos 
+estadísticos CUSUM. Sería impensable bloquear los sub-contadores con el fin de extraer dichos estadísticos: Si el pool 
+está muy ocupado, la cola de paquetes se llenaría y nos veríamos obligados a tirar paquetes.
+
+Para evitar detener los hilos sub-contadores un largo periodo de tiempo, se trabaja con punteros y con las variables 
+cerrojo de la librería \gls{pthreads}. Cada hilo contador tiene reservados dos piscinas de contadores, y sólo usa en un 
+periodo de tiempo una de ellas, que va llenando de contadores. Un puntero apunta al contador que está usando 
+actualmente, situado en un vector que llamaremos \emph{Piscina Contadores}. Así, el contador que está usando el 
+trabajador \emph{i} actualmente será \emph{Piscina contadores[i]}.
+
+Cada hilo contador tiene asociado una variable cerrojo, que bloquea cuando trabaja con su piscina. Cuando se activa la 
+alarma del hilo principal, éste último bloquea dicha variable, e intercambia las piscinas de los hilos contadores, 
+lo que se traduce en una simple asignación de punteros y esto, a su vez, se traduce como un tiempo mínimo de bloqueo.
+
+Así pues, en el instante previo al lanzamiento de la alarma, el hilo contador ve una piscina llena de contadores, 
+mientras que en el instante posterior ve una piscina nueva y limpia en la que almacenar. Para una descripción 
+gráfica, ver \FIG{AntesSIGALRM} y \FIG{DespuesSIGALRM}.
+
+\begin{figure}[htbp]
+\centering
+%\hfill
+\subfloat[Instante antes de lanzar SIGALRM]%
+   {\LABFIG{AntesSIGALRM}%
+   \includegraphics[width=0.45\textwidth]{CapituloEstructura/Figuras/DiagramaPoolsAntesSIGALRM-crop}}%
+\hfill
+\subfloat[Instante después de lanzar SIGALRM]%
+ {\LABFIG{DespuesSIGALRM}%
+ \includegraphics[width=0.45\textwidth]{CapituloEstructura/Figuras/DiagramaPoolsDespuesSIGALRM-crop}}%
+
+\caption{Estado de las piscinas de contadores instantes antes y después de lanzar SIGALRM}
+%\LABFIG{ActividadSubcontador}
+\end{figure}
+%
+
+\subsubsection{Pool de estadísticos CUSUM}
+%TODO Falta descripción
+\subsection{Decisor}\index{Decisor}
+Periódicamente, el contador maestro recogerá.
+
+
+\section{Resúmenes}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Resumen}[Resumen de la estructura]
+\subsection*{S1}
+\end{Resumen}
+

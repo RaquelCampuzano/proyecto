@@ -14,7 +14,6 @@
 %:Paquete para incorporar aspectos concretos de la edición
 \usepackage{edicionPFC}
 
-
 %:Estas líneas de código son INNECESARIAS excepto para mostrar determinadas características en este manual. Pueden eliminarse o comentarse sin ningún problema.
 %Se usan para compilar el capítulo estilolibroetsi.tex
 \usepackage[final]{showexpl}
@@ -58,7 +57,7 @@
 %	\markboth{#1}{#1}}
 %\addbibresource{bibliografiaLibroETSI.bib}
 
-% Ejemplo de Glosario
+%TODO check longnewglossaryentry
 \newacronym[type=main]{DoS}{DoS}{Denial of Service}
 \newacronym[type=main]{DDoS}{DDoS}{Distributed DoS}
 \newacronym[type=main]{SO}{SO}{Sistema Operativo}
@@ -69,7 +68,8 @@
 \newacronym[type=main]{HTTP}{HTTP}{Hyper Text Transfer Protocol}
 \newacronym[type=main]{ITU-T}{ITU-T}{International Telecommunications Union}
 \newacronym[type=main]{CNSS}{CNSS}{Committee on National Security Systems}
-\newacronym[type=main]{PFRING}{PFRING}{Packet Filter RING}
+\newacronym[type=main]{PFRING}{PF\_RING}{Protocol Family RING}
+% TODO TCP SYN, TCP ACK
 \newacronym[type=main]{SYN}{SYN}{Synchronize}
 \newacronym[type=main]{ACK}{ACK}{Acknowledge}
 \newacronym[type=main]{DNS}{DNS}{Domain Name Server}
@@ -80,7 +80,14 @@
 \newacronym[type=main]{VI}{VI}{Variable de Interés}
 \newacronym[type=main]{OWCD}{OWCD}{One Way Connection Density}
 \newacronym[type=main]{PCAP}{PCAP}{Packet CAPture}
+\newacronym[type=main]{pthreads}{pthreads}{POSIX threads}
+\newacronym[type=main]{LIFO}{LIFO}{Last In, First Out}
+\newacronym[type=main]{IPC}{IPC}{Inter Process Communication}
+\newacronym[type=main]{SIGSEGV}{\texttt{SIGSEGV}}{SIGnal SEGment Violation}
+\newacronym[type=main]{SIGTSTP}{\texttt{SIGTSTP}}{SIGnal Terminal STOP}
+\newacronym[type=main]{SIGALRM}{\texttt{SIGALRM}}{SIGnal ALARM}
 
+\newacronym[type=main]{IPS}{IPS}{Intrusion Prevention System}
 \newacronym[type=main]{API}{API}{Application Programming Interface}
 \newacronym[type=main]{NAPI}{NAPI}{New API, nueva API}
 
@@ -194,7 +201,7 @@ twoside}
 %
 \include{CapituloCusum/CapituloCusum}
 %
-\include{CapituloPF_RING/CapituloPF_RING}
+\include{CapituloEstructura/CapituloEstructura}
 % 
 %%:Empezamos con los apéndices, que irían en uno o más ficheros. Es necesario incluir estos ficheros entre el entorno \begin{appendices}....\end{appendices} debido a que se ha deseado utilizar un formato diferente para el título de los apéndices, incluyendo la palabra apéndice, para la numeración de los apéndices, alfabético, y para las cabeceras de las páginas.
 %
