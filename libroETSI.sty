@@ -201,6 +201,7 @@
 %:Para la gestión de la codificación
 \ifluatex
 \else
+	\usepackage{lmodern}
 	\usepackage[utf8]{inputenc}	 
 	\usepackage[T1]{fontenc}
 \fi
@@ -1178,6 +1179,14 @@ di-fe-ren-tes re-a-li-za-do ma-ne-ra}
 %:Para romper los url
 \usepackage{breakurl}
 
+% Algoritmos
+\usepackage[spanish]{algorithm2e}
+% Para traducir al español algunas cosas que no se traducen por defecto
+\SetKwInput{KwIn}{Entrada}%
+\SetKwInput{KwOut}{Salida}%
+\SetKwInput{KwData}{Datos}%
+\SetKwInput{KwResult}{Resultado}%
+
 %:Paquete para el listado de códigos y los ajustes necesarios.
 \usepackage{listings}
 %\lstset{language=TeX}
@@ -1192,6 +1201,7 @@ di-fe-ren-tes re-a-li-za-do ma-ne-ra}
 \lstset{showstringspaces=false}
 %\lstset{rulecolor=\color{black!10}, frame=single, framerule=3pt}
 \lstset{
+inputencoding=utf8,
 basicstyle=\ttfamily,
 captionpos=t,
 frame=top,
@@ -1220,6 +1230,7 @@ breaklines=true
     {º}{{\textsuperscript{\b{o}}}}1
     {ª}{{\textsuperscript{\b{a}}}}1
     {¿}{{?`}}1
+    {¡}{{!`}}1
 }
 \fi
 
