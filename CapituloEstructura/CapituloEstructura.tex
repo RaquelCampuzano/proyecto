@@ -31,7 +31,63 @@ leer este capítulo.
 Por tanto, describiremos en esta sección las técnicas usadas, a fin de que podamos hacer referencia a ellas al 
 describir el funcionamiento del programa sin necesidad de mezclar detalles de bajo y alto nivel.
 
-\subsection{Estructuras de datos básicas}
+\subsection{Comparación de números en coma flotante}\index{Número en coma flotante}
+Salvar un número decimal en la memoria de un ordenador tiene una condición importante: La memoria del ordenador es 
+finita. Los números, por el contrario, son infinitos. Es más, entre dos números distinguibles cualesquiera, hay 
+infinitos números reales intermedios.
+
+Así, pues, si destinamos por ejemplo $4$ bits de memoria para guardar un número, para una misma base sólo podremos 
+guardar $2^{4}$ números distintos. Si, por ejemplo, queremos guardar los números posibles entre $0$ y $1$, la 
+asignación número $\rightarrow$ representación binaria quedaría como en la \TAB{RepresentacionBinariaEjemplo4bits}.
+
+\begin{table}
+\begin{tabular}{cl}
+ Representación & Número \\\hline
+  \texttt{0000} & 0.000000 \\
+  \texttt{0001} & 0.066667 \\
+  \texttt{0010} & 0.133333 \\
+  \texttt{0011} & 0.200000 \\
+  \texttt{0100} & 0.266667 \\
+  \texttt{0101} & 0.333333 \\
+  \texttt{0110} & 0.400000 \\
+  \texttt{0111} & 0.466667 \\
+  \texttt{1000} & 0.533333 \\
+  \texttt{1001} & 0.600000 \\
+  \texttt{1010} & 0.666667 \\
+  \texttt{1011} & 0.733333 \\
+  \texttt{1100} & 0.800000 \\
+  \texttt{1101} & 0.866667 \\
+  \texttt{1110} & 0.933333 \\
+  \texttt{1111} & 1.000000
+ \end{tabular}
+ \caption{Representación posible de flotantes equidistantes desde el 0 hasta el 1 usando cuatro bits.}
+ \LABTAB{RepresentacionBinariaEjemplo4bits}
+\end{table}
+
+Si, con esta representación, computamos $1/4+1/4-1/2$, el ordenador tendría que aproximarlo a 
+$\mathtt{0b0100}+\mathtt{0b0100}-\mathtt{0b0111} \rightarrow 0.266667+0.266667-0.466667$, las representaciones más 
+próximas de las que disponemos. Entonces, el resultado de la operación binaria sería $\mathtt{0b0001} \rightarrow 
+0.066667$, y no $0$, como se esperaría en un sistema numérico real.
+
+Pese a que en el proyecto se trabaja con números en punto flotante IEE754 dobles, capaces de almacenar $2^64$ números 
+distintos, no estamos exentos de este tipo de fallos. Para evitarlos, la comparación entre números no debe ser 
+realizada con el operador \texttt{==}, sino que en su lugar se compararán dejando lugar a un margen de error, como se 
+ve en Algoritmo \ALG{ComparacionFlotante}.
+
+\begin{algorithm}
+ \KwData{Dos números $n_1$,$n_2$ en formato \texttt{double IEEE754}, y un epsilon $e$}
+ \KwResult{Comparación de los mismos: 0 si son iguales, $>0$ si $n_1>n_2$ y $<0$ en otro caso}
+ \eIf{$abs\left(n_1-n_2\right)< e$}{
+   devolver 0\;
+ }{
+   devolver $n_1-n_2$\;
+ }
+ \caption{Algoritmo de comparación de números en punto flotante}
+ \LABALG{ComparacionFlotante}
+\end{algorithm}
+
+
+\subsection{Estructuras de datos básicas}\index{Estructura de datos}
 Para almacenar el funcionamiento de cada flujo de tráfico, y ser capaz de compararlo con el supuesto funcionamiento 
 normal de la red, es necesario contar con unos sistemas de almacenamiento rápidos y eficientes. Si se pierde demasiado 
 tiempo en el manejo de la memoria, \redborderddos{} no será capaz de leer y modelar el tráfico a una velocidad 
@@ -83,6 +139,18 @@ posición $N$ es necesario iterar por todos los $N-1$ elementos. Existen otras v
 al anterior y posterior nodo, listas circulares, listas con puntero a la cabeza y a cola, etc. Pero por el momento, nos 
 basta con esta visión de las listas enlazadas.
 
+%TODO explicar listas doblemente enlazadas, y la lista tommy.
+
+\subsubsection{Pilas}\index{Pila}
+Una pila es una estructura de datos con sólo dos operaciones: añadir elementos a la pila (operación \emph{push}) y 
+extraer el último elemento de la pila (operación \emph{pop}). Si insertamos un elemento $E$, insertamos tras él $N$ 
+elementos, será necesario extraer (\emph{pop}) los $N$ elementos antes de volver a acceder al elemento $E$. Es, por 
+tanto, una cola \gls{LIFO}.
+
+Podemos simular una pila con un vector de memoria, si llevamos la cuenta de los elementos que hemos insertado con una 
+variable \emph{cuenta} con valor inicial a cero, podemos hacer \emph{push} salvando en dicha posición e incrementando 
+esa variable, y \emph{pop} decrementandola y devolviendo la posición.
+
 \subsubsection{Tabla HASH}\index{Tabla HASH}
 Resumiendo los apartados \SSSEC{VectorMemoria} y \SSSEC{ListaEnlazada}:
 \begin{itemize}
@@ -125,14 +193,20 @@ $K$, ya que en ella existen todos los elementos insertados cuyas claves $K$ cump
 de actividad en \FIG{BuscarTablaHash}.
 
 Para conseguir la mínima probabilidad de colisión, se le aplica a las diferentes claves una función HASH\index{Función 
-HASH}, esto es una, función que ante la misma entrada de siemrpe la misma salida, pero que pequeñas diferencias de los 
+HASH}, esto es una, función que ante la misma entrada de siempre la misma salida, pero que pequeñas diferencias de los 
 valores de la entrada provoca grandes diferencias en los valores de salida. Como nota, es probable que una función HASH 
 produzca colisiones, esto es, diferentes entradas producen la misma salida.
+
+En el mismo sentido, es importante encontrar una buena relación entre el tamaño de la tabla hash y el número de 
+elementos que queremos insertar. Siempre será más rápido que una lista puramente enlazada, pero cuantos menos elementos 
+ocupen la misma posición de memoria, mejor.
+
+%TODO reservar una sección "pruebas realizadas"
 
 Por ejemplo, supongamos que queremos almacenar unos contadores, cuyo flujo está asociado a la \gls{IP} \emph{10.0.1.1}, 
 en una tabla hash de longitud $S=2^8$. Tras aplicarle nuestra función HASH, vemos que 
 $\text{hash}(\text{10.0.0.1})=476$. Buscamos en la tabla HASH la lista enlazada de la posición 
-$476\&0xff=220$, y la añadimos a la cola. Ver \FIG{EstadoTablaHashInsercion} para visualizar graficamente qué ocurre 
+$476\&0xff=220$, y la añadimos a la cola. Ver \FIG{EstadoTablaHashInsercion} para visualizar gráficamente qué ocurre 
 con la tabla HASH.
 
 \begin{figure}[hbtp]
@@ -170,8 +244,8 @@ Por ejemplo, supongamos una función que realiza las siguientes acciones sobre u
  \item Vuelve a guardar ese entero en su ubicación original, ya incrementado.
 \end{enumerate}
 
-Esta función se está llamando concurrentemente desde dos hilos distintos. Se debería esperar que, tras la ejecución de 
-los dos hilos, el entero valga 2.
+Esta función se está llamando concurrentemente\index{Concurrencia} desde dos hilos distintos. Se debería esperar que, 
+tras la ejecución de los dos hilos, el entero valga 2.
 
 Sin embargo, si hilamos mas fino, descubrimos un problema. Pongamos el caso de que, en el momento de terminar la 
 instrucción \ref{item:EjemploHilosGetInt}, el planificador decide que es hora de pasar el control al hilo dos. 
@@ -179,7 +253,7 @@ instrucción \ref{item:EjemploHilosGetInt}, el planificador decide que es hora d
 simplemente tiene en su registro un 0, lo incrementará a 1, y guardará un 1. Y no podemos saber cuando el planificador 
 decidirá cambiar el hilo en ejecución, por lo que este problema se puede reproducir de manera aleatoria.
 
-Es necesaria una \emph{variable cerrojo}\index{Variable Cerrojo}\index{Mutex}. Una variable especial que sólo puede ser 
+Es necesaria una \emph{Variable Cerrojo}\index{Variable Cerrojo}\index{Mutex}. Una variable especial que sólo puede ser 
 modificada por un proceso al mismo tiempo en todo el sistema y, por tanto, proteja la \emph{sección 
 crítica}\index{Sección Crítica}, esto es, aquella susceptible de ser indeterminada si el procesador cambia de hilo de 
 ejecución en el momento que está siendo ejecutada.
@@ -198,7 +272,7 @@ De esta forma, ambos hilos de ejecución saben cuando otro proceso está modific
 No obstante, esto tiene una desventaja: el hilo que espera a que la variable cerrojo sea abierta no puede hacer otra 
 cosa que no sea esperar. Por tanto, una mala elección de secciones críticas hará el programa lento.
 
-\subsection{Señales en linux. La señal SIGALRM.}\LABSSEC{SIGALRM}\index{SIGALRM}
+\subsection{Señales en linux. La señal SIGALRM.}\LABSSEC{SIGALRM}\index{SIGALRM}\index{Señal Linux}
 Un mecanismo de comunicación entre procesos o \gls{IPC} es el envío de señales. Por ejemplo, cuando un programa intenta 
 escribir en un área de memoria restringida, el \gls{SO} le envía una señal \gls{SIGSEGV}, y el proceso puede actuar en 
 consecuencia.
@@ -206,10 +280,10 @@ consecuencia.
 Cuando un proceso la recibe, pueden ocurrir tres cosas según la señal. Por defecto, o es ignorada, o abortará el 
 programa. No obstante, también es posible escribir código para manejar algunas señales.
 
-En este caso, cuando el proceso decida crear un manejador para una señal concreta, y reciba dicha señal, será 
-interrumpido y será como si en ese momento hubiese llamado al manejador. Cuando el manejador termine, el programa 
-seguirá su ejecución normal. Si el programa estaba en un \texttt{sleep}, este será interrumpido, y el programa no 
-dormirá los segundos restantes.
+En este caso, cuando el proceso decida crear un manejador para una señal\index{Manejador de señal Linux} concreta, y 
+reciba dicha señal, será interrumpido y será como si en ese momento hubiese llamado al manejador. Cuando el manejador 
+termine, el programa seguirá su ejecución normal. Si el programa estaba en un \texttt{sleep}, este será interrumpido, y 
+el programa no dormirá los segundos restantes.
 
 Por ejemplo, si pulsamos \texttt{Ctrol-Z} en un programa, este detendrá su ejecución y podremos o bien enviarlo a 
 segundo plano con el comando \texttt{bg} o reanudar su ejecución con \texttt{fg}. Esto es notificado al programa con 
@@ -218,8 +292,9 @@ una señal \gls{SIGTSTP}, y es posible manejarla.
 Por ejemplo, el \lstlistingname{} \ref{code:dumbSignalStopHandling} muestra un ejemplo de manejo de esta señal. Sin 
 embargo si varias señales llegan muy rápido, comenzaremos a manejar una señal mientras aún estábamos manejando la 
 anterior, por lo que tenemos el mismo problema que en \SSEC{ProgramacionMultihilo}. Para colmo, no podemos solucionarlo 
-con una variable cerrojo: \gls{pthreads} establece que el resultado de bloquear una señal bloqueada por tu mismo hilo 
-de ejecución es indeterminado. Y esto podría pasar si el manejador de la señal salta en la región crítica.
+con una variable cerrojo: \gls{pthreads}\index{Librería phtread} establece que el resultado de bloquear una señal 
+bloqueada por tu mismo hilo de ejecución es indeterminado. Y esto podría pasar si el manejador de la señal salta en la 
+región crítica.
 
 \begin{lstlisting}[language=C++,caption={Manejo ingenuo de la señal \gls{SIGTSTP}}, 
 breaklines=true, label=code:dumbSignalStopHandling,numbers=left,float=htbp]
@@ -276,11 +351,12 @@ int main(void) {
 }
 \end{lstlisting}
 
-Por último, una señal interesante, y que usaremos en el proyecto, es la señal \gls{SIGALRM}. Mediante la función 
-\texttt{alarm(int s)}, se le notifica al \gls{SO} de que se desea recibir una señal \gls{SIGALRM} pasados \texttt{s} 
-segundos. Por tanto, se podría usar para realizar tareas periódicas. Por ejemplo, el \lstlistingname{} 
-\ref{code:AlarmSignal} imprimirá la fecha actual\footnote{En formato UNIX time, esto es, segundos transcurridos desde 
-el 1 de Enero de 1970} y un mensaje indicativo de que se está realizando alguna tarea.
+Por último, una señal interesante, y que usaremos en el proyecto, es la señal \gls{SIGALRM}\index{Señal 
+\texttt{SIGALRM}}. Mediante la función \texttt{alarm(int s)}\index{Función \texttt{alarm}}, se le notifica al \gls{SO} 
+de que se desea recibir una señal \gls{SIGALRM} pasados \texttt{s} segundos. Por tanto, se podría usar para realizar 
+tareas periódicas. Por ejemplo, el \lstlistingname{} \ref{code:AlarmSignal} imprimirá la fecha actual\footnote{En 
+formato \emph{UNIX time}\index{UNIX time}, esto es, segundos transcurridos desde el 1 de Enero de 1970} y un mensaje 
+indicativo de que se está realizando alguna tarea.
 
 \begin{lstlisting}[language=C++,caption={Ejemplo de uso de \gls{SIGALRM}}, 
 breaklines=true, label=code:AlarmSignal,numbers=left,float=htbp]
@@ -312,7 +388,7 @@ int main(void) {
 \end{lstlisting}
 
 Sin embargo, este programa vuelve a ignorar la concurrencia. ¿Qué ocurre si el programa tarda mas de la cuenta en 
-ejecutarse? Si descomentamos el \texttt{sleep(100)} entre el \texttt{printf(...)} y el \texttt{alarma = 0}, vemos que 
+ejecutarse? Si des-comentamos el \texttt{sleep(100)} entre el \texttt{printf(...)} y el \texttt{alarma = 0}, vemos que 
 el programa imprime el mensaje cada dos segundos, en lugar de cada segundo. Esto es debido a que se ha lanzado la 
 alarma mientras se estaba ejecutando el trabajo (el \texttt{sleep}), y nada ha cambiado tras ello (ya que sólo hemos 
 establecido \texttt{alarma} a 1, pero ya estaba a 1). Debido a ello, es posible que el trabajo no se esté ejecutando 
@@ -363,7 +439,7 @@ int main(void) {
 \end{lstlisting}
 
 \section{Vista externa}\LABSEC{Vista Externa}
-\subsection{Situación fisica de \redborderddos}
+\subsection{Situación física de \redborderddos}
 Desde el punto de vista de la arquitectura de red, \redborderddos{} debe colocarse en dos puertos SPAN\index{Puerto 
 SPAN} del conmutador que llegue al activo protegido, tal y como muestra la \FIG{diagramaArquitectura}. Cada uno de los 
 puertos SPAN clonará los paquetes dirigidos hacia el activo a proteger, y los paquetes desde el activo a proteger 
@@ -383,8 +459,8 @@ Tras el conmutador, se debería colocar un cortafuegos o \gls{IPS}, que se usa p
  \item Detener ataques semánticos o usuarios no autorizados.
 \end{enumerate}
 
-\redborderddos{} puede funcionar sin el cortafuegos. No obstante, e ese caso sólo detectaremos los ataques, en lugar de 
-detenerlos efectivamente.
+\redborderddos{} puede funcionar sin el cortafuegos\index{Cortafuegos}. No obstante, en ese caso sólo detectaremos los 
+ataques, en lugar de detenerlos efectivamente.
 
 Es necesario que \redborderddos{} se coloque delante del elemento que corta el tráfico. De otra forma, sería imposible 
 para el sistema conocer cuándo ha cesado el ataque, y cuándo podemos dejar el Modo Alerta.
@@ -394,16 +470,6 @@ posible enviarlo todo por un sólo puerto, podemos dedicar a \redborderddos{} do
 Incluso, podríamos dedicar dos o más puertos de entrada, y sólo uno de tráfico saliente, si el tráfico que tenemos es 
 altamente asimétrico. Cualquier combinación es posible, siempre y cuando tengamos al menos un puerto destinado a cada 
 dirección. De esta forma, \redborderddos{} es completamente escalable desde un punto de vista de admisión de datos.
-
-\subsubsection{Pilas}\index{Pila}
-Una pila es una estructura de datos con sólo dos operaciones: añadir elementos a la pila (operación \emph{push}) y 
-extraer el último elemento de la pila (operación \emph{pop}). Si insertamos un elemento $E$, insertamos tras él $N$ 
-elementos, será necesario extraer (\emph{pop}) los $N$ elementos antes de volver a acceder al elemento $E$. Es, por 
-tanto, una cola \gls{LIFO}.
-
-Podemos simular una pila con un vector de memoria, si llevamos la cuenta de los elementos que hemos insertado con una 
-variable \emph{cuenta} con valor inicial a cero, podemos hacer \emph{push} salvando en dicha posición e incrementando 
-esa variable, y \emph{pop} decrementandola y devolviendo la posición.
 
 \subsection{Registro y alerta del ataque. El protocolo Apache Kafka}
 % TODO ver formato del registro: Disco duro y por kafka
@@ -416,8 +482,8 @@ encontramos mucha carga de trabajo, es posible aumentar, de manera horizontal\fo
 nodos debe doblar, aproximadamente, el rendimiento obtenido.}, la capacidad de procesamiento, siempre y cuando 
 dispongamos de máquinas (reales o virtuales) que sirvan de nodos Kafka.
 
-Así, \redborderddos{} es un productor Kafka, que envía el registro de ataques a una cola de mensajes a un 
-\emph{broker}, que los almacenará y entregará al consumidor que los solicite.
+Así, \redborderddos{} es un productor Kafka\index{Productor Kafka}, que envía el registro de ataques a una cola de 
+mensajes a un \emph{broker}, que los almacenará y entregará al consumidor\index{Consumidor Kafka} que los solicite.
 
 Muchos sistemas de procesamiento de eventos usan Apache Kafka como base para su funcionamiento. Por ejemplo, es posible 
 enriquecer los eventos con Apache Storm\index{Apache Storm} \cite{ApacheStorm}, o bien almacenarlos en una base de 
@@ -502,9 +568,45 @@ Se puede ver el gráficamente el algoritmo seguido por la función de distribuci
 %
 
 \subsection{Subcontadores}\index{Subcontador}\LABSSEC{subcontadores}
-\subsubsection{Pool de contadores}\LABSEC{Pool de contadores}
-Los subcontadores son los encargados de contar las distintas características de los paquetes entrantes, y deben hacerlo 
-de una forma muy rápida para evitar que el tráfico se acumule.
+\subsubsection{Estructura contador}
+Con el fin de almacenar las características del tráfico descritas en \SSEC{Parametros de interés}, se prepara una 
+estructura de datos en la que se irán contando los paquetes y octetos de cada tipo. Dicha estructura de datos puede 
+verse en \lstlistingname{} \ref{code:RbCounter}. Por comodidad, dicha estructura también será llamada, a lo largo del 
+proyecto, simplemente \texttt{RbCounter}.
+
+\begin{lstlisting}[language=C++,caption={Estructura de contadores por flujo}, breaklines=true, 
+label=code:RbCounter,numbers=left,float=htbp]
+typedef uint32_t counter_t;
+
+typedef struct rb_counters_s{
+    rb_addr_t external_address; ///< External IP address
+
+    counter_t tcp_pkts;     ///< number tcp packets in the flow
+    counter_t udp_pkts;     ///< number udp packets in the flow
+    counter_t icmp_pkts;    ///< number icmp packets in the flow
+    counter_t total_pkts;   ///< total number packets in the flow
+
+    counter_t tcp_bytes;    ///< tcp bytes in the flow
+    counter_t udp_bytes;    ///< udp bytes in the flow
+    counter_t icmp_bytes;   ///< icmp bytes in the flow
+    counter_t total_bytes;  ///< total bytes in the flow
+
+    counter_t input_pkts;   ///< Input packets in the flow;
+    counter_t output_pkts;  ///< Output packets in the flow;
+    counter_t input_bytes;  ///< Input bytes in the flow;
+    counter_t output_bytes; ///< Output bytes in the flow;
+
+    counter_t syn_counter;      ///< Number of tcp packets with syn flag enabled
+    counter_t syn_ack_counter;  ///< Number of tcp packets with syn+ack flags enabled
+
+    /// Node iterator to store and recover for hashtable node.
+    tommy_hashtable_node hashtable_node;
+} rb_counters_t;
+\end{lstlisting}
+
+\subsubsection{Pool de contadores}\LABSSSEC{Pool de contadores}
+Los sub-contadores son los encargados de contar las distintas características de los flujos de tráfico, y deben 
+hacerlo de una forma muy rápida para evitar que el tráfico se acumule.
 
 Por ello, necesitan:
 \begin{itemize}
@@ -513,21 +615,22 @@ Por ello, necesitan:
 \end{itemize}
 
 Un Pool o Piscina de Contadores\index{Piscina de Contadores}, llamado en el código \emph{Counters Pool} es una 
-estructura capaz de almacenar y organizar los contadores basandose en su dirección IP externa, según venga por la 
+estructura capaz de almacenar y organizar los contadores basándose en su dirección IP externa, según venga por la 
 interfaz definida como entrante o saliente.
 
 Consta de dos sub-clases:
 \begin{itemize}
- \item Un gran vector de contadores, al cual se le puede pedir nuevos contadores (\emph{push}) o bien los que ya 
-contiene (\emph{pop}). Este es lineal, esto es, las posiciones del vector se asignan por orden de llamada a la función 
-\emph{push}.
- \item Una tabla hash, cuya clave es la dirección IP externa, para localizar eficientemente los contadores 
-anteriormente almacenados.
+ \item Una gran pila de contadores, a la cual se le puede pedir nuevos contadores (\emph{push}) o bien los que ya 
+contiene (\emph{pop}).
+ \item Una tabla HASH, cuya clave es la dirección IP externa, para localizar eficientemente los contadores 
+anteriormente almacenados en función del flujo al que pertenezca.
 \end{itemize}
 
 En \FIG{ClasesPoolContadores} podemos ver el diagrama de clases asociado a esta estructura\footnote{Si bien C no es un 
 lenguaje orientado a objetos, sigue siendo capaz de encapsular comportamiento, por lo que podemos hablar de clases 
 con métodos públicos y atributos ocultos o no accesibles.}.
+
+%TODO describir rbAddr
 
 \begin{figure}[htbp]
 \centering
@@ -537,22 +640,31 @@ con métodos públicos y atributos ocultos o no accesibles.}.
 \end{figure}
 %
 
-\subsubsection{Mapa de contadores}
-%TODO Falta descripión
-% TODO hablar de la política no malloc
-% TODO hablar de la relación (pool size)/(hashtable size)
+A lo largo de la ejecución del programa, no se permitirá hacer nuevas reservas de memoria al \gls{SO} para 
+nuevos contadores. En el caso de ataque, esto saturaría los recursos de los que dispone la máquina, por lo que tiene 
+sentido ponerle un límite superior. Por otro lado, en caso de ataque repentino, no se debería perder tiempo en llamadas 
+al \gls{SO} para pedir más memoria. Así pues, se dispondrá de un número limitado de contadores desde el inicio hasta el 
+final de la ejecución del programa.
 
 \subsubsection{Algoritmo del subcontador}
 Tras ser enviado el paquete a una cola, le tocará ser procesado por un hilo contador. Cada hilo contador tiene 
-asociadas dos piscinas de contadores\footnote{ver \SEC{Pool de contadores}.}. 
+asociadas dos piscinas de contadores\footnote{ver \SSSEC{Pool de contadores}.}. 
 
 Cuando un nuevo paquete llega, la Función de Distribución\footnote{ver \SSEC{EstructuraCluster}.} lo habrá marcado como 
-entrante o saliente, según la interfaz por la que ha entrado al Cluster. A partir de ahí, se extrae su \gls{IP} externa:
+entrante o saliente, según la interfaz por la que ha entrado al Cluster. A partir de ahí, se extrae su \gls{IP} externa 
+mediante el Algoritmo \ALG{ExtracciónIPExterna}.
 
-\begin{enumerate}
- \item Si el paquete es entrante al activo a proteger, la \gls{IP} externa es la \gls{IP} origen.
- \item En cualquier otro caso, la IP externa es la \gls{IP} destino del paquete.
-\end{enumerate}
+\begin{algorithm}[htbp]
+ \KwData{Paquete a analizar}
+ \KwResult{Dirección del mismo }
+ \eIf{paquete entrante}{
+   ip externa $\gets$ ip origen\;
+   }{
+   ip externa $\gets$ ip destino\;
+  }
+ \caption{Algoritmo de extracción de IP externa}
+ \LABALG{ExtracciónIPExterna}
+\end{algorithm}
 
 Tras ello, se pide a la piscina de contadores el contador asociado a la IP externa, y se actualiza la información 
 pertinente, controlando siempre los errores como que la piscina esté llena y no pueda albergar ningún contador más.
@@ -568,31 +680,31 @@ En la \FIG{ActividadSubcontador} podemos ver el diagrama de actividad de esta fu
 %
 
 \subsection{Contador Maestro}\index{Contrador Maestro}
-\subsubsection{Señal SIGALRM}
-%TODO seguro?? Revisar...
-% TODO Si es así, explicar \item qué se hace en el caso de que salte SIGALRM mientras se está ejecutando esta función.
+\subsubsection{Señal SIGALRM}\index{SIGALRM}
 Para conseguir que la función del contador maestro se ejecute de una manera periódica, se usa la señal 
-SIGALRM\index{Señales de GNU/Linux}\index{SIGALRM} de GNU/Linux (ver sección \SSEC{SIGALRM}.
+SIGALRM\index{Señales de GNU/Linux}\index{SIGALRM} de GNU/Linux (ver sección \SSEC{SIGALRM}). Cuando esta se produce, 
+se activará una variable global \texttt{sigalrm\_received} y, si esta ya estaba activada en el momento que se produjo, 
+se activará también \texttt{sigalrm\_accum}, como indicador de que \redborderddos{} no es capaz de procesar todo el 
+flujo de tráfico.
 
-\subsubsection{Cerrojos de la librería \gls{pthreads}}
-\subsubsection{Pool CUSUM}
-\subsubsection{Mínima interrupción de los sub-contadores.}
+\subsubsection{Mínima interrupción de los sub-contadores}
 Los sub-contadores son la parte de \redborderddos que más carga de trabajo llevan. Es por eso por lo que se ha enfocado 
 todo el diseño de la aplicación en hacerlos lo más escalable posible.
 
 Sin embargo, es necesario recolectar los contadores y procesarlos en algún momento, con el fin de extraer los distintos 
-estadísticos CUSUM. Sería impensable bloquear los sub-contadores con el fin de extraer dichos estadísticos: Si el pool 
-está muy ocupado, la cola de paquetes se llenaría y nos veríamos obligados a tirar paquetes.
+estadísticos \gls{CUSUM}. Sería impensable bloquear los sub-contadores con el fin de extraer dichos estadísticos: Si la 
+piscina está muy ocupada, la cola de paquetes se llenaría y nos veríamos obligados a tirar paquetes.
 
 Para evitar detener los hilos sub-contadores un largo periodo de tiempo, se trabaja con punteros y con las variables 
-cerrojo de la librería \gls{pthreads}. Cada hilo contador tiene reservados dos piscinas de contadores, y sólo usa en un 
-periodo de tiempo una de ellas, que va llenando de contadores. Un puntero apunta al contador que está usando 
-actualmente, situado en un vector que llamaremos \emph{Piscina Contadores}. Así, el contador que está usando el 
-trabajador \emph{i} actualmente será \emph{Piscina contadores[i]}.
+cerrojo de la librería \gls{pthreads}\index{Librería pthread}. Cada hilo contador tiene reservados dos piscinas de 
+contadores, y sólo usa en un periodo de tiempo una de ellas, que va llenando de contadores. Un puntero apunta al 
+contador que está usando actualmente, situado en un vector que llamaremos \emph{Piscina Contadores}. Así, el contador 
+que está usando el trabajador \emph{i} actualmente será \emph{Piscina contadores[i]}.
 
-Cada hilo contador tiene asociado una variable cerrojo, que bloquea cuando trabaja con su piscina. Cuando se activa la 
-alarma del hilo principal, éste último bloquea dicha variable, e intercambia las piscinas de los hilos contadores, 
-lo que se traduce en una simple asignación de punteros y esto, a su vez, se traduce como un tiempo mínimo de bloqueo.
+Cada hilo contador tiene asociado una variable cerrojo\index{Variable Cerrojo}, que bloquea cuando trabaja con su 
+piscina. Cuando se activa la alarma del hilo principal, éste último bloquea dicha variable, e intercambia las piscinas 
+de los hilos contadores, lo que se traduce en una simple asignación de punteros y esto, a su vez, se traduce como un 
+tiempo mínimo de bloqueo.
 
 Así pues, en el instante previo al lanzamiento de la alarma, el hilo contador ve una piscina llena de contadores, 
 mientras que en el instante posterior ve una piscina nueva y limpia en la que almacenar. Para una descripción 
@@ -614,8 +726,178 @@ gráfica, ver \FIG{AntesSIGALRM} y \FIG{DespuesSIGALRM}.
 \end{figure}
 %
 
+\subsubsection{Extración de estadísticos CUSUM}\LABSSSEC{ExtraccionEstadisticosCUSUM}
+
+Tras intercambiar los contadores con el/los hilos contadores, el hilo maestro deberá extraer las estadísticas CUSUM de 
+los mismos. Para ello, preparamos una estructura de datos con los parámetros de interés vistos en la 
+\SSEC{Parametros de interés}. Por ello, de cada contador IP se debe extraer una muestra $x_i$ que indique el estado de 
+las variables a controlar en ese momento.
+
+Por comodidad, copiamos la estructura en \lstlistingname{} \ref{code:RbCusumStats}, y el algoritmo seguido para 
+rellenarla en las ecuaciones desde \EQ{ExtractCusumTcpBytesRate} hasta \EQ{ExtractCusumInputOutputRate}.
+
+\begin{align}
+ \text{stats.tcp\_bytes\_percent}  &\gets \frac{\text{counters.tcp\_bytes   }}{\text{counters.total\_bytes}}
+                                                                                    \LABEQ{ExtractCusumTcpBytesRate}\\
+ \text{stats.udp\_bytes\_percent}  &\gets \frac{\text{counters.udp\_bytes   }}{\text{counters.total\_bytes}}\\
+ \text{stats.icmp\_bytes\_percent} &\gets \frac{\text{counters.icmp\_bytes  }}{\text{counters.total\_bytes}}\\
+%
+ \text{stats.tcp\_pkts\_percent}   &\gets \frac{\text{counters.tcp\_pkts    }}{\text{counters.total\_pkts}}\\
+ \text{stats.udp\_pkts\_percent}   &\gets \frac{\text{counters.udp\_pkts    }}{\text{counters.total\_pkts}}\\
+ \text{stats.icmp\_pkts\_percent}  &\gets \frac{\text{counters.icmp\_pkts   }}{\text{counters.total\_pkts}}\\
+%
+ \text{stats.syn\_ack\_rate}       &\gets \frac{\text{counters.syn\_counter }}{\text{counters.ack\_counter}}\\
+ \text{stats.input\_output\_prate} &\gets \frac{\text{counters.input\_pkts  }}{\text{counters.output\_pkts}}\\
+ \text{stats.input\_output\_brate} &\gets \frac{\text{counters.input\_bytes }}{\text{counters.output\_bytes}}
+                                                                                     \LABEQ{ExtractCusumInputOutputRate}
+\end{align}
+
+\begin{lstlisting}[language=C++,caption={Estructura estadísticos CUSUM}, breaklines=true, 
+label=code:RbCusumStats,numbers=left,float=htbp]
+typedef struct rb_cusum_stats_sample_s{
+    double tcp_bytes_percent;   ///< TCP bytes/total bytes rate
+    double udp_bytes_percent;   ///< UDP bytes/total bytes rate
+    double icmp_bytes_percent;  ///< ICMP bytes/total bytes rate
+
+    double tcp_pkts_percent;    ///< TCP paktes/total packets rate
+    double udp_pkts_percent;    ///< UDP paktes/total packets rate
+    double icmp_pkts_percent;   ///< ICMP paktes/total packets rate
+
+    double syn_ack_rate;        ///< syn/ack rate
+
+    double input_output_prate;   ///< Rate input/output packets
+    double input_output_brate;   ///< Rate input/output bytes
+}rb_cusum_stats_sample_t;
+\end{lstlisting}
+
+\subsubsection{Muestra completa de un estadístico CUSUM}
+Como vimos en la \SEC{AlgoritmoCUSUM}, es necesario llevar el algoritmo CUSUM para el lado positivo y negativo ($C_i^+$ 
+y $C_i^-$). Por tanto, con cada muestra debemos actualizar dos estadísticos \gls{CUSUM} por flujo o \gls{IP} externa.
+
+Por ello, se debe crear una estructura que nos permita relacionar esas tres características. En cada ciclo del contador 
+maestro, éste extraerá los contadores de los \texttt{CountersPool} vistos en \SSSEC{Pool de contadores} usando el 
+método \texttt{popCounter} hasta que no haya más contadores (esto es, hasta que la misma devuelve \texttt{NULL}.
+
+Por cada contador, extraemos una muestra $X_i$ como hemos visto en el \SSSEC{ExtraccionEstadisticosCUSUM}. Tras ello, 
+aplicamos el algoritmo visto en la \SEC{AlgoritmoCUSUM}:
+
+\begin{align}
+ C_i^+ &= \max \left[0,\left\{C_{i-1}^+\left(x_i-\mu_0\right)\right\}-K\right] \\
+ C_i^- &= \max \left[0,\left\{C_{i-1}^-\left(x_i-\mu_0\right)\right\}-K\right]
+\end{align}
+
+Donde $C_{i-1}$ es el contador almacenado en la anterior iteración.
+
+No obstante, existe un problema con esta forma de actuar: es posible que en una iteración exista el $x_i$ de un 
+contador, en la siguiente iteración no exista tráfico de esa dirección \gls{IP}, por lo que no se generaría ningún 
+contador del mismo, y vuelva a existir el contador en la tercera iteración. De esa forma, si $T=-\mu_0-K$, $C_3$ 
+quedaría:
+\begin{align}
+ C_3 = \max\left[0,C_1 + (x_3-T)\right] = \max\left[0,x_1-T+x_3-T\right] = 
+       \max\left[0,x_1+x_3-2T\right] 
+\end{align}
+Sin embargo, al tener en cuenta $X_2=0$, $C_3$ debería quedar:
+\begin{align}
+ C_3 &= \max\left[0,C_1 + C_2 + (x_3-T)\right] = \max\left[0,x_1-T+0-T+x_3-T\right]
+     =        \max\left[0,x_1 + x_3 -3T\right] 
+\end{align}
+
+Para salvar esa diferencia, tenemos dos opciones:
+\begin{itemize}
+ \item Escanear todo el espacio de direcciones CUSUM y actualizarlo.
+ \item Almacenar, por cada CUSUM que se actualice, la marca de tiempo en la que fue actualizado.
+\end{itemize}
+
+Se elige, por razones de rendimiento, la segunda opción. Por tanto, la estructura para almacenar $C_i^+$ y $C_i^-$ 
+quedan como se muestra en la \FIG{ClasesCusumSample}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/DiagramaClasesCusumSample-crop}
+\caption{Diagrama de clases de las estructuras de almacenamiento de estadísticas CUSUM}
+\LABFIG{ClasesCusumSample}
+\end{figure}
+%
+
+Como funciones especiales que actúan sobre la estructura, se destacan \emph{iteration}, que realiza una iteración 
+\gls{CUSUM} sobre la muestra, y \emph{cmp}, que guarda en una estructura del mismo tipo la comparación entre dos 
+estructuras, aplicando el la comparación vista en Algoritmo\ALG{ComparacionFlotante} en cada miembro de la misma.
+
+\subsubsection{Limpieza de estadísticos antiguos}
+Todo lo que se aprende, debe ser olvidado. Si pretendiésemos almacenar estadísticas \gls{CUSUM} por cada \gls{IP} que 
+vemos indefinidamente, terminaríamos por saturar los contadores, y no podríamos seguir el comportamiento de ninguna 
+dirección \gls{IP} más.
+
+Por el momento, se reservará una cantidad fija de memoria para los estadísticos \gls{CUSUM}, y se almacenarán, a 
+priori, en una lista de contadores \emph{libres}. A medida que se van necesitando, se almacenarán en otra lista de 
+contadores \emph{en uso}. Es importante, desde el punto de vista del rendimiento, que la entrada de contadores en esta 
+lista esté bien definida: O bien por la cabeza, o bien por la cola. A lo largo de este ejemplo, la entrada de 
+estadísticos \gls{CUSUM} nuevos se realizará por la cabeza.
+
+A intervalos de tiempo regulares, se realizará una limpieza de los contadores usados, comenzando por el lado inverso a 
+la entrada de los mismos. En este ejemplo, el sentido elegido será la cola. Se elegirá un tiempo mínimo, a partir del 
+cual, si el estadístico no ha sido actualizado tras esa marca de tiempo, será eliminado de la lista de 
+estadísticos \emph{en uso} y pasará a la lista de \emph{libres}. Podemos ver este procedimiento en el 
+Algoritmo\ALG{EliminacionContadoresAntigos} y en la \FIG{DiagramaActividadLimpiarLista}.
+
+\begin{algorithm}
+ \KwData{Lista de estadísticos cusum $l$, marca de tiempo $t$}
+ \KwResult{Lista de estadísticos con sólo las entradas con marca de tiempo $t_0$ que cumplen $T_0>t$}
+ \While{element $e \gets l.\text{last} y e.timestamp < t_0 $}{
+	 usados.delete($e$)\;
+	 libres.push($e$)\;
+ }
+ \caption{Procedimiento para la eliminación de contadores antiguos}
+ \LABALG{EliminacionContadoresAntigos}
+\end{algorithm}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.4\textwidth]{CapituloEstructura/Figuras/ActividadFuncionLimpiarPoolCUSUM-crop}
+\caption{Diagrama de actividad de la limpieza de estadísticos CUSUM antiguos}
+\LABFIG{DiagramaActividadLimpiarLista}
+\end{figure}
+%
+
+El orden de entrada y salida en la segunda lista no es relevante, si bien es preferible que esta actúe como una pila, 
+con el fin de maximizar las probabilidades de que la memoria ocupada por los contadores se encuentre en la caché del 
+procesador\footnote{Dicha caché eliminará las páginas que no han sido recientemente utilizadas. Si queremos volver a 
+ellas, será necesario volver a recuperarlas de la RAM.}.
+
+Cuando se use de nuevo un contador de la lista de contadores \emph{en uso}, esto es, se insertó en $C_i$ y se usó en 
+$C_j j>i$, es necesario volver a colocarlo en la cabeza de la lista. Para ello, se deberá extraer de la misma, y volver 
+a colocar en la cabeza. Si no se hiciese este paso, las marcas de tiempo de cada contador no estarían ordenadas en la 
+lista, y la limpieza no sería efectiva.
+
+Por ejemplo, si tenemos cinco flujos que están activos en un tiempo $t_i$, y nunca más vuelven a estar activos. Tras 
+ellos, y sin haberse olvidado aún, llega un flujo en el instante $t_j j>i$ que, por ejemplo, se trata de un proceso 
+automatizado que hace peticiones en un corto espacio de tiempo (por tanto, nunca olvidaremos ese flujo, ya que nunca 
+será lo suficientemente antiguo).
+
+Si no actualizamos la posición del elemento que ha llegado en $t_j$, y lo volvemos a colocar en la cabeza de la lista, 
+nunca eliminaremos los elementos que llegaron antes.
+
 \subsubsection{Pool de estadísticos CUSUM}
-%TODO Falta descripción
+
+Al igual que ocurre con los contadores, el contador maestro necesita almacenar los diferentes estadísticos CUSUM que ha 
+ido almacenando a lo largo del tiempo, y recuperarlos de una manera rápida. Para ello, se utiliza una estructura 
+similar a la usada para almacenar y localizar los contadores: un Pool de estadísticos CUSUM.
+
+Para ello, se utiliza una estructura similar a la vista en el \SSSEC{Pool de contadores}, pero necesita algunas 
+diferencias:
+\begin{itemize}
+ \item 
+\end{itemize}
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloEstructura/Figuras/DiagramaClasesCUSUM-crop}
+\caption{Diagrama de clases de la piscina de estadísticas CUSUM}
+\LABFIG{ClasesCusumPool}
+\end{figure}
+%
+
 \subsection{Decisor}\index{Decisor}
 Periódicamente, el contador maestro recogerá.
 
