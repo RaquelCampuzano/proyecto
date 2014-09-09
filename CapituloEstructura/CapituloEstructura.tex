@@ -823,7 +823,7 @@ Como funciones especiales que actúan sobre la estructura, se destacan \emph{ite
 \gls{CUSUM} sobre la muestra, y \emph{cmp}, que guarda en una estructura del mismo tipo la comparación entre dos 
 estructuras, aplicando el la comparación vista en Algoritmo\ALG{ComparacionFlotante} en cada miembro de la misma.
 
-\subsubsection{Limpieza de estadísticos antiguos}
+\subsubsection{Limpieza de estadísticos antiguos}\LABSSSEC{LimpiezaCusum}
 Todo lo que se aprende, debe ser olvidado. Si pretendiésemos almacenar estadísticas \gls{CUSUM} por cada \gls{IP} que 
 vemos indefinidamente, terminaríamos por saturar los contadores, y no podríamos seguir el comportamiento de ninguna 
 dirección \gls{IP} más.
@@ -842,8 +842,8 @@ Algoritmo\ALG{EliminacionContadoresAntigos} y en la \FIG{DiagramaActividadLimpia
 
 \begin{algorithm}
  \KwData{Lista de estadísticos cusum $l$, marca de tiempo $t$}
- \KwResult{Lista de estadísticos con sólo las entradas con marca de tiempo $t_0$ que cumplen $T_0>t$}
- \While{element $e \gets l.\text{last} y e.timestamp < t_0 $}{
+ \KwResult{Lista de estadísticos con sólo las entradas con marca de tiempo $t_0$ que cumplen $t_0>t$}
+ \While{element $e \gets l.$last and $e.$timestamp $< t_0 $}{
 	 usados.delete($e$)\;
 	 libres.push($e$)\;
  }
@@ -884,11 +884,12 @@ ido almacenando a lo largo del tiempo, y recuperarlos de una manera rápida. Par
 similar a la usada para almacenar y localizar los contadores: un Pool de estadísticos CUSUM.
 
 Para ello, se utiliza una estructura similar a la vista en el \SSSEC{Pool de contadores}, pero necesita algunas 
-diferencias:
-\begin{itemize}
- \item 
-\end{itemize}
+diferencias. Mientras que la piscina de contadores tenía un ciclo de vida bien definido (nacía y moría en cada ciclo), 
+esta estructura debe estar diseñada para vivir todo lo que viva el programa, por lo que necesita un método para 
+eliminar entradas antiguas.
 
+Por otro lado, no es necesario acceder, desde fuera de la misma, a los nodos almacenados de una manera 
+lineal, es decir, como una lista.
 
 \begin{figure}[htbp]
 \centering
@@ -897,6 +898,24 @@ diferencias:
 \LABFIG{ClasesCusumPool}
 \end{figure}
 %
+
+Así pues, el diagrama de clases de la piscina de estadísticos \gls{CUSUM} se ve reflejado en \FIG{ClasesCusumPool}. 
+Además del constructor y destructor, las funciones a destacar son \emph{getCusum}, que obtendrá la muestra completa 
+\gls{CUSUM} que le indiquemos, y \emph{purge}, que eliminará de la piscina los contadores antiguos, siguiendo el 
+algoritmo del \SSSEC{LimpiezaCusum}. Debido a ello, existen en la estructura las listas de estadísticos \emph{freeList} 
+y \emph{usedList}.
+
+En dichas listas podemos:
+\begin{itemize}
+ \item Añadir un elemento por la cabeza (inserción de un estadístico CUSUM).
+ \item Eliminar un elemento por la cabeza (para extraer un elemento de la lista de libres).
+ \item Acceder al elemento de la cola (para hacer la purga).
+ \item Eliminar un elemento aleatorio de la lista.
+\end{itemize}
+
+Por último, para accesos aleatorios a los elementos tenemos la Tabla HASH, al igual que ocurría con la piscina de 
+contadores. Es importante destacar que, al purgar los elementos, además de eliminarlos de la lista de elementos usados 
+es necesario eliminarlos también de la tabla HASH. De otra forma, tendremos la entrada a un elemento eliminado.
 
 \subsection{Decisor}\index{Decisor}
 Periódicamente, el contador maestro recogerá.

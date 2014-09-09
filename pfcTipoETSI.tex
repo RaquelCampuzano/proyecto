@@ -38,13 +38,14 @@
 \else
 	\ifluatex
 		% Para utilizar la fuente Times New Roman, o alguna otra que se tenga instalada
-		\setmainfont[Renderer=Basic, Ligatures=TeX,	% Fuente del texto 
-		Scale=1.0,
-		]{Times New Roman}
+		%\setmainfont[Renderer=Basic, Ligatures=TeX,	% Fuente del texto 
+		%Scale=1.0,
+		%]{Times New Roman}
 	\else
-		\usepackage{tgtermes} 	%clone of Times
+		%\usepackage{tgtermes} 	%clone of Times
 		%\usepackage[default]{droidserif}
 		%\usepackage{anttor} 	
+		\usepackage{lmodern}
 	\fi
 \fi
 \makeatother
