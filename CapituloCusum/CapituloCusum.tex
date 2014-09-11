@@ -392,19 +392,47 @@ Tras ello, es necesario inspeccionar, si las hubiese, qué flujos \gls{IP} han o
 el algoritmo \gls{CUSUM} aplicado a cada uno. Se seguirán deteniendo los flujos hasta que, mediante el algoritmo 
 \gls{CUSUM} de nuevo, se detecte que estamos fuera de la zona de alerta.
 
+\section{Conclusiones}
+Con el fin de detectar ataques \gls{DDoS} por inundación, es necesario distinguir entre el tráfico \emph{normal} o 
+legítimo, y las desviaciones sobre éste, que se clasifican como tráfico \emph{anómalo} o ilegítimo.
+
+Un Sistema de Control de procesos es un sistema de observación que permite detectar variaciones en la norma, y puede 
+ser capaz de llegar a su origen. Por tanto, nos sirve para clasificar el tráfico en tráfico normal y anómalo.
+
+De entre ellos, el algoritmo \gls{CUSUM} se caracteriza por ser un \gls{SCP} con memoria, esto es, que clasifique un 
+proceso como anómalo depende de su instante actual y de los instantes pasados. Es un algoritmo simple, y no requiere 
+almacenar todos los estados anteriores para que su sistema de memoria funcione, lo que lo hace adecuado para instalarlo 
+en un sistema de monitorización computerizado.
+
+De entre los parámetros posibles que el alogitmo \gls{CUSUM} puede monitorizar, se han elegido $8$, a saber: Porcentaje 
+de paquetes y bytes \gls{TCP}, \gls{UDP}, \gls{ICMP}, densidad de conexiones de un sólo sentido (que se medirá con 
+la relación paquetes \gls{SYN} frente a paquetes \gls{SYN}+\gls{ACK}) y relación entre paquetes entrantes y salientes.
+
+Para discernir el tráfico normal del anómalo, los \gls{SCP} requieren de un periodo de aprendizaje. Este paso es 
+delicado, ya que cualquier ataque en esa ventana de aprendizaje supondría que el tráfico normal es el tráfico 
+bajo ataque, por lo que obtendremos falsos negativos. Por otro lado, si el periodo de aprendizaje no se escoje 
+adecuadamente, detectará rápidamente tráfico normal como atacante, y obtendremos muchos falsos positivos.
+
+El periodo de aprendizaje monitorizará los parámetros expuestos anteriormente y extraerá su media y desviación típica. 
+Tras ello, entraremos en un periodo de defensa, en el que aplicará el algoritmo \gls{CUSUM} realmente. 
+
+Si se produce alguna desviación, se entrará en un periodo de \emph{alerta}, en el que notificarán las direcciones 
+\gls{IP} como atacantes, y cualquier otra nueva dirección \gls{IP}. Si, pasado un periodo de tiempo, no se producen 
+nuevos ataques, se volverá al estado de defensa.
+
 \section{Resumen}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Resumen}[Resumen del capítulo]
 \subsection*{El algoritmo CUSUM}
-\begin{displaymath}
-\begin{cases}
- \text{control de procesos}
+\begin{flalign*}
+&\begin{cases}
+ \text{Control de procesos}
  \begin{cases}
   \text{Diferencia las las pautas \emph{normales} y las \emph{desviaciones}}\\
   \text{Diferencia procesos \emph{bajo control} y \emph{fuera de control}}   \\
   \text{Podemos usarlo para distinguir tráfico legítimo del atacante}
  \end{cases}\\\\
-
+%
  \text{CUSUM}
  \begin{cases}
   \text{-- SCP con memoria: Detecta pequeñas variaciones a lo largo de mucho tiempo} \\ 
@@ -416,12 +444,12 @@ el algoritmo \gls{CUSUM} aplicado a cada uno. Se seguirán deteniendo los flujos
   \qquad C_i^- = max\left[0, C_{i-1} - \left(x_i-\mu_0\right)- K\right]\\
   \text{-- Alarma si $C_i$ supera un valor $H = H(\sigma)$} \\
  \end{cases}
-\end{cases}
-\end{displaymath}
+\end{cases}&
+\end{flalign*}
 
 \subsection*{Cusum aplicado al control del tráfico}
-\begin{displaymath}
- \begin{cases}
+\begin{flalign*}
+ &\begin{cases}
   \text{Parámetros de interés}
   \begin{cases}
    \text{Densidad de conexiones en un sentido} \\
@@ -448,8 +476,8 @@ el algoritmo \gls{CUSUM} aplicado a cada uno. Se seguirán deteniendo los flujos
     \text{Búsqueda y bloqueo de IP maliciosas ($C_{i,\text{IP}} > H$).}
    \end{cases}
   \end{cases} \\
- \end{cases}
-\end{displaymath}
+ \end{cases}&
+\end{flalign*}
 
 
 \end{Resumen}

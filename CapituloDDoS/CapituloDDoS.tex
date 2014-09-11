@@ -102,15 +102,16 @@ cual terminará por agotar los recursos del servidor (la víctima).
 \noindent Si existen muchos atacantes que requieren intervención manual para realizar el ataque, estamos hablando de un 
 ataque DDoS coordinado por seres humanos. 
 
-Un ejemplo de este tipo de ataque es el ataque denominado F5 \cite{F5_attack}. En él, un estudiante intentó tirar abajo 
-la red de su escuela convenciendo a muchos estudiantes de que se conectasen a una página determinada y, a una hora 
-concreta, presionasen al mismo tiempo el botón \emph{F5} (actualizar página en la mayoría de los navegadores) durante 
-un periodo de tiempo.
+Un ejemplo de este tipo de ataque es el ataque denominado F5 \cite{F5_attack}\index{Ataque F5}. En él, un estudiante 
+intentó tirar abajo la red de su escuela convenciendo a muchos estudiantes de que se conectasen a una página determinada 
+y, a una hora concreta, presionasen al mismo tiempo el botón \emph{F5} (actualizar página en la mayoría de los 
+navegadores) durante un periodo de tiempo.
 
-Otro ejemplo de ataques de este tipo suceden con bastante frecuencia en el denominado \emph{efecto slashdot} (o, el 
-equivalente español, efecto barrapunto/menéame). Slashdot es un servicio de noticias muy usado en todo el mundo, al 
-igual que sus equivalentes españoles meneame y barrapunto, en el que se acumulan enlaces a noticias subidas por los 
-propios usuarios, que son votadas y promocionadas.
+Otro ejemplo de ataques de este tipo suceden con bastante frecuencia en el denominado \emph{efecto 
+slashdot}\index{Efecto Slashdot}\index{Efecto Menéame}\index{Efecto Barrapunto } (o, el equivalente español, efecto 
+barrapunto/menéame). Slashdot es un servicio de noticias muy usado en todo el mundo, al igual que sus equivalentes 
+españoles meneame y barrapunto, en el que se acumulan enlaces a noticias subidas por los propios usuarios, que son 
+votadas y promocionadas.
 
 Cuando una de esas noticias se encuentra alojada en un servidor con pocos recursos, es frecuente que esta quede 
 inaccesible por sobrecarga de recursos. Pese a que la intención de los usuarios era legítima, el sitio ha sufrido un 
@@ -130,13 +131,13 @@ que ocurre en este ataque.
 \end{figure}
 %
 
-Normalmente, este tipo de ataques utilizan la dirección de difusión o broadcast \index{Broadcast} \index{Difusión}. La 
+Normalmente, este tipo de ataques utilizan la dirección de difusión o broadcast\index{Broadcast} \index{Difusión}. La 
 dirección de difusión es una dirección especial en las redes en las que todos los nodos recibirán el paquete. Si ese 
 paquete es una petición que requiere una respuesta, y tiene como dirección origen la dirección IP\index{Dirección IP} 
 de la víctima (IP spoofing\index{IP Spoofing}), todos los nodos de la red responderán el mensaje, saturando la máquina 
 objetivo.
 
-Un ejemplo sencillo de este tipo de ataque es el denominado Ataque \emph{Smurf} \index{Smurf}, que utiliza un 
+Un ejemplo sencillo de este tipo de ataque es el denominado Ataque \emph{Smurf}\index{Smurf}, que utiliza un 
 simple \gls{ICMP}\index{ICMP} PING\index{ICMP}\index{PING}. Si a todos los nodos de la red les llega una petición de PING 
 proveniente de la dirección de la víctima, la víctima se encontrará con tantas respuestas como nodos configurados para 
 responder tenga la red. Dichas respuestas tendrán que ser, al menos, procesadas por el sistema operativo de la máquina 
@@ -197,29 +198,30 @@ adecuada configuración o actualización de componentes.
 Uno de los principales ataques de este estilo consiste en enviar información concreta que sabemos de antemano que 
 provocará una caída o malfuncionamiento en el servidor, es decir, aprovechando un fallo de seguridad. Por ejemplo, hasta 
 hace relativamente poco (1997), el famoso \emph{ping de la muerte}\index{Ping de la Muerte} \cite{Bidou} era capaz de 
-tumbar un servidor con tan 
-sólo un comando: \texttt{ping <objetivo>\ -l 65511}, el cual viene integrado en todos los sistemas operativos. Éste 
-aprovechaba que la pila \gls{ICMP} asumía que el paquete tenía una longitud determinada. Al procesar el paquete, y superarse 
-esta longitud, se producía un desbordamiento de buffer que hacía que el servidor colapsase.
+tumbar un servidor con tan sólo un comando: \texttt{ping <objetivo>\ -l 65511}, el cual viene integrado en todos los 
+sistemas operativos. Éste aprovechaba que la pila \gls{ICMP} asumía que el paquete tenía una longitud determinada. Al 
+procesar el paquete, y superarse esta longitud, se producía un desbordamiento de buffer que hacía que el servidor 
+colapsase.
 
 Otro ejemplo de ataque de este tipo es el ataque \emph{land\index{Land attack}}. En él, la victima recibe un paquete 
 \gls{TCP} cuya dirección origen y destino es él mismo, por lo que intenta contactar consigo mismo hasta que colapsa. 
 
 El ataque \emph{\index{Teardrop}} también es muy famoso, consistente en enviar mensajes IP fragmentados y malformados a 
-la muina objetivo. De esta forma, al intentar des-fragmentarlos, la máquina colapsa.
+la máquina objetivo. De esta forma, al intentar des-fragmentarlos, la máquina colapsa.
 
-Las nuevas tecnologías tampoco son inmunes a este tipo de ataque. IPv6, por ejemplo, puede sufrir de \emph{Anuncio de 
-vecino envenenado\index{Neighbour Advertisement Spoofing Attack}}. En él, un equipo intermedio se anuncia como poseedor 
-de una dirección en el camino del cliente al servidor (o bien, la dirección del propio servidor), y anuncia su 
-dirección MAC para que todos los paquetes destinados al servidor le lleguen a él. Esto es, es la versión IPv6 del ARP 
-spoofing.
+Las nuevas tecnologías tampoco son inmunes a este tipo de ataque. \gls{IPv6}, por ejemplo, puede sufrir de 
+\emph{Anuncio de vecino envenenado\index{Neighbour Advertisement Spoofing Attack}}. En él, un equipo intermedio se 
+anuncia como poseedor de una dirección en el camino del cliente al servidor (o bien, la dirección del propio servidor), 
+y anuncia su dirección \gls{MAC} para que todos los paquetes destinados al servidor le lleguen a él. Esto es, es la 
+versión \gls{IPv6} del \gls{ARP} spoofing\index{ARP Spoofing}.
 
 \subsection{Objetivo del ataque}
-Si queremos ser capaces de defendernos ante un ataque DDoS, es necesario conocer a qué objetivos van destinados. De esa 
+Si queremos ser capaces de defendernos ante un ataque \gls{DDoS}, es necesario conocer a qué objetivos van destinados. 
+De esa 
 forma, podremos centrarnos en defender los activos vulnerables de una forma eficiente.
 
-Podemos clasificar los ataques según el nivel de la capa OSI que atacan en ataques a los routers, a la red, al SSOO o a 
-la propia aplicación. Obviamente, un ataque a un nivel inferior afectará a todos los niveles superiores.
+Podemos clasificar los ataques según el nivel de la capa \gls{OSI} que atacan en ataques a los routers, a la red, al 
+SSOO o a la propia aplicación. Obviamente, un ataque a un nivel inferior afectará a todos los niveles superiores.
 
 \subsubsection{Ataque a dirigido a redes}
 La red es el componente más básicos de los ataques DDoS. Si el cliente es incapaz de conectar con la red del servicio, 
@@ -227,27 +229,28 @@ es imposible que éste pueda ser ofrecido. Por su parte, si la red del servicio 
 de acceder a la misma.
 
 Para agravar las cosas, las aplicaciones confían cada vez más en servicios dependientes de la red. Ejemplo de ello es 
-la proliferación de servicios web\index{Servicio web} (aquellos que usan el protocolo \acrshort{HTTP} para su 
+la proliferación de servicios web\index{Servicio Web} (aquellos que usan el protocolo \acrshort{HTTP} para su 
 funcionamiento), o los servicios en la nube\index{Servicio en la nube} (esto es, aquellos en los que el almacenamiento 
 y procesado de datos se realiza en ordenadores remotos, a los que se accede por Internet). 
 
 No solo las redes corporativas exponen sus servicios a Internet. Poco a poco, sistemas críticos, tales como plantas 
 generadoras de energía o de procesado de agua, están dentro de una red que, a su vez, en unos pocos saltos están 
-conectadas a Internet. De esta forma, estos servicios podrían ser víctimas de un ataque DDoS. Es posible, incluso, que 
-el lanzar un ataque hacia otro servicio en esta red intermedia afecte a dicho servicio crítico \cite{Raghavan}.
+conectadas a Internet. De esta forma, estos servicios podrían ser víctimas de un ataque \gls{DDoS}. Es posible, 
+incluso, que el lanzar un ataque hacia otro servicio en esta red intermedia afecte a dicho servicio crítico 
+\cite{Raghavan}.
 
 Así pues, un ataque de denegación de servicio que afectase a dicha infraestructura crítica podría tener repercusiones 
 muy serias, tales como dejar sin energía o agua una zona del mapa, y que pocos sistemas escapan actualmente de la 
-posibilidad de un ataque DDoS: En el momento que lo conectas a Internet, estás expuesto a ello.
+posibilidad de un ataque \gls{DDoS}: En el momento que lo conectas a Internet, estás expuesto a ello.
 
 Uno de los protocolos más usados para el transporte de información es \gls{TCP}, por lo que un gran porcentaje de 
 ataques van dirigidos contra esta tecnología.
 
 \paragraph{Reseteo de conexiones}\mbox{\newline}
 
-Un ataque muy simple consiste en, una vez que el atacante conoce una conexión existente, resetear dicha conexión. Una 
+Un ataque muy simple consiste en, una vez que el atacante conoce una conexión existente, reiniciar dicha conexión. Una 
 conexión en \gls{TCP} está identificada por una dirección origen, una dirección destino, un puerto origen y un puerto 
-destino. Existe un bit RST\index{TCP RST} en la cabecera \gls{TCP} que permite resetear una conexión inmediatamente. 
+destino. Existe un bit RST\index{TCP RST} en la cabecera \gls{TCP} que permite reiniciar una conexión inmediatamente. 
 Esto es usado, por ejemplo, si uno de los dos extremos detecta un problema en la conexión. Para terminar de empeorar 
 las cosas, RST no necesita \gls{ACK}, por lo que el cliente no llega a saber que la conexión ha terminado
 
@@ -271,12 +274,12 @@ quede invalidada. Podemos ver una descripción gráfica de este ataque en la \FI
 Otra característica comúnmente explotada de las conexiones \gls{TCP} es su control de congestión\index{Control de 
 congestión TCP}. Para calcular la saturación del enlace, un extremo considera como paquete perdido (y, por tanto, el 
 enlace está saturado) aquel paquete que tarda más de $T$ segundos en recibir el ACK. Al iniciar la conexión \gls{TCP}, el 
-algoritmo de arranque lento\index{TCP slow start} incrementará el número de paquetes enviados de una forma exponencial.
+algoritmo de arranque lento\index{TCP Slow Start} incrementará el número de paquetes enviados de una forma exponencial.
 
 Si el atacante envía \gls{ACK} optimistas, esto es, \gls{ACK} de un paquete que realmente no ha recibido aún, el atacante enviará 
 cada vez más y más paquetes salientes, hasta saturar su conexión. Teniendo en cuenta que un \gls{TCP} \gls{ACK} sólo ocupa 54 
 bytes, el efecto amplificador de este tipo de ataque es bastante importante. Algunos estudios hablan de que, con una 
-conexión de 56kbps, es posible generar en el lado del atacante unos 8.9mbps \cite{sherwood}.
+conexión de $56kbps$, es posible generar en el lado del atacante unos $8.9mbps$ \cite{sherwood}.
 
 Podemos ver un ejemplo de este tipo de ataques en la \FIG{optim ACK attack}.
 
@@ -301,7 +304,7 @@ dispositivos y hacer perder paquetes. En este caso, \gls{TCP} alcanzará el esta
 comunicaciones, y necesitará comenzar a retransmitir los paquetes por donde iba la conexión.
 
 Siguiendo el procedimiento de \gls{TCP}, se debe comenzar a retransmitir los paquetes en ráfagas, empezando por un 
-paquete por ráfaga e ir aumentando progresivamente. En poco tiempo, se debería volver a alcanzar un buen rutmo para la 
+paquete por ráfaga e ir aumentando progresivamente. En poco tiempo, se debería volver a alcanzar un buen ritmo para la 
 conexión.
 
 Sin embargo, si el atacante, al acabar el temporizador de retransmisión, vuelve a lanzar otro ataque intensivo pero de 
@@ -331,23 +334,23 @@ cabo un ataque \gls{DoS}.
 
 En este tipo de ataque se busca explotar una vulnerabilidad en el modo que el \gls{SO} gestiona los paquetes. Por 
 ejemplo, si a la hora de recibir un paquete, el \gls{SO} lo escribe en memoria sin comprobar los límites de la memoria 
-reservada para ello, el atacante podría enviar un paquete lo suficientemente largo como para provocar un \emph{buffer 
-overflow}\index{Buffer Overflow}, esto es, se escribirá en una zona de memoria indebida, provocando que el sistema 
+reservada para ello, el atacante podría enviar un paquete lo suficientemente largo como para provocar un \emph{Buffer 
+Overflow}\index{Buffer Overflow}, esto es, se escribirá en una zona de memoria indebida, provocando que el sistema 
 colapse. Esta técnica es la empleada por el llamado \emph{ping de la muerte}\index{Ping de la Muerte}, ya explicado en 
-el \SSSEC{DDoS semanticos}.
+el \SSSEC{DDoS semánticos}.
 
-Otro ataque, también dirigido a saturar el \gls{SO}, sería un \gls{SYN} flood (inundación \gls{SYN}). Esta vez, con la inundación, 
-no provocamos saturar la red, sino la capacidad de conexiones simultaneas que aguante el sistema.
+Otro ataque, también dirigido a saturar el \gls{SO}, sería un \emph{\gls{SYN} Flood} (inundación \gls{SYN}). Esta vez, 
+con la inundación, no provocamos saturar la red, sino la capacidad de conexiones simultaneas que aguante el sistema.
 
 \subsubsection{Ataques dirigidos a aplicaciones (Ataques capa 7)}
 
 Muchas aplicaciones están desarrollando sus aplicaciones sobre una arquitectura tipo servicio web, esto es, programas 
-distribuídos que funcionan mediante el paso de mensajes sobre el protocolo HTTP. Para que este servicio funcione, si 
-está expuesto a internet, es necesario que el cortafuegos permita el tráfico hacia esa aplicación. Por tanto, el 
+distribuidos que funcionan mediante el paso de mensajes sobre el protocolo HTTP. Para que este servicio funcione, si 
+está expuesto a Internet, es necesario que el cortafuegos permita el tráfico hacia esa aplicación. Por tanto, el 
 atacante es capaz también de alcanzar dicho servicio, aunque quizás no pueda usarlo por necesitar, por ejemplo, unas 
 credenciales válidas.
 
-Al igual que los servicios web, la aplicación distribuída puede estar confiando en cualquier otro tipo de tecnología 
+Al igual que los servicios web, la aplicación distribuida puede estar confiando en cualquier otro tipo de tecnología 
 subyacente. Mientras que esta se encuentre en espacio de usuario, se considerará un ataque de capa 7.
 
 Los métodos para realizar este ataque son muy parecidos a los de la \SSSEC{Ataques a SSOO}. Por la parte semántica, se 
@@ -356,7 +359,7 @@ sirviendo. Por otra parte, tenemos los ataques por inundación, que buscarían s
 a la máquina le sea imposible seguir respondiendo peticiones.
 
 
-\section{Técnicas de detección y mitigacinó de un ataque DDoS}\LABSEC{Deteccion y mitigacion DoS}
+\section{Técnicas de detección y mitigación de un ataque DDoS}\LABSEC{Deteccion y mitigacion DoS}
 \subsection{Ataques por inundación}
 La principal señal que indica que un servicio está sufriendo un ataque por inundación es que reciben una cantidad de 
 tráfico anormalmente grande. Sin embargo, para una detección correcta deberíamos definir qué supone \emph{anormal}. 
@@ -388,15 +391,35 @@ paquetes contra firmas que comprometen servidores web, es un gaso inútil.
 Este es el sistema de detección usado por IPS tales como snort \cite{snort} o suricata \cite{suricata}. A lo largo de 
 este trabajo no pretenderemos abarcar este tipo de soluciones.
 
+\section{Conclusiones}
+Así pues, un ataque de \gls{DoS} es cualquier cosa que permita que un servicio deje de estar disponible. 
+Como consecuencia, los posibles beneficios que ese servicio pudiese estar generando se ven anulados, y es posible que 
+algunos usuarios dejen de confiar en él.
+
+Podríamos dividirlos entre ataques por inundación, en los que englobaríamos aquellos que persiguen agotar los recursos 
+en los que se apoya el servicio, o bien ataques semánticos, que buscan explotar alguna vulnerabilidad encontrada en los 
+mismos. La forma efectiva de detectar dichos ataques es, respectivamente, el análisis de flujos de tráfico, y el 
+análisis de paquetes en busca de firmas o patrones conocidos.
+
+Los ataques de denegación de servicio pueden ir destinados a agotar o explotar vulnerabilidades de cualquier capa en la 
+que se apoye el servicio. Esto es, pueden atacar al propio servicio, o bien al \gls{SO} sobre el que es ofrecido, o a 
+cualquier elemento de red entre el usuario y el servicio. Si logra inutilizar un elemento de capa baja, todos los 
+elementos superiores caen en efecto cascada.
+
+Por último, es posible realizar el ataque desde muchos puntos distintos, esto es, haciendo que el ataque sea 
+perpetrado por muchos atacantes distintos. De esta forma, conseguimos aumentar la magnitud del ataque y dificultamos 
+la supervivencia del servicio. Cuando esto ocurre, estamos hablando de un ataque \gls{DDoS}.
+
+
 \section{Resumen}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Resumen}[Resumen del capítulo]
 \subsection*{Definición}
-Acción(es) que impiden que un sistema de información funcione normalmente.
+Acción(es) que impiden que un sistema de información funcione normalmente. 
 
 \subsection*{Taxonomía}
-\begin{align*}
- \begin{cases}
+\begin{flalign*}
+ &\begin{cases}
    \text{Por inundación.}
    \begin{cases}
      \text{Coordinados por seres humanos / manuales.}\\
@@ -413,12 +436,12 @@ Acción(es) que impiden que un sistema de información funcione normalmente.
    \end{cases}\\
    \text{Semántico.}\\
    \qquad{\text{\emph{Se busca explotar fallos}}}
- \end{cases}
-\end{align*}
+ \end{cases}&
+\end{flalign*}
 
 \subsection*{Objetivo del ataque}
-\begin{align*}
- \begin{cases}
+\begin{flalign*}
+ &\begin{cases}
    \text{Dirigido a redes.}\\
    \qquad{\text{\emph{Ejemplos:}}}
    \begin{cases}
@@ -428,12 +451,12 @@ Acción(es) que impiden que un sistema de información funcione normalmente.
    \end{cases}\\
    \text{Ataques a SSOO.} \\
    \text{Ataques de capa 7.}\\
- \end{cases}
-\end{align*}
+ \end{cases}&
+\end{flalign*}
 
 \subsection*{Técnicas de detección y mitigación}
-\begin{align*}
- \begin{cases}
+\begin{flalign*}
+ &\begin{cases}
    \text{Por inundación.}
    \begin{cases}
      \text{Detección de comportamiento \emph{anómalo} en la red.} \\
@@ -449,9 +472,9 @@ Acción(es) que impiden que un sistema de información funcione normalmente.
      \text{Bloqueo de paquetes que cumplan dichos patrones}\\
      \qquad\rightarrow\text{Posibilidad de falsos negativos y falsos positivos} \\
      \text{Tuneado consiste en seleccionar reglas en base a los activos a proteger}
-   \end{cases}\\
- \end{cases}
-\end{align*}
+   \end{cases}
+ \end{cases}&
+\end{flalign*}
 
 \end{Resumen}
 
