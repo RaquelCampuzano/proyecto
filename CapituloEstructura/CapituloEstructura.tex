@@ -7,19 +7,22 @@
 %\lettrine[lraise=0.7, lines=1, loversize=-0.25]{E}{l} 
 \lettrine[lraise=-0.1, lines=2, loversize=0.25]{R}edBorder DDoS\index{RedBorder DDoS} es el nombre del producto en el 
 que, mediante el análisis del tráfico en tiempo real a través del algoritmo \gls{CUSUM}, nos permite detectar ataques 
-\gls{DDoS} en tiempo real.
-
-A lo largo de este capítulo, %TODO
-
-\section{Alcance de \redborderddos} %TODO hablar de la escalabilidad.
-Como vimos en el \CHAP{Denegacion de Servicio}, podemos diferencias los ataques de \gls{DDoS} en dos grandes bloques: 
-Ataques por inundación, que buscan saturar los recursos de los que depende el servicio, y ataques semánticos. que 
-buscan explotar una vulnerabilidad conocida.
+\gls{DDoS} en tiempo real. Como vimos en el \CHAP{Denegacion de Servicio}, podemos diferencias los ataques de 
+\gls{DDoS} en dos grandes bloques: 
+\begin{enumerate}
+ \item Ataques por inundación, que buscan saturar los recursos de los que depende el servicio.
+ \item Ataques semánticos. que buscan explotar una vulnerabilidad conocida.
+\end{enumerate}
 
 \redborderddos{} intenta detectar y, en la medida de lo posible, mitigar el primer tipo de ataque, mediante el 
-algoritmo \gls{CUSUM} visto en el capítulo \CHAP{Algoritmo CUSUM}. 
+algoritmo \gls{CUSUM} visto en el capítulo \CHAP{Algoritmo CUSUM}. Sin embargo, para manejar y ser capaz de 
+detectar un ataque \gls{DDoS} por inundación, destinado a agotar los recursos de una máquina, es necesario disponer de 
+muchos recusos y usar algoritmos eficientes, a fin de que el recurso agotado no sea el elemento detector del \gls{DDoS}.
 
-%TODO Falta. Relacioanr con los tipos de ataques de DDoS
+Por ello, se busca aprovechar al máximo la estructura multiprocesador de los sensores de los que disponemos. El 
+principal cuello de botella en este tipo de sistema son los elementos de comunicación entre los distintos núcleos y 
+procesos, por lo que se buscará reducir al mínimo dicho lastre.
+
 \section{Nociones previas}
 
 %TODO por qué basado en C
@@ -85,7 +88,6 @@ ve en Algoritmo \ALG{ComparacionFlotante}.
  \caption{Algoritmo de comparación de números en punto flotante}
  \LABALG{ComparacionFlotante}
 \end{algorithm}
-
 
 \subsection{Estructuras de datos básicas}\index{Estructura de datos}
 Para almacenar el funcionamiento de cada flujo de tráfico, y ser capaz de compararlo con el supuesto funcionamiento 
@@ -271,6 +273,74 @@ De esta forma, ambos hilos de ejecución saben cuando otro proceso está modific
 
 No obstante, esto tiene una desventaja: el hilo que espera a que la variable cerrojo sea abierta no puede hacer otra 
 cosa que no sea esperar. Por tanto, una mala elección de secciones críticas hará el programa lento.
+
+\subsection{Alineamiento de datos en memoria}
+El alineamiento\index{Alineamiento de Datos}\index{Alineamiento de memoria} de los datos se refiere a obligar a que un 
+tipo de dato específico ocupe una cierta cantidad de octetos en memoria, y comience en una dirección de memoria 
+determinada.
+
+Esto significa que, por ejemplo, si tenemos una estructura que ocupa $40$ bytes en memoria, el compilador obligará a 
+que esta ocupe $64$ bytes, rellenando la parte sobrante con ``basura''. A priori, esto parece un derroche de memoria, 
+pero tiene varias ventajas si entendemos cómo funcionan los procesadores y el acceso a memoria a bajo nivel.
+
+\subsubsection{Inconvenientes de no alinear con un procesador}\LABSSSEC{NoAlinearUnProcesador}
+Un procesador es capaz de trabajar, de forma directa, con bloques alineados de memoria o palabras. Por ejemplo, 
+establecer a cero una estructura de $40$ bytes llevaría dos instrucciones: Establecer a $0$ los primeros $32$ bytes, y 
+establecer a $0$ los $8$ bytes restantes. El resto de bytes no se pueden tocar, ya que pueden pertenecer a cualquier 
+otra cosa. Por ejemplo, si esas estructuras fuesen un vector en memoria, pertenecerían a la estructura que ocupase el 
+siguiente índice.
+
+Sin embargo, un procesador sí puede establecer a $0$ una página de $64$ bytes de memoria con una sola instrucción, ya 
+que sabemos que los bytes restantes serán basura.
+
+Por otra parte, suponiendo que, en el anterior vector la posición $i$ esté alineada, es seguro que el elemento $i+1$ no 
+estará alineado. Sin embargo, el procesador sólo es capaz de leer\footnote{En realidad, de llevar a su memoria caché}, 
+de una vez, páginas alineadas. Eso obligará al elemento que ocupa dos páginas realizar dos accesos distintos a la 
+caché: la primera, para leer la primera parte del elemento, y la segunda para leer el resto. Por último, necesitará una 
+última instrucción para unir las anteriores lecturas. Podemos ver una descripción gráfica en 
+\FIG{AccesoMemoriaNoAlineada}.
+
+Sin embargo, si el elemento sólo ocupa una página de memoria, o un múltiplo de ésta, estamos seguros de poder traernos 
+ese elemento en sólo una iteración, evitando así operaciones innecesarias. Se puede ver este modo de funcionar en la 
+figura \FIG{AccesoMemoriaAlineada} \cite{intelAlignment}.
+
+\begin{figure}[hbtp]
+\centering
+%\hfill
+\subfloat[Acceso del procesador a memoria no alineada]%
+   {\LABFIG{AccesoMemoriaNoAlineada}%
+   \includegraphics[width=0.45\textwidth]{CapituloEstructura/Figuras/AccesoMemoriaNoAlineada-crop}}
+\hfill
+\subfloat[Acceso del procesador a memoria alineada]%
+   {\LABFIG{AccesoMemoriaAlineada}%
+   \includegraphics[width=0.45\textwidth]{CapituloEstructura/Figuras/AccesoMemoriaAlineada-crop}}
+%
+\caption{Diferencia entre el acceso a bloques de memorias alineados y no alineados}
+\end{figure}
+%
+
+\subsubsection{Inconvenientes de no alinear con más de un procesador}
+Por motivos de sincronización, todos los procesadores deben notificar qué memoria están modificando. De no hacerlo, dos 
+modificaciones muy rápidas podrían solaparse y el estado de la memoria sería indeterminado.
+
+Siguiendo con el mismo ejemplo que en el \SSSEC{NoAlinearUnProcesador}, es posible que el elemento $i$ del vector lo 
+esté procesando un procesador, y, al mismo tiempo, el elemento $i+1$ esté situado en la caché de otro. Si esto sucede, 
+y las modificaciones son muy frecuentes, se perderá un montón de tiempo en sincronización. Es lo que se conoce como 
+\emph{cache miss}\index{Cache Miss}.
+
+Sin embargo, si cada elemento ocupa una sóla página de caché, sin solaparse con las siguientes, garantizamos que la 
+comunicación entre núcleos sea innecesaria \cite{intelAlignmentSMP}.
+
+\subsubsection{Alineamiento de memoria con gcc}
+Para evitarlo, se suele añadir una palabra clave a la declaración de las estructuras. En el caso del compilador gcc, 
+que será el usado en el proyecto, dicha palabra es \texttt{\_\_aligned}. Por ejemplo, si queremos que una estructura 
+con tres enteros esté alineada en memoria, se declarará como en \lstlistingname{}\ref{code:structAlignment} 
+\cite{gccTypeAttributes}.
+
+\begin{lstlisting}[language=C++,caption={Alineamiento de una estructura de datos}, 
+breaklines=true, label=code:structAlignment,numbers=left,float=htbp]
+ struct S { int f[3]; } __attribute__ ((aligned));
+\end{lstlisting}
 
 \subsection{Señales en linux. La señal SIGALRM.}\LABSSEC{SIGALRM}\index{SIGALRM}\index{Señal Linux}
 Un mecanismo de comunicación entre procesos o \gls{IPC} es el envío de señales. Por ejemplo, cuando un programa intenta 
@@ -497,7 +567,7 @@ de comunicación con el mismo. Actualmente, \redborderddos{} simplemente alerta 
 necesario que el \gls{IPS} o algún sistema intermedio leyese de la cola Kakfa y modificase su comportamiento en base a 
 dicha lectura.
 
-\section{Estructura general}\LABSEC{EsctructuraGeneral}
+\section{Estructura interna}\LABSEC{EsctructuraGeneral}
 Internamente, \redborderddos{} intenta aprovechar al máximo la potencia de procesamiento del sensor, haciendo todas las 
 tareas posibles de una manera concurrente.
 
@@ -917,12 +987,156 @@ Por último, para accesos aleatorios a los elementos tenemos la Tabla HASH, al i
 contadores. Es importante destacar que, al purgar los elementos, además de eliminarlos de la lista de elementos usados 
 es necesario eliminarlos también de la tabla HASH. De otra forma, tendremos la entrada a un elemento eliminado.
 
+\subsubsection{Algoritmo del contador maestro}
+
+Con los conceptos vistos bajo esta sección, el algoritmo del contador maestro queda como se muestra en Algoritmo 
+
+%\begin{algorithm}
+% \KwData{Lista de estadísticos cusum $l$, marca de tiempo $t$}
+% \KwResult{Lista de estadísticos con sólo las entradas con marca de tiempo $t_0$ que cumplen $t_0>t$}
+% \While{element $e \gets l.$last and $e.$timestamp $< t_0 $}{
+%	 usados.delete($e$)\;
+%	 libres.push($e$)\;
+% }
+% \caption{Procedimiento para la eliminación de contadores antiguos}
+% \LABALG{EliminacionContadoresAntigos}
+%\end{algorithm}
+
+
 \subsection{Decisor}\index{Decisor}
-Periódicamente, el contador maestro recogerá.
 
 
 \section{Resúmenes}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{Resumen}[Resumen de la estructura]
-\subsection*{S1}
+\begin{Resumen}[Alcance de \redborderddos]
+\redborderddos{} intenta detectar los ataques de \gls{DDoS} por inundación, quedando fuera del alcance del proyecto los 
+ataques semánticos.
+\end{Resumen}
+
+\begin{Resumen}[Nociones previas: El lenguaje de programación C]
+\subsection*{Números en coma flotante}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Se intenta representar con $N$ estados un conjunto $\infty \rightarrow$ imprecisión} \\
+    \text{Puede ocurrir que }(a \cdot b) \cdot c \neq a \cdot (b \cdot c) \\
+    \text{Se hace necesario comparar con épsilon: $\left|a - b\right| < \epsilon \rightarrow a = b$}
+  \end{cases}&
+\end{flalign*}\\
+
+\subsection*{Estructuras de datos básicas}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Vector}
+    \begin{cases}
+      \text{Posiciones contiguas de memoria} \\
+      \text{Fácil acceso aleatorio. Dificil inserción de elementos}
+    \end{cases}\\
+    \text{Lista enlazada}
+    \begin{cases}
+      \text{Nodos diseminados por la memoria}\\
+      \text{Cada elemento apunta al siguiente}\\
+      \text{Variaciones: Doblemente enlazadas, etc}
+    \end{cases}\\
+    \text{Pilas}
+    \begin{cases}
+      \text{Contenedor que sólo se puede insertar y extraer en un sentido} \\
+      \text{Se puede implementar con vector y con lista enlazada}
+    \end{cases}\\
+    \text{Tabla HASH}
+    \begin{cases}
+      \text{Vector de listas enlazadas} \\
+      \text{Cada elemento tiene una clave} \\
+      \text{La clave marca la posición del elemento} \\
+      \text{Aplicar HASH ayuda a repartir elementos} \\
+      \quad\text{Acceso aleatorio vector más rápido que lista enlazada} \\
+      \text{Acceso aleatorio rápido} \\
+      \text{Inserción/eliminación rápida}
+    \end{cases}
+  \end{cases}&
+\end{flalign*}\\
+
+\subsection*{Programación multihilo}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Hilo o proceso ligero: Unidad de ejecución independiente} \\
+    \text{Modificación de memoria concurrente $\rightarrow$ Resultado indeterminado} \\
+    \text{Región crítica}\\
+    \quad\text{Zona de memoria que puede ser modificada por dos hilos}\\
+    \text{Variables cerrojo}\\
+    \quad\text{Protegen regiones críticas}
+  \end{cases}&
+\end{flalign*}\\
+
+\subsection*{Alineación de memoria}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Si la memoria no está alineada, se requieren más instrucciones} \\
+    \text{Memoria no alineada $\rightarrow$} \\
+    \text{Región crítica}\\
+    \quad\text{Zona de memoria que puede ser modificada por dos hilos}\\
+    \text{Variables cerrojo}\\
+    \quad\text{Protegen regiones críticas}
+  \end{cases}&
+\end{flalign*}\\
+ 
+\subsection*{Señales en LINUX}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Mecanismo de comunicación inter-proceso (IPC)}\\
+    \text{Manejador de señal}\\
+    \quad\text{Si el proceso recibe una señal $S_0$, se llama al manejador}\\
+    \quad\text{Aleatoriedad en el momento de recibir la señal $\rightarrow$ concurrencia}\\
+    \text{\texttt{SIGALRM}: Se programa recibir una señal $S_0$ en un tiempo $t_0$}\\
+    \text{Se puede usar, con precaución, para eventos periódicos}
+  \end{cases}&
+\end{flalign*}\\
+
+\end{Resumen}
+
+\begin{Resumen}[Vista externa]
+\begin{flalign*}
+  &\begin{cases}
+    \text{Situación física}
+    \begin{cases}
+      \text{Un puerto SPAN clona los paquetes hacia \redborderddos}\\
+      \text{Se debe distinguir entre entrantes y salientes por puerto}\\
+      \text{Si se quiere detener, un elemento externo debe bloquear}
+    \end{cases} \\
+%
+	  \text{Envío del ataque mediante Kafka}
+  \end{cases}&
+\end{flalign*}
+\end{Resumen}
+
+\begin{Resumen}[Estructura interna]
+\subsection*{Clúster}
+\begin{flalign*}
+ &\begin{cases}
+   \text{Capaz de repartir paquetes entre hilos según origen-destino $\left(s_{ip},d_{ip}\right)\rightarrow n$}\\
+   \text{Simétrico: $\left(ip_0,ip_1\right)\rightarrow n \Rightarrow \left(ip_1,ip_0\right) \rightarrow n$}\\
+   \text{Podemos decir que reparte flujos}
+ \end{cases}&
+\end{flalign*}
+
+\subsection*{Sub-contador}
+\begin{flalign*}
+ &\begin{cases}
+   \text{Cuenta características de los flujos: tamaño, protocolo, etc.}\\
+   \text{Usa una tabla hash para almacenar y recuperar los contadores por flujo}\\
+   \text{Identifica flujos por \gls{IP} externa}
+ \end{cases}&
+\end{flalign*}
+
+\subsection*{Contador maestro}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Sincronizado con \texttt{SIGALRM}}\\
+    \text{Recoge los contadores de los hilos sub-contadores.}\\
+    \text{Mínima interrupción: Intercambio de pools $\rightarrow$ punteros}\\
+    \text{Extrae, por contador recogido, los parámetros \gls{CUSUM}}\\
+    \text{Aplica el algoritmo \gls{CUSUM} con su muestra anterior por flujo}\\
+    \text{Necesita eliminar las muestras antiguas para no agotar la memoria}
+  \end{cases}&
+\end{flalign*}
+
 \end{Resumen}
 
