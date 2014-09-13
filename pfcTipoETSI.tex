@@ -58,7 +58,31 @@
 %	\markboth{#1}{#1}}
 %\addbibresource{bibliografiaLibroETSI.bib}
 
-%TODO check longnewglossaryentry
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\colorlet{punct}{red!60!black}
+
+\lstdefinelanguage{json}{
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+
 \newacronym[type=main]{DoS}{DoS}{Denial of Service}
 \newacronym[type=main]{DDoS}{DDoS}{Distributed DoS}
 \newacronym[type=main]{SO}{SO}{Sistema Operativo}
@@ -68,7 +92,7 @@
 {
   name=Medium Access Control,
   description={El control de acceso al medio permite sincronizar el acceso a un enlace entre varios nodos. La dirección 
-MAC es la que usa el dispositivo del nodo para identificarse en el enlace o medio compartido.}
+MAC es la que usa el dispositivo del nodo para identificarse en el enlace o medio compartido}
 }
 \newacronym[type=main]{ARP}{ARP}{Address Resolution Protocol}
 \newacronym[type=main]{TCP}{TCP}{Transmission Control Protocol}
@@ -96,6 +120,13 @@ MAC es la que usa el dispositivo del nodo para identificarse en el enlace o medi
 \newacronym[type=main]{SIGSEGV}{\texttt{SIGSEGV}}{SIGnal SEGment Violation}
 \newacronym[type=main]{SIGTSTP}{\texttt{SIGTSTP}}{SIGnal Terminal STOP}
 \newacronym[type=main]{SIGALRM}{\texttt{SIGALRM}}{SIGnal ALARM}
+\newglossaryentry{json}
+{
+  name=JavaScript Object Notation,
+  description={JavaScript es un lenguaje de tipado dinámico. En él se pueden declarar objetos con una estructura 
+determinada, que no tienen por qué pertenecer a una clase. El lenguaje descriptivo json es el lenguaje de definición de 
+dichos objetos}
+}
 
 \newacronym[type=main]{IPS}{IPS}{Intrusion Prevention System}
 \newacronym[type=main]{API}{API}{Application Programming Interface}
@@ -212,6 +243,10 @@ twoside}
 \include{CapituloCusum/CapituloCusum}
 %
 \include{CapituloEstructura/CapituloEstructura}
+%
+%\include{CapituloPF_RING/CapituloPF_RING}
+%
+% Cita para las pruebas:     {What gets measured, gets managed.}{Peter Drucker}
 % 
 %%:Empezamos con los apéndices, que irían en uno o más ficheros. Es necesario incluir estos ficheros entre el entorno \begin{appendices}....\end{appendices} debido a que se ha deseado utilizar un formato diferente para el título de los apéndices, incluyendo la palabra apéndice, para la numeración de los apéndices, alfabético, y para las cabeceras de las páginas.
 %
@@ -276,6 +311,7 @@ twoside}
 \phantomsection
 \addcontentsline{toc}{listasb}{Glosario}
 \chaptermark{Glosario}
+\glossarystyle{altlist}
 \printglossaries
 
 \end{document}
