@@ -101,7 +101,6 @@ MAC es la que usa el dispositivo del nodo para identificarse en el enlace o medi
 \newacronym[type=main]{HTTP}{HTTP}{Hyper Text Transfer Protocol}
 \newacronym[type=main]{ITU-T}{ITU-T}{International Telecommunications Union}
 \newacronym[type=main]{CNSS}{CNSS}{Committee on National Security Systems}
-\newacronym[type=main]{PFRING}{PF\_RING}{Protocol Family RING}
 % TODO TCP SYN, TCP ACK
 \newacronym[type=main]{OSI}{OSI}{Open System Interconnection}
 \newacronym[type=main]{SYN}{SYN}{Synchronize}
@@ -120,17 +119,39 @@ MAC es la que usa el dispositivo del nodo para identificarse en el enlace o medi
 \newacronym[type=main]{SIGSEGV}{\texttt{SIGSEGV}}{SIGnal SEGment Violation}
 \newacronym[type=main]{SIGTSTP}{\texttt{SIGTSTP}}{SIGnal Terminal STOP}
 \newacronym[type=main]{SIGALRM}{\texttt{SIGALRM}}{SIGnal ALARM}
+
+\newacronym[type=main]{PFRING}{PF\_RING}{Packet Filter RING}
+\newacronym[type=main]{NIC}{NIC}{Network Interface Controller}
+\newacronym[type=main]{DMA}{DMA}{Direct Memory Access}
+\newacronym[type=main]{NAPI}{NAPI}{New API}
+\newacronym[type=main]{libpcap}{libpcap}{Packet CAPture LIBrary}
+\newglossaryentry{controlador}
+{
+  name=Controlador,
+  description={Módulo del núcleo Linux que maneja la comunicación entre un dispositivo y el software que lo usa}
+}
 \newglossaryentry{json}
 {
   name=JavaScript Object Notation,
   description={JavaScript es un lenguaje de tipado dinámico. En él se pueden declarar objetos con una estructura 
 determinada, que no tienen por qué pertenecer a una clase. El lenguaje descriptivo json es el lenguaje de definición de 
 dichos objetos}
+  symbol={json}
+}
+\newglossaryentry{netfilter}
+{
+	name=Netfilter,
+	description={Netfilter es la parte ``cortafuegos'' del núcleo Linux. En él, se pueden definir reglas que afectan a la 
+recepción, envío y reenvío de paquetes.}
+}
+\newglossaryentry{socket}
+{
+	name=socket,
+	description={Extremo de una conexión o flujo de paquetes desde el espacio de usuario.}
 }
 
 \newacronym[type=main]{IPS}{IPS}{Intrusion Prevention System}
 \newacronym[type=main]{API}{API}{Application Programming Interface}
-\newacronym[type=main]{NAPI}{NAPI}{New API, nueva API}
 
 
 \makeindex
@@ -244,7 +265,7 @@ twoside}
 %
 \include{CapituloEstructura/CapituloEstructura}
 %
-%\include{CapituloPF_RING/CapituloPF_RING}
+\include{CapituloPF_RING/CapituloPF_RING}
 %
 % Cita para las pruebas:     {What gets measured, gets managed.}{Peter Drucker}
 % 
