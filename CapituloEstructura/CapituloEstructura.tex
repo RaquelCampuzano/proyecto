@@ -1,8 +1,7 @@
 % !TEX root =../LibroTipoETSI.tex
 \chapter{Estructura de \redborderddos}\LABCHAP{CAPEstructura}
 \pagestyle{esitscCD}
-% TODO Falta epígrafe
-\epigraph{  FaltaFalta }{FaltaFalta}
+\epigraph{Programming is the art of telling another human what one wants the computer to do.}{Donald Knuth}
 
 %\lettrine[lraise=0.7, lines=1, loversize=-0.25]{E}{l} 
 \lettrine[lraise=-0.1, lines=2, loversize=0.25]{R}edBorder DDoS\index{RedBorder DDoS} es el nombre del producto en el 
@@ -15,15 +14,29 @@ que, mediante el análisis del tráfico en tiempo real a través del algoritmo \
 \end{enumerate}
 
 \redborderddos{} intenta detectar y, en la medida de lo posible, mitigar el primer tipo de ataque, mediante el 
-algoritmo \gls{CUSUM} visto en el capítulo \CHAP{Algoritmo CUSUM}. Sin embargo, para manejar y ser capaz de 
-detectar un ataque \gls{DDoS} por inundación, destinado a agotar los recursos de una máquina, es necesario disponer de 
-muchos recusos y usar algoritmos eficientes, a fin de que el recurso agotado no sea el elemento detector del \gls{DDoS}.
+algoritmo \gls{CUSUM} visto en el \CHAP{Algoritmo CUSUM}. Sin embargo, para manejar y ser capaz de detectar un ataque 
+\gls{DDoS} por inundación, destinado a agotar los recursos de una máquina, es necesario disponer de muchos recusos y 
+usar algoritmos eficientes, a fin de que el recurso agotado no sea el elemento detector del \gls{DDoS}.
 
 Por ello, se busca aprovechar al máximo la estructura multiprocesador de los sensores de los que disponemos. El 
 principal cuello de botella en este tipo de sistema son los elementos de comunicación entre los distintos núcleos y 
 procesos, por lo que se buscará reducir al mínimo dicho lastre.
 
-\section{Nociones previas}
+\section{Introducción}
+
+A lo largo de este capítulo se presenta la estructura que sigue \redborderddos{} desde el punto de vista del arquitecto 
+de software y programador. Tras describir las nociones de programación necesarias y algunas particularidades de los 
+algoritmos computacionales en \SEC{NocionesPrevias}. A continuación, se describirá el proyecto desde una perspectiva de 
+``caja negra'', esto es, qué necesita como entrada y salida de datos para funcionar, en la \SEC{Vista Externa}. En este 
+caso, \redborderddos{} funciona usando un puerto SPAN del que recibe una copia de todo el tráfico dirigido hacia el 
+activo a defender.
+
+Por último, y usando la información de los anteriores apartados, analizamos cómo funciona el programa desde un punto de 
+vista interno en la sección \SEC{EstructuraInterna}, separando el mismo en varios componentes: repartidor del tráfico, 
+contadores del tráfico, aglutinador de los contadores y, por último decisor. De esta forma, entendemos cómo funciona el 
+programa en su conjunto, y qué tipo de ataques podemos esperar obtener de él, y en qué formato se nos presentarán, 
+
+\section{Nociones previas}\LABSEC{NocionesPrevias}
 
 %TODO por qué basado en C
 
@@ -567,7 +580,7 @@ de comunicación con el mismo. Actualmente, \redborderddos{} simplemente alerta 
 necesario que el \gls{IPS} o algún sistema intermedio leyese de la cola Kakfa y modificase su comportamiento en base a 
 dicha lectura.
 
-\section{Estructura interna}\LABSEC{EsctructuraGeneral}
+\section{Estructura interna}\LABSEC{EstructuraInterna}
 Internamente, \redborderddos{} intenta aprovechar al máximo la potencia de procesamiento del sensor, haciendo todas las 
 tareas posibles de una manera concurrente.
 
@@ -594,7 +607,7 @@ valores con los valores límite, identificando la IP como atacante si encontramo
 %
 
 \subsection{Clúster}\index{PF\_RING Cluster}\LABSSEC{EstructuraCluster}
-Un clúster \acrshort{PFRING}\footnote{En el capítulo \CHAP{@TODO} se detallará qué es \acrshort{PFRING}. Por el 
+Un clúster \acrshort{PFRING}\footnote{En \CHAP{PFRING} se detallará qué es \acrshort{PFRING}. Por el 
 momento, es sólo el nombre concreto de este tipo de clúster.} es capaz de dividir todo el troncal de tráfico recogido 
 por una o varias interfaces en una o más colas, de forma que cada cola vea sólo una porción del tráfico, de una manera 
 coherente.
@@ -852,8 +865,8 @@ Por cada contador, extraemos una muestra $X_i$ como hemos visto en el \SSSEC{Ext
 aplicamos el algoritmo visto en la \SEC{AlgoritmoCUSUM}:
 
 \begin{align}
- C_i^+ &= \max \left[0,\left\{C_{i-1}^+\left(x_i-\mu_0\right)\right\}-K\right] \\
- C_i^- &= \max \left[0,\left\{C_{i-1}^-\left(x_i-\mu_0\right)\right\}-K\right]
+ C_i^+ &= \max \left[0,\left\{C_{i-1}^+\left(x_i-\mu_0\right)\right\}-K\right] \LABEQ{CUSUMPositivo}\\
+ C_i^- &= \max \left[0,\left\{C_{i-1}^-\left(x_i-\mu_0\right)\right\}-K\right] \LABEQ{CUSUMNegativo}
 \end{align}
 
 Donde $C_{i-1}$ es el contador almacenado en la anterior iteración.
@@ -990,21 +1003,144 @@ es necesario eliminarlos también de la tabla HASH. De otra forma, tendremos la 
 \subsubsection{Algoritmo del contador maestro}
 
 Con los conceptos vistos bajo esta sección, el algoritmo del contador maestro queda como se muestra en Algoritmo 
+\ALG{AlgoritmoContadorMaestro} y en \FIG{ActividadContadorMaestro}\footnote{En la figura se han eliminado los 
+condicionales de estado \texttt{APRENDIZAJE}, ya que es fácil de extrapolar y hacía innecesariamente grande la figura}. 
+En ellos, se usa la función \texttt{alarma\_ddos}, la cual se describirá posteriormente en la \SSEC{Decisor}.
 
-%\begin{algorithm}
-% \KwData{Lista de estadísticos cusum $l$, marca de tiempo $t$}
-% \KwResult{Lista de estadísticos con sólo las entradas con marca de tiempo $t_0$ que cumplen $t_0>t$}
-% \While{element $e \gets l.$last and $e.$timestamp $< t_0 $}{
-%	 usados.delete($e$)\;
-%	 libres.push($e$)\;
-% }
-% \caption{Procedimiento para la eliminación de contadores antiguos}
-% \LABALG{EliminacionContadoresAntigos}
-%\end{algorithm}
+Falta añadir que, destinado a extraer la media y desviación típica del tráfico, el contador dispone de un vector de 
+estadísticos \gls{CUSUM} de longitud suficiente para almacenar una muestra \gls{CUSUM} por cada iteración que tendrá en 
+el periodo de aprendizaje. Cuando dicho vector está lleno, el sistema extrae la media y la desviación típica con la que 
+trabajará el resto del tiempo.
+
+Para facilitar la lectura del algoritmo, se recomienda hacerlo en cinco pasadas:
+
+\begin{description}
+ \item [Periodo de aprendizaje] Suponiendo que estamos en periodo de aprendizaje, que abarcarían el algoritmo desde la 
+línea \ref{algoline:inicioAprendizaje} hasta \ref{algoline:finAprendizaje}
+ \item [Periodo de defensa sin alertas] A continuación, se leería una iteración del periodo de defensa sin alertas, que 
+sería leer todo el algoritmo sin entrar en los bloques condicionales que producen una llamada a la función 
+\texttt{alarma\_ddos}, esto es, las líneas \ref{algoline:inicio1Defensa}-\ref{algoline:fin1Defensa} y 
+\ref{algoline:2DefensaNoAlerta}. Tras ello, se volvería al estado de defensa.
+ \item[Periodo de defensa con alertas] Camino seguido si, durante el periodo de defensa recibimos una alerta, esto es, 
+un contador $C_i$ sobrepasa el umbral. Esto es, líneas \ref{algoline:inicio1Defensa}-\ref{algoline:fin1Defensa} y 
+\ref{algoline:InicioDefensaAlerta}-\ref{algoline:FinDefensaAlerta}. Tras ello, pasamos al estado de alerta.
+ \item[Estado de alerta] Si durante una iteración se lanza alguna alarma, estaremos a partir de esa 
+iteración y en la siguiente en estado de alarma. Así, la siguiente iteración cubrirá las líneas 
+\ref{algoline:inicioAlerta}-\ref{algoline:finAlerta1}, y marcará las direcciones IP nuevas como atacantes en el bloque 
+condicional de la línea \ref{algoline:condAlerta}. Si, durante este estado, no se entra en la condición anterior, ni 
+ningún contador supera el límite, se volverá al estado de defensa. En caso contrario, el sistema permanecerá en alerta.
+\end{description}
+
+\LinesNumbered
+\begin{algorithm}
+	\KwData{Piscina de contadores $P_C$, piscina de estadísticos \gls{CUSUM} $P_E$}
+	\KwResult{Actualización de la piscina de contadores}
+	alertas = falso\;
+	\While{listaContadores no vacía}{
+		Contador $C$ = extraer cabeza de $P_C$ \label{algoline:inicioAprendizaje}\label{algoline:inicio1Defensa}
+		                                       \label{algoline:inicioAlerta}\;
+		Estadísticos CUSUM $X$ = extraídos de contador $C$\;
+		IPAddr $E_{IP}$ = Dirección \gls{IP} externa de $C$\;
+		Stats $S_{IP}$ = CUSUM con clave $E_{IP}$ en $P_E$  \label{algoline:fin1Defensa}\label{algoline:finAlerta1}\;
+		\eIf{Periodo de aprendizaje}{
+			Añadir $X$ al vector de aprendizaje $V_A$\;
+			\If{$V_A$ lleno}{
+				\tcp{Fin del periodo de aprendizaje}
+				Almacenar media $\mu_0$ y desviación típica $\sigma$
+				Estado = \texttt{DEFENSA}
+			} 
+		}{                                                              \label{algoline:finAprendizaje}
+			\If{$S_{IP}$ es nuevo y estamos en alerta}{                   \label{algoline:condAlerta}
+				alarma\_ddos($C_{i}$)                                       \label{algoline:AlarmaNuevaIp}\;
+				estado alerta\;
+				alertas = verdadero\;
+			}
+			Iteración \gls{CUSUM} con $C_{i-i}=S_{IP},x_i=X$, usando $\mu_0$ y $\sigma$ Guardar en $S_{IP}$
+                                                \label{algoline:2DefensaNoAlerta}\label{algoline:InicioDefensaAlerta}\;
+			\If{$C_{i-1} > \text{Límites }H$}{
+				alarma\_ddos($C_{i}$)                   \label{algoline:AlarmaUmbralSuperado}\;
+				Estado = \texttt{ALARMA}\;
+				alertas = verdadero\;
+			}                                         \label{algoline:FinDefensaAlerta}
+		}
+	}
+	\If{alertas = verdadero}{
+		Estado = \texttt{DEFENSA}\;
+	}
+\caption{Algoritmo usado en el contador maestro}
+\LABALG{AlgoritmoContadorMaestro}
+\end{algorithm}
+\LinesNotNumbered
 
 
-\subsection{Decisor}\index{Decisor}
+\begin{figure}[htbp]
+\centering
+\includegraphics[height=0.5\textheight]{CapituloEstructura/Figuras/ActividadContadorMaestro-crop}
+\caption{Diagrama de Actividad del Contador Maestro}
+\LABFIG{ActividadContadorMaestro}
+\end{figure}
+%
 
+\subsection{Decisor}\index{Decisor}\LABSSEC{Decisor}
+Como último paso, resta decidir qué IP es maliciosa y qué IP no lo es, mediante el algoritmo \gls{CUSUM} 
+(Ecuaciones \EQ{CUSUMPositivo} y \EQ{CUSUMNegativo}). Una vez calculado $C_i$ siguiendo Algoritmo 
+\ALG{AlgoritmoContadorMaestro}, se comparará con un valor $Threshold$, que se tendrá pre-cacheado para mayor comodidad.
+
+Tras ello, se examinará la comparación, y se emitirá un mensaje de alerta\index{Alerta}. Como ya hemos dicho, la 
+alerta será emitida por el protocolo Kafka en formato \gls{json}.
+
+\begin{lstlisting}[language=json,caption={Ejemplo de alarma por umbral superado}, breaklines=true, 
+label=code:ejemplosAlarmaUmbral,numbers=left,float=htbp]
+{
+	"timestamp": 1410602387, 
+	"extern_ip": "8.8.8.8", 
+	"positive_tcp_bytes_percent_value": 25.000000,
+	"negative_udp_bytes_percent_value": 6.666667, 
+	"positive_udp_pkts_percent_value": 13.333333, 
+	"reason": "threshold"
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=json,caption={Ejemplo de alarma por nueva IP}, breaklines=true, 
+label=code:ejemplosAlarmaNuevaIP,numbers=left,float=htbp]
+{"timestamp":1410622605,"extern_ip":"8.8.8.8","reason":"New IP in alarm time"}
+\end{lstlisting}
+
+
+En \lstlistingname{} \ref{code:ejemplosAlarmaUmbral} vemos el ejemplo de la alarma emitida si se supera el umbral 
+\gls{CUSUM}. Esto es, la alarma que se emite en la línea \ref{algoline:AlarmaUmbralSuperado} del algoritmo 
+\ALG{AlgoritmoContadorMaestro}.
+
+En el mensaje \gls{json} podemos ver los campos \texttt{timestamp}, que indican el momento 
+de la alerta en formato UNIX time\index{Unix time}\footnote{Número de segundos transcurridos desde el 1 de enero de 1970 
+a las 00:00}, la dirección que ocasionó la alerma, y los distintos campos que han superado el umbral positivo o 
+negativo. Las unidades de estos están en ``desviaciones típicas'', esto es, un valor de $25$ indica que $C_i$ estaba, en 
+ese momento, a $25\sigma$.
+
+Por último, se indica que la razón del mensaje ha sido superar el valor límite. Si lo comparamos con el mensaje de 
+\lstlistingname{} \ref{code:ejemplosAlarmaNuevaIP}, vemos que no aparecen ninguno de los campos relacionados con la 
+superación del valor límite y, en su lugar, sólo aparece que la alarma está causada por ser una \gls{IP} no vista 
+previamente en periodo de alerta. Este mensaje sería el enviado en la línea \ref{algoline:AlarmaNuevaIp} del Algoritmo
+\ALG{AlgoritmoContadorMaestro}.
+
+\section{Conclusiones}
+\redborderddos{} es capaz de analizar el tráfico, aplicando técnicas eficientes de almacenamiento de datos y uso de la 
+memoria y miltiprocesamiento, tales como las tablas hash, el alineamiento de los datos en memoria y el uso del 
+miltihilo, respectivamente. Su diseño modular permite que cada procesador dedique su tiempo a realizar una única tarea, 
+de una forma exclusiva, y se usan técnicas rápidas de IPC tales como el intercambio de piscinas que, si bien usan mucha 
+memoria, son necesarias si queremos conseguir el rendimiento esperado.
+
+Externamente, \redborderddos{} necesita como mínimo dos interfaces de entrada de datos, que serán una copia del tráfico 
+saliente y entrante a los activos a proteger. Podemos, a partir de ahí, usar tantas interfaces como queramos, tanto de 
+entrada como de salida.
+
+Internamente, un clúster redirigirá el tráfico hacia varios hilos contadores, según el flujo de datos al que 
+pertenezcan. Ellos almacenarán las características del tráfico, y contaran paquetes u octetos de distintas 
+características según el protocolo al que pertenezcan, que sean salientes o entrantes, y, si es \gls{TCP}, que tengan 
+determinadas banderas activadas.
+
+Tras ello, un contador maestro aplicará el algoritmo \gls{CUSUM} a los contadores, para finalmente decidir si el flujo 
+es legítimo o, por el contrario, se trata de un flujo atacante.
 
 \section{Resúmenes}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{Resumen}[Alcance de \redborderddos]
@@ -1070,7 +1206,7 @@ ataques semánticos.
 \begin{flalign*}
   &\begin{cases}
     \text{Si la memoria no está alineada, se requieren más instrucciones} \\
-    \text{Memoria no alineada $\rightarrow$} \\
+    \text{Memoria no alineada $\rightarrow$ Pérdidas de rendimiento}\\
     \text{Región crítica}\\
     \quad\text{Zona de memoria que puede ser modificada por dos hilos}\\
     \text{Variables cerrojo}\\
@@ -1138,5 +1274,14 @@ ataques semánticos.
   \end{cases}&
 \end{flalign*}
 
+\subsection*{Decisor}
+\begin{flalign*}
+  &\begin{cases}
+    \text{Intercalado en el contador maestro}\\
+    \quad\text{1 iteración CM $\rightarrow$ 1 iteración decisor.}\\
+    \text{Envía alarma indicando el tipo (umbral / nueva IP en alarma}\\
+    \quad\text{Si alarma por límites $\rightarrow$ qué límites y cuánto}\\
+  \end{cases}&
+\end{flalign*}
 \end{Resumen}
 
