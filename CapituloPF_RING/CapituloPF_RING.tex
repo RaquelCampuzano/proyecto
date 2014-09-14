@@ -508,6 +508,46 @@ Se resumen los resultados de las pruebas en la \TAB{ResultadosPFring}.
   \LABTAB{ResultadosPFring}
 \end{table}
 
+\section{Aportaciones realizadas a PF\_RING}
+\texttt{PF\_RING} es, en su mayor parte, código libre licenciado bajo GPL2. Por ello, su código se puede estudiar y 
+modificar libremente. Durante el desarrollo del proyecto, se descubrió que \texttt{PF\_RING} no balanceaba bien los 
+paquetes fragmentados, y se ayudó Alfredo Cardigliano, principal mantenedor del proyecto, a solucionar el fallo.
+
+Por defecto, \texttt{PF\_RING} balancea haciendo un hash simétrico de dirección origen y destino, puerto origen y 
+destino y protocolo. Sin embargo, la información del puerto no viaja en el paquete fragmentado, lo que los hacen 
+difícil de manejar para el balanceador.
+
+Para su correcto procesado, \texttt{PF\_RING} almacena el ID del fragmento y el socket al que lo ha dirigido. Sin 
+embargo, este proceso no contemplaba más allá de dos fragmentos, y eliminaba esta información si llegaba el segundo 
+fragmento.
+
+\begin{itemize}
+ \item El primer fragmento sería identificado como aquel que tuviese los campos de la cabecera IP 
+\texttt{fragment\_offset}=0 y la bandera \texttt{more\_fragments}=1
+ \item Por su parte, el segundo fragmento supondría \texttt{fragment\_offset}$ 
+\neq$0, y \texttt{more\_fragments}=0.
+\end{itemize}
+
+Tras las modificaciones, \texttt{PF\_RING} identifica tres tipos de fragmentos:
+\begin{enumerate}
+ \item Primer fragmento, que cumple \texttt{fragment\_offset}=0 y \texttt{more\_fragments}=1.
+ \item Fragmentos intermedios, que cumplen \texttt{fragment\_offset}$\neq$0 y \texttt{more\_fragments}=1.
+ \item Último fragmento, que cumple \texttt{fragment\_offset}$\neq$0 y \texttt{more\_fragments}=0.
+\end{enumerate}
+
+Y sólo se elimina la información anteriormente descrita al llegar el último fragmento.
+
+\begin{verbatim}
+$ svn co https://svn.ntop.org/svn/ntop/trunk/PF_RING
+$ cd PF_RING
+$ svn log -r 8015
+------------------------------------------------------------------------
+r8015 | cardigliano | 2014-07-31 20:17:26 +0200 (jue 31 de jul de 2014) | 1 línea
+
+fragment cache fix (courtesy of Eugenio Perez <eugenio@redborder.net>)
+------------------------------------------------------------------------
+\end{verbatim}
+
 
 \section{Conclusiones}
 El núcleo de un sistema operativo como Linux es el encargado de hablar con el hardware disponible y, por tanto, de 
@@ -527,6 +567,9 @@ directa del paquete desde la memoria de la tarjeta, evitando así la primera cop
 lado, este marco de trabajo permite crear un Cluster \texttt{PF\_RING}, que permite dividir el troncal de tráfico en 
 $n$ flujos independientes y coherentes, y crear un socket distinto para cada uno, de forma que los hilos lectores no 
 tienen que competir para obtener los paquetes.
+
+Por último, gracias a que \texttt{PF\_RING} es en parte de código libre, se pudo realizar aportaciones al proyecto y, 
+de esa forma, mejorarlo un poco.
 
 \section{Resumen}
 \begin{Resumen}[Resumen de PF RING]
