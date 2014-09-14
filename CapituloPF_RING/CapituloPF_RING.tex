@@ -14,13 +14,21 @@ proceso de captura de paquetes esté bien diseñado y sea eficiente. De no serlo
 pérdidas de paquetes, y nuestra monitorización no será efectiva.
 
 %TODO unir con lo demás
-Ya hemos cubierto la eficiencia en términos de procesamiento de paquetes en los anteriores capítulos. 
+Ya hemos cubierto la eficiencia en términos de procesamiento de paquetes en los anteriores capítulos. La parte que nos 
+queda por cubrir, a fin de ser capaces de aguantar y analizar un ataque \gls{DDoS}, es la parte de recogida de paquetes 
+que, como veremos en este capítulo, también debe ser afinada.
 
 \gls{PFRING} es, según su autor Luca Deri, una tecnología que persigue capturar tráfico a $10G$ sin necesitar 
 tarjetas especializadas, sin pérdidas y bajo cualquier circunstancia del tráfico, de forma que sea posible crear sondas 
 de tráfico software con el mismo rendimiento que las basadas en hardware \cite{LucaDeriPFRING}.
 
-A lo largo de este capítulo, %TODO
+A lo largo de este capítulo, describiremos los distintos aspectos de \gls{PFRING}. Comenzamos describiendo algunos 
+términos y técnicas usadas en el sistema de recogida de paquetes en \SEC{PFRINGConceptosPreliminares}, para observar 
+cómo los aplica el Sistema Operativo Linux en la sección \SEC{ProcesoPaquetesLinux}. Destacaremos en esta sección las 
+deficiencias que corrige \texttt{PF\_RING}, y veremos cómo las corrige en la sección \SEC{AlternativaPFRING}.
+
+Por último, se comentará un parche que el autor del proyecto añadió a \texttt{PF\_RING}, en la sección 
+\SEC{AportacionPFRING}.
 
 \section{Conceptos preliminares}\SEC{PFRINGConceptosPreliminares}
 Antes de explicar cómo consigue \texttt{PF\_RING} mejorar la velocidad de captura de paquetes, es necesario explicar 
@@ -118,7 +126,7 @@ el procesador sólo necesita iniciar la copia, y recibirá una notificación cua
 interrupción), quedando libre para realizar otras tareas.
 
 
-\section{Proceso de paquetes por el núcleo linux}\LABSEC{sec:ProcesoPaquetesLinux}
+\section{Proceso de paquetes por el núcleo linux}\LABSEC{ProcesoPaquetesLinux}
 El paso de paquetes a través del núcleo Linux puede ser un importante cuello de botella. Para entender cómo evitarlo, 
 es necesario conocer cómo trabaja Linux con los paquetes que recibe, qué camino siguen y qué parte del mismo es el más 
 costoso.
@@ -302,7 +310,7 @@ Resumiendo, por cada paquete recibido, tenemos:
  \item Copia de memoria al espacio de usuario.
 \end{enumerate}
 
-\section{La alternativa: PF\_RING}\LABSEC{La alternativa: PF RING}
+\section{La alternativa: PF\_RING}\LABSEC{AlternativaPFRING}
 Luca Deri propuso crear un camino directo desde la tarjeta de red hasta el espacio de usuario, que evitase realizar 
 todas las operaciones ineficientes que Linux necesita.
 
@@ -508,7 +516,7 @@ Se resumen los resultados de las pruebas en la \TAB{ResultadosPFring}.
   \LABTAB{ResultadosPFring}
 \end{table}
 
-\section{Aportaciones realizadas a PF\_RING}
+\section{Aportaciones realizadas a PF\_RING}\LABSEC{AportacionPFRING}
 \texttt{PF\_RING} es, en su mayor parte, código libre licenciado bajo GPL2. Por ello, su código se puede estudiar y 
 modificar libremente. Durante el desarrollo del proyecto, se descubrió que \texttt{PF\_RING} no balanceaba bien los 
 paquetes fragmentados, y se ayudó Alfredo Cardigliano, principal mantenedor del proyecto, a solucionar el fallo.
