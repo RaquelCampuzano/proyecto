@@ -1,0 +1,58 @@
+% !TEX root =../LibroTipoETSI.tex
+\chapter{Conclusiones}\LABCHAP{Conclusiones}
+\pagestyle{esitscCD}
+
+\lettrine[lraise=-0.1, lines=2, loversize=0.25]{T}ras haber investigado sobre la taxonomía de los distintos ataques 
+\gls{DoS}, el método seguido para detectar parte de ellos, el uso de PF\_RING como acelerador de captura y las diversas 
+pruebas realizadas, plasmamos en este capítulo las principales conclusiones.
+
+\section{Taxonomía de los ataques DDoS}
+Un ataque \gls{DDoS} es toda acción que impida el acceso de usuarios legítimos a un servicio. de información. Podemos 
+dividirlos, según su método de detección, en dos grandes grupos: Ataques por inundación, que son aquellos destinados a 
+saturar los recursos de algún elemento de la comunicación, y ataques semánticos, que buscan explotar algún fallo en el 
+algoritmo de los procesos implicados en la comunicación.
+
+Para detectar los primeros, se deben usar sistemas de descubrimiento de cambios en tráfico, esto es, se deben extraer 
+las características \emph{normales} del tráfico, y analizar si el tráfico instantáneo entra dentro de esos parámetros o 
+no.
+
+Por otro lado, la forma idónea de detectar ataques semánticos es mediante la búsqueda de patrones. Esto es, se debe
+analizar el contenido de los paquetes, y detectar de esa forma paquetes con contenido malicioso.
+
+\section{Algoritmo CUSUM}
+El algoritmo CUSUM es un sistema de control de procesos con memoria, esto es, un sistema de monitorización que permite 
+detectar variaciones en la norma no solo basándose en el instante actual, sino en el comportamiento de la variable a lo 
+largo del tiempo, sin requerir para ello almacenar todos sus estados anteriores.
+
+De entre los posibles valores a monitorizar, se han escogido ocho valores que han demostrado ser representativos: 
+Paquetes y bytes TCP, ICMP, UDP, densidad de conexiones de un solo sentido y relación entre paquetes entrantes y 
+salientes.
+
+Sin embargo, es necesario indicarle al algoritmo qué norma debe seguir el tráfico, y es la parte compleja de la 
+situación. En las pruebas realizadas, el tráfico es sintético y predecible, pero el tráfico IP real varía mucho para un 
+mismo segmento a diferentes horas del día, día de la semana, y periodos del año. Por ello, lo que se ha aprendido a una 
+hora, no tiene por qué ser válido a la siguiente hora, y un tráfico legítimo puede ser clasificado rápidamente como 
+ilegítimo. 
+
+Así, CUSUM aplicado directamente no resulta una solución eficaz para la detección de anomalías en el tráfico de red y, 
+por tanto, para detectar ataques \gls{DDoS}.
+
+\section{PF\_RING y ZeroCopy}
+PF\_RING es una tecnología diseñada para sustituir el tratamiento normal que el núcleo de Linux da a los paquetes 
+destinados a la monitorización pasiva, eliminando redundancias y deficiencias que el modelo actual tiene. 
+
+PF\_RING funciona, principalmente, reservando de antemano muchos de los recursos que la máquina necesita para almacenar 
+un paquete, y evitando que éste pase por la pila normal del núcleo, la cual tiene el inconveniente de necesitar, 
+fundamentalmente, excesivas copias de memoria y demasiadas llamadas al sistema.
+
+Por su parte, ZeroCopy es un marco de trabajo en el que los paquetes se pueden distribuir entre aplicaciones sin 
+necesitar por ello realizar varias copias para cada una de ellas. Si funcionamos en modo ZeroCopy puro, además, 
+evitamos la copia de memoria entre la tarjeta, el núcleo y el espacio de usuario, consiguiendo así muchos más recursos 
+para el procesado de paquetes, misión principal del sensor.
+
+En las pruebas realizadas, ambas tecnologías se muestran muy beneficiosas a la hora de analizar el tráfico de manera 
+pasiva, pasando de no ser capaz de superar los 7000mbps en un enlace saturado usando el 100\% de la CPU a leer a 
+velocidad de cable usando sólo un 4\% de la CPU.
+
+\endinput
+
