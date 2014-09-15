@@ -133,7 +133,8 @@ la captura \emph{entrenamiento.pcap} por uno de los dos segmentos, mientras que 
 se hará pasar tráfico claramente atacante: una ráfaga de paquetes UDP a alta velocidad, desde un pcap preparado.
 
 Se modificará \texttt{rbddos} para que emita un mensaje si, en un ciclo, se ha visto bajo ataque, y para que emita el 
-tráfico total visto. De esta forma, podremos saber si el programa funciona correctamente.
+tráfico total visto. De esta forma, podremos saber si el programa funciona correctamente. Las IP normales estarán en 
+una red distinta de las atacante (\texttt{172.26.0.0/16} frente a \texttt{10.0.0.0/8})
 
 Se utilizarán los datos de entrenamiento de la anterior prueba.
 
@@ -160,6 +161,17 @@ Se detiene el pcap a los 10 segundos. Tras ello, se analiza la salida, y se regi
 \end{itemize}
 
 \subsubsection{Reultados}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{CapituloPruebas/Figuras/pruebaTrafico-crop}
+\caption{Resultados de la prueba}
+\LABFIG{PruebaTrafico}
+\end{figure}
+%
+
+En los resultados, \texttt{rbddos} fue capaz de marcar los momentos ajo ataque a distintas velocidades, y todos los 
+elementos atacantes pertenecían al conjunto de direcciones IP correctos.
 
 \section{Prueba realizada en Produban}\LABSEC{PruebaProduban}
 \subsection{Entorno}
