@@ -1,0 +1,144 @@
+\section{read\+Only\+Globals\+\_\+s Struct Reference}
+\label{structread_only_globals__s}\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+
+
+{\ttfamily \#include $<$global.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ {\bf preload}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>pfring\_zc\_cluster $\ast$ {\bf zc}\\
+\>pfring\_zc\_worker $\ast$ {\bf zw}\\
+\>pfring\_zc\_queue $\ast$$\ast$ {\bf inzq}\\
+\>pfring\_zc\_queue $\ast$$\ast$ {\bf outzq}\\
+\>pfring\_zc\_multi\_queue $\ast$ {\bf outzmq}\\
+\>pfring\_zc\_buffer\_pool $\ast$ {\bf wsp}\\
+\} {\bf zc}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em zero-\/copy related \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u\_int32\_t {\bf num\_devices}\\
+\>u\_int32\_t {\bf num\_in\_devices}\\
+\>u\_int32\_t {\bf num\_threads}\\
+\>int $\ast$ {\bf bind\_core}\\
+\>int {\bf bind\_worker\_core}\\
+\>char $\ast$$\ast$ {\bf devices}\\
+\>uint8\_t {\bf enable\_debug}\\
+\>uint8\_t {\bf wait\_for\_packet}\\
+\>time\_t {\bf learn\_time\_s}\\
+\>time\_t {\bf alarm\_time\_s}\\
+\>struct timeval {\bf purge\_time}\\
+\>struct timeval {\bf purge\_aggressivity}\\
+\>const char $\ast$ {\bf kafka\_str}\\
+\} {\bf config}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em Configuration related. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>rd\_kafka\_t $\ast$ {\bf rk}\\
+\>rd\_kafka\_topic\_t $\ast$ {\bf rkt}\\
+\} {\bf kafka}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Variables that should not be edited while the programm is running. 
+
+\subsection{Member Data Documentation}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!alarm\+\_\+time\+\_\+s@{alarm\+\_\+time\+\_\+s}}
+\index{alarm\+\_\+time\+\_\+s@{alarm\+\_\+time\+\_\+s}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{alarm\+\_\+time\+\_\+s}]{\setlength{\rightskip}{0pt plus 5cm}time\+\_\+t read\+Only\+Globals\+\_\+s\+::alarm\+\_\+time\+\_\+s}\label{structread_only_globals__s_adae234a83378cbd995aa5012a23da207}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!bind\+\_\+core@{bind\+\_\+core}}
+\index{bind\+\_\+core@{bind\+\_\+core}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{bind\+\_\+core}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ read\+Only\+Globals\+\_\+s\+::bind\+\_\+core}\label{structread_only_globals__s_a69ab72dfeeb9d9a277f0d3b0f37193c5}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!bind\+\_\+worker\+\_\+core@{bind\+\_\+worker\+\_\+core}}
+\index{bind\+\_\+worker\+\_\+core@{bind\+\_\+worker\+\_\+core}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{bind\+\_\+worker\+\_\+core}]{\setlength{\rightskip}{0pt plus 5cm}int read\+Only\+Globals\+\_\+s\+::bind\+\_\+worker\+\_\+core}\label{structread_only_globals__s_a0a21f36a6f2cb211ee84855060186697}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!config@{config}}
+\index{config@{config}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  read\+Only\+Globals\+\_\+s\+::config}\label{structread_only_globals__s_a42db839b75b2da1d224ef01b2d9549fe}
+
+
+Configuration related. 
+
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!devices@{devices}}
+\index{devices@{devices}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{devices}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$$\ast$ read\+Only\+Globals\+\_\+s\+::devices}\label{structread_only_globals__s_ab6554dfa65409e3c69b35f9b17be6e60}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!enable\+\_\+debug@{enable\+\_\+debug}}
+\index{enable\+\_\+debug@{enable\+\_\+debug}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{enable\+\_\+debug}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t read\+Only\+Globals\+\_\+s\+::enable\+\_\+debug}\label{structread_only_globals__s_ac62562826d7719dd2d4dafe70d1f7c80}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!inzq@{inzq}}
+\index{inzq@{inzq}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{inzq}]{\setlength{\rightskip}{0pt plus 5cm}pfring\+\_\+zc\+\_\+queue$\ast$$\ast$ read\+Only\+Globals\+\_\+s\+::inzq}\label{structread_only_globals__s_a16b751de655f157c45fb1f4c2c836566}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!kafka@{kafka}}
+\index{kafka@{kafka}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{kafka}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  read\+Only\+Globals\+\_\+s\+::kafka}\label{structread_only_globals__s_a006d32d8b59d2df20e79b9df8045cb98}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!kafka\+\_\+str@{kafka\+\_\+str}}
+\index{kafka\+\_\+str@{kafka\+\_\+str}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{kafka\+\_\+str}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ read\+Only\+Globals\+\_\+s\+::kafka\+\_\+str}\label{structread_only_globals__s_ad6a717e6a0a89f2365b1c06c16c416ca}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!learn\+\_\+time\+\_\+s@{learn\+\_\+time\+\_\+s}}
+\index{learn\+\_\+time\+\_\+s@{learn\+\_\+time\+\_\+s}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{learn\+\_\+time\+\_\+s}]{\setlength{\rightskip}{0pt plus 5cm}time\+\_\+t read\+Only\+Globals\+\_\+s\+::learn\+\_\+time\+\_\+s}\label{structread_only_globals__s_ab6c66a32ddad223184bfb699677963fc}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!num\+\_\+devices@{num\+\_\+devices}}
+\index{num\+\_\+devices@{num\+\_\+devices}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{num\+\_\+devices}]{\setlength{\rightskip}{0pt plus 5cm}u\+\_\+int32\+\_\+t read\+Only\+Globals\+\_\+s\+::num\+\_\+devices}\label{structread_only_globals__s_a1a318033a7683b65560b297fc8c13bd9}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!num\+\_\+in\+\_\+devices@{num\+\_\+in\+\_\+devices}}
+\index{num\+\_\+in\+\_\+devices@{num\+\_\+in\+\_\+devices}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{num\+\_\+in\+\_\+devices}]{\setlength{\rightskip}{0pt plus 5cm}u\+\_\+int32\+\_\+t read\+Only\+Globals\+\_\+s\+::num\+\_\+in\+\_\+devices}\label{structread_only_globals__s_a3b6f71819875272dc61d1008bac5517f}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!num\+\_\+threads@{num\+\_\+threads}}
+\index{num\+\_\+threads@{num\+\_\+threads}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{num\+\_\+threads}]{\setlength{\rightskip}{0pt plus 5cm}u\+\_\+int32\+\_\+t read\+Only\+Globals\+\_\+s\+::num\+\_\+threads}\label{structread_only_globals__s_a0fafb46667acd8ef00900c6e859aebfc}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!outzmq@{outzmq}}
+\index{outzmq@{outzmq}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{outzmq}]{\setlength{\rightskip}{0pt plus 5cm}pfring\+\_\+zc\+\_\+multi\+\_\+queue$\ast$ read\+Only\+Globals\+\_\+s\+::outzmq}\label{structread_only_globals__s_ae02d026388789a1facfdeb89caf2216e}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!outzq@{outzq}}
+\index{outzq@{outzq}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{outzq}]{\setlength{\rightskip}{0pt plus 5cm}pfring\+\_\+zc\+\_\+queue$\ast$$\ast$ read\+Only\+Globals\+\_\+s\+::outzq}\label{structread_only_globals__s_abe9b014d2f1b03b2dbb828f1a1f40ce6}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!preload@{preload}}
+\index{preload@{preload}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{preload}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ read\+Only\+Globals\+\_\+s\+::preload}\label{structread_only_globals__s_a60e5a8e86de21b003db509ca0844e3db}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!purge\+\_\+aggressivity@{purge\+\_\+aggressivity}}
+\index{purge\+\_\+aggressivity@{purge\+\_\+aggressivity}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{purge\+\_\+aggressivity}]{\setlength{\rightskip}{0pt plus 5cm}struct timeval read\+Only\+Globals\+\_\+s\+::purge\+\_\+aggressivity}\label{structread_only_globals__s_aa9d86ab08461823946a4ce6994a33a7a}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!purge\+\_\+time@{purge\+\_\+time}}
+\index{purge\+\_\+time@{purge\+\_\+time}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{purge\+\_\+time}]{\setlength{\rightskip}{0pt plus 5cm}struct timeval read\+Only\+Globals\+\_\+s\+::purge\+\_\+time}\label{structread_only_globals__s_acdb43c60789b5f3ba47ae7aaf0625e1a}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!rk@{rk}}
+\index{rk@{rk}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{rk}]{\setlength{\rightskip}{0pt plus 5cm}rd\+\_\+kafka\+\_\+t$\ast$ read\+Only\+Globals\+\_\+s\+::rk}\label{structread_only_globals__s_a4576c4a53ed4afb4c1f711ba0cece615}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!rkt@{rkt}}
+\index{rkt@{rkt}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{rkt}]{\setlength{\rightskip}{0pt plus 5cm}rd\+\_\+kafka\+\_\+topic\+\_\+t$\ast$ read\+Only\+Globals\+\_\+s\+::rkt}\label{structread_only_globals__s_a005192eb9f393450707d64d5e56e0093}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!wait\+\_\+for\+\_\+packet@{wait\+\_\+for\+\_\+packet}}
+\index{wait\+\_\+for\+\_\+packet@{wait\+\_\+for\+\_\+packet}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{wait\+\_\+for\+\_\+packet}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t read\+Only\+Globals\+\_\+s\+::wait\+\_\+for\+\_\+packet}\label{structread_only_globals__s_a9f520e0b430add4e16d5b5ef746fb042}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!wsp@{wsp}}
+\index{wsp@{wsp}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{wsp}]{\setlength{\rightskip}{0pt plus 5cm}pfring\+\_\+zc\+\_\+buffer\+\_\+pool$\ast$ read\+Only\+Globals\+\_\+s\+::wsp}\label{structread_only_globals__s_a736918ba4123e3c87aee9280dcc7b116}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!zc@{zc}}
+\index{zc@{zc}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{zc}]{\setlength{\rightskip}{0pt plus 5cm}pfring\+\_\+zc\+\_\+cluster$\ast$ read\+Only\+Globals\+\_\+s\+::zc}\label{structread_only_globals__s_a269e34a802b74857cff01946b6fc929a}
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!zc@{zc}}
+\index{zc@{zc}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{zc}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   read\+Only\+Globals\+\_\+s\+::zc}\label{structread_only_globals__s_ae9e24f762ee7976c1a20d8533345097f}
+
+
+zero-\/copy related 
+
+\index{read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}!zw@{zw}}
+\index{zw@{zw}!read\+Only\+Globals\+\_\+s@{read\+Only\+Globals\+\_\+s}}
+\subsubsection[{zw}]{\setlength{\rightskip}{0pt plus 5cm}pfring\+\_\+zc\+\_\+worker$\ast$ read\+Only\+Globals\+\_\+s\+::zw}\label{structread_only_globals__s_a86de855611710a5d5a04cdea948431fb}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+{\bf global.\+h}\end{DoxyCompactItemize}

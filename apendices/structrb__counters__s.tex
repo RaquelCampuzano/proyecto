@@ -1,0 +1,173 @@
+\section{rb\+\_\+counters\+\_\+s Struct Reference}
+\label{structrb__counters__s}\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+
+
+{\ttfamily \#include $<$rb\+\_\+counters.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t {\bf magic}
+\begin{DoxyCompactList}\small\item\em Just useful for integrity. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+addr\+\_\+t} {\bf external\+\_\+address}
+\begin{DoxyCompactList}\small\item\em External I\+P address. \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf tcp\+\_\+pkts}
+\begin{DoxyCompactList}\small\item\em number tcp packets in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf udp\+\_\+pkts}
+\begin{DoxyCompactList}\small\item\em number udp packets in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf icmp\+\_\+pkts}
+\begin{DoxyCompactList}\small\item\em number icmp packets in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf total\+\_\+pkts}
+\begin{DoxyCompactList}\small\item\em total number packets in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf tcp\+\_\+bytes}
+\begin{DoxyCompactList}\small\item\em tcp bytes in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf udp\+\_\+bytes}
+\begin{DoxyCompactList}\small\item\em udp bytes in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf icmp\+\_\+bytes}
+\begin{DoxyCompactList}\small\item\em icmp bytes in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf total\+\_\+bytes}
+\begin{DoxyCompactList}\small\item\em total bytes in the flow \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf input\+\_\+pkts}
+\begin{DoxyCompactList}\small\item\em Input packets in the flow;. \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf output\+\_\+pkts}
+\begin{DoxyCompactList}\small\item\em Output packets in the flow;. \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf input\+\_\+bytes}
+\begin{DoxyCompactList}\small\item\em Input bytes in the flow;. \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf output\+\_\+bytes}
+\begin{DoxyCompactList}\small\item\em Output bytes in the flow;. \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf syn\+\_\+counter}
+\begin{DoxyCompactList}\small\item\em Number of tcp packets with syn flag enabled. \end{DoxyCompactList}\item 
+uint32\+\_\+t {\bf ack\+\_\+counter}
+\begin{DoxyCompactList}\small\item\em Number of tcp packets with ack flag enabled. \end{DoxyCompactList}\item 
+tommy\+\_\+hashtable\+\_\+node {\bf hashtable\+\_\+node}
+\begin{DoxyCompactList}\small\item\em Node iterator to store and recover for hashtable node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Fundamental counters structure 
+
+\subsection{Member Data Documentation}
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!ack\+\_\+counter@{ack\+\_\+counter}}
+\index{ack\+\_\+counter@{ack\+\_\+counter}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{ack\+\_\+counter}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::ack\+\_\+counter}\label{structrb__counters__s_ad56857cdaf1a1d6f0e48369370452555}
+
+
+Number of tcp packets with ack flag enabled. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!external\+\_\+address@{external\+\_\+address}}
+\index{external\+\_\+address@{external\+\_\+address}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{external\+\_\+address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+addr\+\_\+t} rb\+\_\+counters\+\_\+s\+::external\+\_\+address}\label{structrb__counters__s_a0c78d881462006b548458e6c3b203fce}
+
+
+External I\+P address. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!hashtable\+\_\+node@{hashtable\+\_\+node}}
+\index{hashtable\+\_\+node@{hashtable\+\_\+node}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{hashtable\+\_\+node}]{\setlength{\rightskip}{0pt plus 5cm}tommy\+\_\+hashtable\+\_\+node rb\+\_\+counters\+\_\+s\+::hashtable\+\_\+node}\label{structrb__counters__s_ae3969735e584c9d4b3ad8177cd37a43c}
+
+
+Node iterator to store and recover for hashtable node. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!icmp\+\_\+bytes@{icmp\+\_\+bytes}}
+\index{icmp\+\_\+bytes@{icmp\+\_\+bytes}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{icmp\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::icmp\+\_\+bytes}\label{structrb__counters__s_aa06f1ab9ee525c6559ee80637013f92d}
+
+
+icmp bytes in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!icmp\+\_\+pkts@{icmp\+\_\+pkts}}
+\index{icmp\+\_\+pkts@{icmp\+\_\+pkts}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{icmp\+\_\+pkts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::icmp\+\_\+pkts}\label{structrb__counters__s_a6d5c2ba252a0952f600eccfa2d8bde17}
+
+
+number icmp packets in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!input\+\_\+bytes@{input\+\_\+bytes}}
+\index{input\+\_\+bytes@{input\+\_\+bytes}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{input\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::input\+\_\+bytes}\label{structrb__counters__s_a2a7aad9db4af2d8909fffd8affd850a0}
+
+
+Input bytes in the flow;. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!input\+\_\+pkts@{input\+\_\+pkts}}
+\index{input\+\_\+pkts@{input\+\_\+pkts}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{input\+\_\+pkts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::input\+\_\+pkts}\label{structrb__counters__s_a12f45ccf5c1f9f09849f7ffa0a6a0294}
+
+
+Input packets in the flow;. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!magic@{magic}}
+\index{magic@{magic}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{magic}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t rb\+\_\+counters\+\_\+s\+::magic}\label{structrb__counters__s_a4637efba80a0b333e28d08e0ac5fcbc2}
+
+
+Just useful for integrity. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!output\+\_\+bytes@{output\+\_\+bytes}}
+\index{output\+\_\+bytes@{output\+\_\+bytes}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{output\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::output\+\_\+bytes}\label{structrb__counters__s_a0cf94d1094d11324f977c21ad57c52f2}
+
+
+Output bytes in the flow;. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!output\+\_\+pkts@{output\+\_\+pkts}}
+\index{output\+\_\+pkts@{output\+\_\+pkts}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{output\+\_\+pkts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::output\+\_\+pkts}\label{structrb__counters__s_a02be1979992526d5404fecb9fb700048}
+
+
+Output packets in the flow;. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!syn\+\_\+counter@{syn\+\_\+counter}}
+\index{syn\+\_\+counter@{syn\+\_\+counter}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{syn\+\_\+counter}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::syn\+\_\+counter}\label{structrb__counters__s_ab366e11e45d77c0861aa858ffd28e43e}
+
+
+Number of tcp packets with syn flag enabled. 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!tcp\+\_\+bytes@{tcp\+\_\+bytes}}
+\index{tcp\+\_\+bytes@{tcp\+\_\+bytes}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{tcp\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::tcp\+\_\+bytes}\label{structrb__counters__s_aeec89214dbefa6f268ddf75138debc56}
+
+
+tcp bytes in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!tcp\+\_\+pkts@{tcp\+\_\+pkts}}
+\index{tcp\+\_\+pkts@{tcp\+\_\+pkts}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{tcp\+\_\+pkts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::tcp\+\_\+pkts}\label{structrb__counters__s_a4a76cc7a471f980d4c1a2fee752fd797}
+
+
+number tcp packets in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!total\+\_\+bytes@{total\+\_\+bytes}}
+\index{total\+\_\+bytes@{total\+\_\+bytes}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{total\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::total\+\_\+bytes}\label{structrb__counters__s_ad54764c285babd4deaa3ebd973b5ba5f}
+
+
+total bytes in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!total\+\_\+pkts@{total\+\_\+pkts}}
+\index{total\+\_\+pkts@{total\+\_\+pkts}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{total\+\_\+pkts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::total\+\_\+pkts}\label{structrb__counters__s_a0e78c2a2ae6d482d8409465097f1459a}
+
+
+total number packets in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!udp\+\_\+bytes@{udp\+\_\+bytes}}
+\index{udp\+\_\+bytes@{udp\+\_\+bytes}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{udp\+\_\+bytes}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::udp\+\_\+bytes}\label{structrb__counters__s_ab96a79188bdb2e72c6278b609e8e4e06}
+
+
+udp bytes in the flow 
+
+\index{rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}!udp\+\_\+pkts@{udp\+\_\+pkts}}
+\index{udp\+\_\+pkts@{udp\+\_\+pkts}!rb\+\_\+counters\+\_\+s@{rb\+\_\+counters\+\_\+s}}
+\subsubsection[{udp\+\_\+pkts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t rb\+\_\+counters\+\_\+s\+::udp\+\_\+pkts}\label{structrb__counters__s_a0ae055dfa6bb939dbfb0d8fa0084e29c}
+
+
+number udp packets in the flow 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+counters.\+h}\end{DoxyCompactItemize}

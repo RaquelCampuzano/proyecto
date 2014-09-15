@@ -1,0 +1,75 @@
+\section{rb\+\_\+cusum\+\_\+pool\+\_\+s Struct Reference}
+\label{structrb__cusum__pool__s}\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+
+
+Counters pool structure.  
+
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t {\bf num\+\_\+counters}
+\begin{DoxyCompactList}\small\item\em Number of counters availables. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} {\bf hashtable}
+\begin{DoxyCompactList}\small\item\em hashtable to look into \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+list\+\_\+t} {\bf used\+\_\+list}
+\begin{DoxyCompactList}\small\item\em List with all used cusum counters, needed to free memory. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+list\+\_\+t} {\bf free\+\_\+list}
+\begin{DoxyCompactList}\small\item\em List with all free cusum counters. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$ {\bf mempool}
+\begin{DoxyCompactList}\small\item\em Memory pool. \end{DoxyCompactList}\item 
+uint8\+\_\+t {\bf flags}
+\begin{DoxyCompactList}\small\item\em Useful flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Counters pool structure. 
+
+\subsection{Member Data Documentation}
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}!flags@{flags}}
+\index{flags@{flags}!rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+\subsubsection[{flags}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t rb\+\_\+cusum\+\_\+pool\+\_\+s\+::flags}\label{structrb__cusum__pool__s_ad124423b8036aa3a2f89b77af213bd0c}
+
+
+Useful flags. 
+
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}!free\+\_\+list@{free\+\_\+list}}
+\index{free\+\_\+list@{free\+\_\+list}!rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+\subsubsection[{free\+\_\+list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+list\+\_\+t} rb\+\_\+cusum\+\_\+pool\+\_\+s\+::free\+\_\+list}\label{structrb__cusum__pool__s_ade2679b14297cbee2a76d23ddaea5bda}
+
+
+List with all free cusum counters. 
+
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}!hashtable@{hashtable}}
+\index{hashtable@{hashtable}!rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+\subsubsection[{hashtable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} rb\+\_\+cusum\+\_\+pool\+\_\+s\+::hashtable}\label{structrb__cusum__pool__s_a9b67a7c173cc618a112ea933ab52b310}
+
+
+hashtable to look into 
+
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}!mempool@{mempool}}
+\index{mempool@{mempool}!rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+\subsubsection[{mempool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}$\ast$ rb\+\_\+cusum\+\_\+pool\+\_\+s\+::mempool}\label{structrb__cusum__pool__s_a4f1bcc699f605bd1cc5b8f10c6a731ea}
+
+
+Memory pool. 
+
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}!num\+\_\+counters@{num\+\_\+counters}}
+\index{num\+\_\+counters@{num\+\_\+counters}!rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+\subsubsection[{num\+\_\+counters}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t rb\+\_\+cusum\+\_\+pool\+\_\+s\+::num\+\_\+counters}\label{structrb__cusum__pool__s_a1bfbe193dcf26a55b6f056ecb19d8c14}
+
+
+Number of counters availables. 
+
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}!used\+\_\+list@{used\+\_\+list}}
+\index{used\+\_\+list@{used\+\_\+list}!rb\+\_\+cusum\+\_\+pool\+\_\+s@{rb\+\_\+cusum\+\_\+pool\+\_\+s}}
+\subsubsection[{used\+\_\+list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+list\+\_\+t} rb\+\_\+cusum\+\_\+pool\+\_\+s\+::used\+\_\+list}\label{structrb__cusum__pool__s_a75d7dff9e8949d03cd92dabb113d31b8}
+
+
+List with all used cusum counters, needed to free memory. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+cusum\+\_\+pool.\+c}\end{DoxyCompactItemize}

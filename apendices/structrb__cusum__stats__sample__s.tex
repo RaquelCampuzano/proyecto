@@ -1,0 +1,110 @@
+\section{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s Struct Reference}
+\label{structrb__cusum__stats__sample__s}\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+
+
+{\ttfamily \#include $<$rb\+\_\+cusum.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t {\bf magic}
+\begin{DoxyCompactList}\small\item\em Useful for integrity check purposes. \end{DoxyCompactList}\item 
+double {\bf tcp\+\_\+bytes\+\_\+percent}
+\begin{DoxyCompactList}\small\item\em T\+C\+P bytes/total bytes rate. \end{DoxyCompactList}\item 
+double {\bf udp\+\_\+bytes\+\_\+percent}
+\begin{DoxyCompactList}\small\item\em U\+D\+P bytes/total bytes rate. \end{DoxyCompactList}\item 
+double {\bf icmp\+\_\+bytes\+\_\+percent}
+\begin{DoxyCompactList}\small\item\em I\+C\+M\+P bytes/total bytes rate. \end{DoxyCompactList}\item 
+double {\bf tcp\+\_\+pkts\+\_\+percent}
+\begin{DoxyCompactList}\small\item\em T\+C\+P paktes/total packets rate. \end{DoxyCompactList}\item 
+double {\bf udp\+\_\+pkts\+\_\+percent}
+\begin{DoxyCompactList}\small\item\em U\+D\+P paktes/total packets rate. \end{DoxyCompactList}\item 
+double {\bf icmp\+\_\+pkts\+\_\+percent}
+\begin{DoxyCompactList}\small\item\em I\+C\+M\+P paktes/total packets rate. \end{DoxyCompactList}\item 
+double {\bf syn\+\_\+ack\+\_\+rate}
+\begin{DoxyCompactList}\small\item\em syn/ack rate \end{DoxyCompactList}\item 
+double {\bf input\+\_\+output\+\_\+prate}
+\begin{DoxyCompactList}\small\item\em Rate input/output packets. \end{DoxyCompactList}\item 
+double {\bf input\+\_\+output\+\_\+brate}
+\begin{DoxyCompactList}\small\item\em Rate input/output bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Structure to hold all needed traffic stats.  Change to vector operations, using R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S 
+
+\subsection{Member Data Documentation}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!icmp\+\_\+bytes\+\_\+percent@{icmp\+\_\+bytes\+\_\+percent}}
+\index{icmp\+\_\+bytes\+\_\+percent@{icmp\+\_\+bytes\+\_\+percent}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{icmp\+\_\+bytes\+\_\+percent}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::icmp\+\_\+bytes\+\_\+percent}\label{structrb__cusum__stats__sample__s_a7599a172d6a083ebfd011d50a6fa2ed1}
+
+
+I\+C\+M\+P bytes/total bytes rate. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!icmp\+\_\+pkts\+\_\+percent@{icmp\+\_\+pkts\+\_\+percent}}
+\index{icmp\+\_\+pkts\+\_\+percent@{icmp\+\_\+pkts\+\_\+percent}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{icmp\+\_\+pkts\+\_\+percent}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::icmp\+\_\+pkts\+\_\+percent}\label{structrb__cusum__stats__sample__s_a0cd0f8d4de0b88ffca93b82825734788}
+
+
+I\+C\+M\+P paktes/total packets rate. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!input\+\_\+output\+\_\+brate@{input\+\_\+output\+\_\+brate}}
+\index{input\+\_\+output\+\_\+brate@{input\+\_\+output\+\_\+brate}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{input\+\_\+output\+\_\+brate}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::input\+\_\+output\+\_\+brate}\label{structrb__cusum__stats__sample__s_a005bd165705c44bab8c49d03e2a9d70f}
+
+
+Rate input/output bytes. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!input\+\_\+output\+\_\+prate@{input\+\_\+output\+\_\+prate}}
+\index{input\+\_\+output\+\_\+prate@{input\+\_\+output\+\_\+prate}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{input\+\_\+output\+\_\+prate}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::input\+\_\+output\+\_\+prate}\label{structrb__cusum__stats__sample__s_ac21f015111cb7408e3c1c0eaab3afc13}
+
+
+Rate input/output packets. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!magic@{magic}}
+\index{magic@{magic}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{magic}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::magic}\label{structrb__cusum__stats__sample__s_a8f87bcf59e0a35b0224b5b8b4a5506a4}
+
+
+Useful for integrity check purposes. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!syn\+\_\+ack\+\_\+rate@{syn\+\_\+ack\+\_\+rate}}
+\index{syn\+\_\+ack\+\_\+rate@{syn\+\_\+ack\+\_\+rate}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{syn\+\_\+ack\+\_\+rate}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::syn\+\_\+ack\+\_\+rate}\label{structrb__cusum__stats__sample__s_ab7a7ae786e8d117d5c2c6cf5a44131b2}
+
+
+syn/ack rate 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!tcp\+\_\+bytes\+\_\+percent@{tcp\+\_\+bytes\+\_\+percent}}
+\index{tcp\+\_\+bytes\+\_\+percent@{tcp\+\_\+bytes\+\_\+percent}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{tcp\+\_\+bytes\+\_\+percent}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::tcp\+\_\+bytes\+\_\+percent}\label{structrb__cusum__stats__sample__s_a9ebb80eab07f230cc1a30b2aaf5d1dce}
+
+
+T\+C\+P bytes/total bytes rate. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!tcp\+\_\+pkts\+\_\+percent@{tcp\+\_\+pkts\+\_\+percent}}
+\index{tcp\+\_\+pkts\+\_\+percent@{tcp\+\_\+pkts\+\_\+percent}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{tcp\+\_\+pkts\+\_\+percent}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::tcp\+\_\+pkts\+\_\+percent}\label{structrb__cusum__stats__sample__s_a8214357d713606deccb769b4b78cb973}
+
+
+T\+C\+P paktes/total packets rate. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!udp\+\_\+bytes\+\_\+percent@{udp\+\_\+bytes\+\_\+percent}}
+\index{udp\+\_\+bytes\+\_\+percent@{udp\+\_\+bytes\+\_\+percent}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{udp\+\_\+bytes\+\_\+percent}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::udp\+\_\+bytes\+\_\+percent}\label{structrb__cusum__stats__sample__s_ad0f2bb365a5841a68243ab3ca52565e3}
+
+
+U\+D\+P bytes/total bytes rate. 
+
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}!udp\+\_\+pkts\+\_\+percent@{udp\+\_\+pkts\+\_\+percent}}
+\index{udp\+\_\+pkts\+\_\+percent@{udp\+\_\+pkts\+\_\+percent}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}}
+\subsubsection[{udp\+\_\+pkts\+\_\+percent}]{\setlength{\rightskip}{0pt plus 5cm}double rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s\+::udp\+\_\+pkts\+\_\+percent}\label{structrb__cusum__stats__sample__s_aefe5b35fea450d4d03d4020476434e91}
+
+
+U\+D\+P paktes/total packets rate. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+cusum.\+h}\end{DoxyCompactItemize}

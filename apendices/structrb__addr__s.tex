@@ -1,0 +1,55 @@
+\section{rb\+\_\+addr\+\_\+s Struct Reference}
+\label{structrb__addr__s}\index{rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}}
+
+
+Abstraction for ipv4 and v6 address.  
+
+
+
+
+{\ttfamily \#include $<$rb\+\_\+addr.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t {\bf addr\+\_\+family}
+\begin{DoxyCompactList}\small\item\em Family of address\+: A\+F\+\_\+\+I\+N\+E\+T or A\+F\+\_\+\+I\+N\+E\+T6. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct in\_addr {\bf sin\_addr}\\
+\>struct in6\_addr {\bf sin6\_addr}\\
+\} {\bf addr}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em Real buffer storing the address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstraction for ipv4 and v6 address. 
+
+\subsection{Member Data Documentation}
+\index{rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}!addr@{addr}}
+\index{addr@{addr}!rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}}
+\subsubsection[{addr}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}  rb\+\_\+addr\+\_\+s\+::addr}\label{structrb__addr__s_ab669e4f43ac662476dd7e1824f28f422}
+
+
+Real buffer storing the address. 
+
+\index{rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}!addr\+\_\+family@{addr\+\_\+family}}
+\index{addr\+\_\+family@{addr\+\_\+family}!rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}}
+\subsubsection[{addr\+\_\+family}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t rb\+\_\+addr\+\_\+s\+::addr\+\_\+family}\label{structrb__addr__s_a0eab82f9cdc545c452068f24a8f64cc1}
+
+
+Family of address\+: A\+F\+\_\+\+I\+N\+E\+T or A\+F\+\_\+\+I\+N\+E\+T6. 
+
+\index{rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}!sin6\+\_\+addr@{sin6\+\_\+addr}}
+\index{sin6\+\_\+addr@{sin6\+\_\+addr}!rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}}
+\subsubsection[{sin6\+\_\+addr}]{\setlength{\rightskip}{0pt plus 5cm}struct in6\+\_\+addr rb\+\_\+addr\+\_\+s\+::sin6\+\_\+addr}\label{structrb__addr__s_a272dcafb5295c1f8d999f860a96b2fd5}
+\index{rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}!sin\+\_\+addr@{sin\+\_\+addr}}
+\index{sin\+\_\+addr@{sin\+\_\+addr}!rb\+\_\+addr\+\_\+s@{rb\+\_\+addr\+\_\+s}}
+\subsubsection[{sin\+\_\+addr}]{\setlength{\rightskip}{0pt plus 5cm}struct in\+\_\+addr rb\+\_\+addr\+\_\+s\+::sin\+\_\+addr}\label{structrb__addr__s_ac26433c8034f129ed3f06f44e63df305}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+addr.\+h}\end{DoxyCompactItemize}

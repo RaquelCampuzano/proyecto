@@ -1,0 +1,208 @@
+\section{read\+Write\+Globals\+\_\+s Struct Reference}
+\label{structread_write_globals__s}\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+
+
+{\ttfamily \#include $<$global.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf stats} $\ast$ {\bf consumers\+\_\+stats}
+\begin{DoxyCompactList}\small\item\em Stats of the consumers. \end{DoxyCompactList}\item 
+pthread\+\_\+mutex\+\_\+t $\ast$ {\bf thread\+\_\+mutex}
+\begin{DoxyCompactList}\small\item\em Mutex that protect the different thread's counters. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$$\ast$ {\bf counters\+\_\+pool\+\_\+1}
+\begin{DoxyCompactList}\small\item\em First counters pool array. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$$\ast$ {\bf counters\+\_\+pool\+\_\+2}
+\begin{DoxyCompactList}\small\item\em Second counters pool array. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$$\ast$ {\bf current\+\_\+counters\+\_\+pool}
+\begin{DoxyCompactList}\small\item\em Current counter pool for each thread. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$$\ast$ {\bf global\+\_\+counters\+\_\+1}
+\begin{DoxyCompactList}\small\item\em Counter array of every packet on the flow. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$$\ast$ {\bf global\+\_\+counters\+\_\+2}
+\begin{DoxyCompactList}\small\item\em Second counter array of every packet on the flow. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$$\ast$ {\bf current\+\_\+global\+\_\+counters}
+\begin{DoxyCompactList}\small\item\em Current global counter for each counter. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$ {\bf cusum\+\_\+pool}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>{\bf rb\_cusum\_stats\_sample\_t} $\ast$ {\bf learned}\\
+\>size\_t {\bf curr\_index}\\
+\} {\bf learned}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em statistics learned in 'learn time'. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} {\bf current\+\_\+parameters}
+\item 
+struct timeval {\bf last\+\_\+purge}
+\begin{DoxyCompactList}\small\item\em Last purge timestamp. \end{DoxyCompactList}\item 
+struct timeval {\bf now}
+\begin{DoxyCompactList}\small\item\em Current timestamp (in master counter iteration) \end{DoxyCompactList}\item 
+int {\bf last\+\_\+under\+\_\+attack}
+\begin{DoxyCompactList}\small\item\em True if, in the last interval, we have been under attack. \end{DoxyCompactList}\item 
+int {\bf under\+\_\+attack}
+\begin{DoxyCompactList}\small\item\em True if we are under attack in this interval. \end{DoxyCompactList}\item 
+{\bf S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E} {\bf system\+\_\+state}
+\begin{DoxyCompactList}\small\item\em Current system state. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} {\bf mean\+\_\+k}
+\begin{DoxyCompactList}\small\item\em Current mean -\/ k in C\+U\+S\+U\+M algorithm. \end{DoxyCompactList}\item 
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} {\bf threshold}
+\begin{DoxyCompactList}\small\item\em Current threshold in C\+U\+S\+U\+M algorithm. \end{DoxyCompactList}\item 
+uint8\+\_\+t {\bf alarm\+\_\+raised}
+\begin{DoxyCompactList}\small\item\em S\+I\+G\+A\+L\+A\+R\+M set this to 1. \end{DoxyCompactList}\item 
+uint8\+\_\+t {\bf alarm\+\_\+raised\+\_\+too\+\_\+fast}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Variables to edit while the application is running, like queues or counters.
+
+\subsection*{Counters\+\_\+pool and global\+\_\+counters.}
+
+counters\+\_\+pool\+\_\+1, counters\+\_\+pool\+\_\+2 and current\+\_\+counters\+\_\+pool are related this way\+: The counter thread only add information in one pool, let's say, counters\+\_\+pool\+\_\+1. Then, current\+\_\+counters\+\_\+pool points to counters\+\_\+pool\+\_\+1. When the main thread request it, main thread change current\+\_\+counters\+\_\+pool to counters\+\_\+pool\+\_\+2, and process the counters stored in counters\+\_\+pool\+\_\+1. The counter thread starts, every 'main pool tick', with a clean counter\+\_\+pool.
+
+Note that this is valid for every counter thread\+: It could happens that current\+\_\+counters\+\_\+pool[0] == counters\+\_\+pool\+\_\+1[0] and current\+\_\+counters\+\_\+pool[1] == counters\+\_\+pool\+\_\+2[1]. There is one instance for counter thread, and the same applies to global\+\_\+counters\+\_\+1, global\+\_\+counters\+\_\+2 and current\+\_\+global\+\_\+counters. 
+
+\subsection{Member Data Documentation}
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!alarm\+\_\+raised@{alarm\+\_\+raised}}
+\index{alarm\+\_\+raised@{alarm\+\_\+raised}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{alarm\+\_\+raised}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t read\+Write\+Globals\+\_\+s\+::alarm\+\_\+raised}\label{structread_write_globals__s_a58ff2cc5c84ad23fbd7c33150e6e9513}
+
+
+S\+I\+G\+A\+L\+A\+R\+M set this to 1. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!alarm\+\_\+raised\+\_\+too\+\_\+fast@{alarm\+\_\+raised\+\_\+too\+\_\+fast}}
+\index{alarm\+\_\+raised\+\_\+too\+\_\+fast@{alarm\+\_\+raised\+\_\+too\+\_\+fast}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{alarm\+\_\+raised\+\_\+too\+\_\+fast}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t read\+Write\+Globals\+\_\+s\+::alarm\+\_\+raised\+\_\+too\+\_\+fast}\label{structread_write_globals__s_a4622b8b7990b2c656803c4dcd4e202a6}
+Enabled if an alarm raised while alarm\+\_\+raised = 1.
+
+This means that the processing thread is too slow processing. This is useful because it warns that the master process couldn't end it's processing before another S\+I\+G\+A\+L\+R\+M was raised, and then there is a cycle that will be missed. \index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!consumers\+\_\+stats@{consumers\+\_\+stats}}
+\index{consumers\+\_\+stats@{consumers\+\_\+stats}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{consumers\+\_\+stats}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf stats}$\ast$ read\+Write\+Globals\+\_\+s\+::consumers\+\_\+stats}\label{structread_write_globals__s_ae97fca857d5c9461981a6190c8c20e94}
+
+
+Stats of the consumers. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!counters\+\_\+pool\+\_\+1@{counters\+\_\+pool\+\_\+1}}
+\index{counters\+\_\+pool\+\_\+1@{counters\+\_\+pool\+\_\+1}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{counters\+\_\+pool\+\_\+1}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+pool\+\_\+t}$\ast$$\ast$ read\+Write\+Globals\+\_\+s\+::counters\+\_\+pool\+\_\+1}\label{structread_write_globals__s_a3006b2042383c65867e6d6e3c6707357}
+
+
+First counters pool array. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!counters\+\_\+pool\+\_\+2@{counters\+\_\+pool\+\_\+2}}
+\index{counters\+\_\+pool\+\_\+2@{counters\+\_\+pool\+\_\+2}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{counters\+\_\+pool\+\_\+2}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+pool\+\_\+t}$\ast$$\ast$ read\+Write\+Globals\+\_\+s\+::counters\+\_\+pool\+\_\+2}\label{structread_write_globals__s_ae3a0490966ea590d598a256378c43e36}
+
+
+Second counters pool array. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!curr\+\_\+index@{curr\+\_\+index}}
+\index{curr\+\_\+index@{curr\+\_\+index}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{curr\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t read\+Write\+Globals\+\_\+s\+::curr\+\_\+index}\label{structread_write_globals__s_a9c50c94762933349218b01bf22970ec5}
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!current\+\_\+counters\+\_\+pool@{current\+\_\+counters\+\_\+pool}}
+\index{current\+\_\+counters\+\_\+pool@{current\+\_\+counters\+\_\+pool}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{current\+\_\+counters\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+pool\+\_\+t}$\ast$$\ast$ read\+Write\+Globals\+\_\+s\+::current\+\_\+counters\+\_\+pool}\label{structread_write_globals__s_a4877dd1a912be9abc6ce72084b7b24dc}
+
+
+Current counter pool for each thread. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!current\+\_\+global\+\_\+counters@{current\+\_\+global\+\_\+counters}}
+\index{current\+\_\+global\+\_\+counters@{current\+\_\+global\+\_\+counters}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{current\+\_\+global\+\_\+counters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$$\ast$ read\+Write\+Globals\+\_\+s\+::current\+\_\+global\+\_\+counters}\label{structread_write_globals__s_a974cbb84d41eeafe6e63be8b7272528f}
+
+
+Current global counter for each counter. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!current\+\_\+parameters@{current\+\_\+parameters}}
+\index{current\+\_\+parameters@{current\+\_\+parameters}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{current\+\_\+parameters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} read\+Write\+Globals\+\_\+s\+::current\+\_\+parameters}\label{structread_write_globals__s_a964601b5c1c1d875628000aeeb1424d0}
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!cusum\+\_\+pool@{cusum\+\_\+pool}}
+\index{cusum\+\_\+pool@{cusum\+\_\+pool}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{cusum\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t}$\ast$ read\+Write\+Globals\+\_\+s\+::cusum\+\_\+pool}\label{structread_write_globals__s_a4e830c73c07802e32e670be9e6b50d52}
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!global\+\_\+counters\+\_\+1@{global\+\_\+counters\+\_\+1}}
+\index{global\+\_\+counters\+\_\+1@{global\+\_\+counters\+\_\+1}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{global\+\_\+counters\+\_\+1}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$$\ast$ read\+Write\+Globals\+\_\+s\+::global\+\_\+counters\+\_\+1}\label{structread_write_globals__s_a3e8a3a16615e4aa9c83937b718cc2e40}
+
+
+Counter array of every packet on the flow. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!global\+\_\+counters\+\_\+2@{global\+\_\+counters\+\_\+2}}
+\index{global\+\_\+counters\+\_\+2@{global\+\_\+counters\+\_\+2}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{global\+\_\+counters\+\_\+2}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$$\ast$ read\+Write\+Globals\+\_\+s\+::global\+\_\+counters\+\_\+2}\label{structread_write_globals__s_a17e43d3bae31a74975371a7fd6cd7782}
+
+
+Second counter array of every packet on the flow. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!last\+\_\+purge@{last\+\_\+purge}}
+\index{last\+\_\+purge@{last\+\_\+purge}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{last\+\_\+purge}]{\setlength{\rightskip}{0pt plus 5cm}struct timeval read\+Write\+Globals\+\_\+s\+::last\+\_\+purge}\label{structread_write_globals__s_ab08329100764f7b19c9593695f0685b9}
+
+
+Last purge timestamp. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!last\+\_\+under\+\_\+attack@{last\+\_\+under\+\_\+attack}}
+\index{last\+\_\+under\+\_\+attack@{last\+\_\+under\+\_\+attack}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{last\+\_\+under\+\_\+attack}]{\setlength{\rightskip}{0pt plus 5cm}int read\+Write\+Globals\+\_\+s\+::last\+\_\+under\+\_\+attack}\label{structread_write_globals__s_a4fccb7e3a3a0dbf46dde300dfc698f51}
+
+
+True if, in the last interval, we have been under attack. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!learned@{learned}}
+\index{learned@{learned}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{learned}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t}$\ast$ read\+Write\+Globals\+\_\+s\+::learned}\label{structread_write_globals__s_aa12d3d00a5a5614f846b4baad8414952}
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!learned@{learned}}
+\index{learned@{learned}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{learned}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  read\+Write\+Globals\+\_\+s\+::learned}\label{structread_write_globals__s_a1b47f8ebf0aeea9616e93e803263ae71}
+
+
+statistics learned in 'learn time'. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!mean\+\_\+k@{mean\+\_\+k}}
+\index{mean\+\_\+k@{mean\+\_\+k}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{mean\+\_\+k}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} read\+Write\+Globals\+\_\+s\+::mean\+\_\+k}\label{structread_write_globals__s_a51a117ade795be8bf49f218fd3d6b754}
+
+
+Current mean -\/ k in C\+U\+S\+U\+M algorithm. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!now@{now}}
+\index{now@{now}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{now}]{\setlength{\rightskip}{0pt plus 5cm}struct timeval read\+Write\+Globals\+\_\+s\+::now}\label{structread_write_globals__s_af1142eda1f07384db0fddfb452506a4c}
+
+
+Current timestamp (in master counter iteration) 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!system\+\_\+state@{system\+\_\+state}}
+\index{system\+\_\+state@{system\+\_\+state}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{system\+\_\+state}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E} read\+Write\+Globals\+\_\+s\+::system\+\_\+state}\label{structread_write_globals__s_a57643dd28b39ab3bd68df035a5050828}
+
+
+Current system state. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!thread\+\_\+mutex@{thread\+\_\+mutex}}
+\index{thread\+\_\+mutex@{thread\+\_\+mutex}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{thread\+\_\+mutex}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+\_\+mutex\+\_\+t$\ast$ read\+Write\+Globals\+\_\+s\+::thread\+\_\+mutex}\label{structread_write_globals__s_a5c41ffe534896f5fffe9dbe5baad247a}
+
+
+Mutex that protect the different thread's counters. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!threshold@{threshold}}
+\index{threshold@{threshold}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{threshold}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} read\+Write\+Globals\+\_\+s\+::threshold}\label{structread_write_globals__s_a2320e5948f3f5c488ae1b0da91369c74}
+
+
+Current threshold in C\+U\+S\+U\+M algorithm. 
+
+\index{read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}!under\+\_\+attack@{under\+\_\+attack}}
+\index{under\+\_\+attack@{under\+\_\+attack}!read\+Write\+Globals\+\_\+s@{read\+Write\+Globals\+\_\+s}}
+\subsubsection[{under\+\_\+attack}]{\setlength{\rightskip}{0pt plus 5cm}int read\+Write\+Globals\+\_\+s\+::under\+\_\+attack}\label{structread_write_globals__s_ad551f8a051aae2dbd30c2575377d771f}
+
+
+True if we are under attack in this interval. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+{\bf global.\+h}\end{DoxyCompactItemize}
