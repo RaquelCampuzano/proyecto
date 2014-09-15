@@ -1,0 +1,68 @@
+\section{rb\+\_\+addr.\+h File Reference}
+\label{rb__addr_8h}\index{rb\+\_\+addr.\+h@{rb\+\_\+addr.\+h}}
+
+
+Abstraction of ipv4/6 addr.  
+
+
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf rb\+\_\+addr\+\_\+s}
+\begin{DoxyCompactList}\small\item\em Abstraction for ipv4 and v6 address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf rb\+\_\+addr\+\_\+s} {\bf rb\+\_\+addr\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Abstraction for ipv4 and v6 address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ {\bf rb\+\_\+addr\+\_\+pton} (const {\bf rb\+\_\+addr\+\_\+t} $\ast$rb\+\_\+addr, char $\ast$buf, size\+\_\+t bufsize)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstraction of ipv4/6 addr. 
+
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+addr.\+h@{rb\+\_\+addr.\+h}!rb\+\_\+addr\+\_\+t@{rb\+\_\+addr\+\_\+t}}
+\index{rb\+\_\+addr\+\_\+t@{rb\+\_\+addr\+\_\+t}!rb\+\_\+addr.\+h@{rb\+\_\+addr.\+h}}
+\subsubsection[{rb\+\_\+addr\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+addr\+\_\+s} {\bf rb\+\_\+addr\+\_\+t}}\label{rb__addr_8h_a96b240970f910a107af8c773cd30389b}
+
+
+Abstraction for ipv4 and v6 address. 
+
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+addr.\+h@{rb\+\_\+addr.\+h}!rb\+\_\+addr\+\_\+pton@{rb\+\_\+addr\+\_\+pton}}
+\index{rb\+\_\+addr\+\_\+pton@{rb\+\_\+addr\+\_\+pton}!rb\+\_\+addr.\+h@{rb\+\_\+addr.\+h}}
+\subsubsection[{rb\+\_\+addr\+\_\+pton}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ rb\+\_\+addr\+\_\+pton (
+\begin{DoxyParamCaption}
+\item[{const {\bf rb\+\_\+addr\+\_\+t} $\ast$}]{rb\+\_\+addr, }
+\item[{char $\ast$}]{buf, }
+\item[{size\+\_\+t}]{bufsize}
+\end{DoxyParamCaption}
+)}\label{rb__addr_8h_ab746367427c26d7a0eafa25c429e510b}
+Write the I\+P address in buffer, in a human-\/readable form. 
+\begin{DoxyParams}{Parameters}
+{\em rb\+\_\+addr} & I\+P address. \\
+\hline
+{\em buf} & Char buffer to write to. \\
+\hline
+{\em bufsize} & Size of buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String with rb\+\_\+addr in humar-\/readable format. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The function assume that bufsize is enough to save the string. 
+\end{DoxyNote}

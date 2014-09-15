@@ -1,0 +1,47 @@
+\section{rb\+\_\+hugemem.\+h File Reference}
+\label{rb__hugemem_8h}\index{rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}}
+
+
+Utility functions to manage huge memory.  
+
+
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/mman.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf M\+M\+A\+P\+\_\+\+A\+D\+D\+R}~N\+U\+L\+L
+\item 
+\#define {\bf M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S}~(M\+A\+P\+\_\+\+P\+R\+I\+V\+A\+T\+E $\vert$ M\+A\+P\+\_\+\+A\+N\+O\+N\+Y\+M\+O\+U\+S $\vert$ M\+A\+P\+\_\+\+H\+U\+G\+E\+T\+L\+B)
+\item 
+\#define {\bf M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N}~(P\+R\+O\+T\+\_\+\+R\+E\+A\+D $\vert$ P\+R\+O\+T\+\_\+\+W\+R\+I\+T\+E)
+\item 
+\#define {\bf M\+M\+A\+P\+\_\+\+F\+D}~0
+\item 
+\#define {\bf M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T}~0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Utility functions to manage huge memory. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}!M\+M\+A\+P\+\_\+\+A\+D\+D\+R@{M\+M\+A\+P\+\_\+\+A\+D\+D\+R}}
+\index{M\+M\+A\+P\+\_\+\+A\+D\+D\+R@{M\+M\+A\+P\+\_\+\+A\+D\+D\+R}!rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}}
+\subsubsection[{M\+M\+A\+P\+\_\+\+A\+D\+D\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+M\+A\+P\+\_\+\+A\+D\+D\+R~N\+U\+L\+L}\label{rb__hugemem_8h_a828b7a9871bbaf6f63f4f8db3719af87}
+\index{rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}!M\+M\+A\+P\+\_\+\+F\+D@{M\+M\+A\+P\+\_\+\+F\+D}}
+\index{M\+M\+A\+P\+\_\+\+F\+D@{M\+M\+A\+P\+\_\+\+F\+D}!rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}}
+\subsubsection[{M\+M\+A\+P\+\_\+\+F\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+M\+A\+P\+\_\+\+F\+D~0}\label{rb__hugemem_8h_a36f08ecc35c5b6e8c4d05e9051ec8f27}
+\index{rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}!M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S@{M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S}}
+\index{M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S@{M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S}!rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}}
+\subsubsection[{M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+M\+A\+P\+\_\+\+F\+L\+A\+G\+S~(M\+A\+P\+\_\+\+P\+R\+I\+V\+A\+T\+E $\vert$ M\+A\+P\+\_\+\+A\+N\+O\+N\+Y\+M\+O\+U\+S $\vert$ M\+A\+P\+\_\+\+H\+U\+G\+E\+T\+L\+B)}\label{rb__hugemem_8h_ad2d83ed2587a673f05e96fb46a11193e}
+\index{rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}!M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T@{M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T}}
+\index{M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T@{M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T}!rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}}
+\subsubsection[{M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+M\+A\+P\+\_\+\+O\+F\+F\+S\+E\+T~0}\label{rb__hugemem_8h_a8ff6e6c7f0cf0d6c8814c58845f6a243}
+\index{rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}!M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N@{M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N}}
+\index{M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N@{M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N}!rb\+\_\+hugemem.\+h@{rb\+\_\+hugemem.\+h}}
+\subsubsection[{M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+M\+A\+P\+\_\+\+P\+R\+O\+T\+E\+C\+T\+I\+O\+N~(P\+R\+O\+T\+\_\+\+R\+E\+A\+D $\vert$ P\+R\+O\+T\+\_\+\+W\+R\+I\+T\+E)}\label{rb__hugemem_8h_a41982e8edb6a98b6f578ebb26f02ef1c}

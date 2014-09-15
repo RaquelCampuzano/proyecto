@@ -1,0 +1,105 @@
+\section{rb\+\_\+counters.\+h File Reference}
+\label{rb__counters_8h}\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+addr.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhashtbl.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$inttypes.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf rb\+\_\+counters\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C}~0x123456789\+L
+\begin{DoxyCompactList}\small\item\em Magic field, useful to check integrity when playing with pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf rb\+\_\+counters\+\_\+s} {\bf rb\+\_\+counters\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast${\bf stats}, const {\bf rb\+\_\+counters\+\_\+t} $\ast$vcounters)
+\item 
+void {\bf rb\+\_\+counters\+\_\+add} ({\bf rb\+\_\+counters\+\_\+t} $\ast$c1, const {\bf rb\+\_\+counters\+\_\+t} $\ast$c2)
+\item 
+void {\bf rb\+\_\+counters\+\_\+reset} ({\bf rb\+\_\+counters\+\_\+t} $\ast$c1)
+\item 
+void {\bf test\+\_\+tb\+\_\+cusum} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}!C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C@{C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C}}
+\index{C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C@{C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C}!rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+\subsubsection[{C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+U\+N\+T\+E\+R\+S\+\_\+\+M\+A\+G\+I\+C~0x123456789\+L}\label{rb__counters_8h_a405bc741645ce00e567403fa7f1ebc26}
+
+
+Magic field, useful to check integrity when playing with pointers. 
+
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}!rb\+\_\+counters\+\_\+t@{rb\+\_\+counters\+\_\+t}}
+\index{rb\+\_\+counters\+\_\+t@{rb\+\_\+counters\+\_\+t}!rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+counters\+\_\+s} {\bf rb\+\_\+counters\+\_\+t}}\label{rb__counters_8h_ae668e148b712edfabc2b1df94e91f5f4}
+Fundamental counters structure 
+
+\subsection{Function Documentation}
+\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}!rb\+\_\+counters\+\_\+add@{rb\+\_\+counters\+\_\+add}}
+\index{rb\+\_\+counters\+\_\+add@{rb\+\_\+counters\+\_\+add}!rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+add}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+counters\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+t} $\ast$}]{c1, }
+\item[{const {\bf rb\+\_\+counters\+\_\+t} $\ast$}]{c2}
+\end{DoxyParamCaption}
+)}\label{rb__counters_8h_ac5439cc4aa9a95fd0d65727a64ce1082}
+Add two counters. c1 += c2. 
+\begin{DoxyParams}{Parameters}
+{\em c1} & Counter to add c2. \\
+\hline
+{\em c2} & Counter to add to c1. \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}!rb\+\_\+counters\+\_\+reset@{rb\+\_\+counters\+\_\+reset}}
+\index{rb\+\_\+counters\+\_\+reset@{rb\+\_\+counters\+\_\+reset}!rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+reset}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+counters\+\_\+reset (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+t} $\ast$}]{c1}
+\end{DoxyParamCaption}
+)}\label{rb__counters_8h_abd251204cc688fdc09b3b9a4ecd2cbf8}
+Reset a counter 
+\begin{DoxyParams}{Parameters}
+{\em c1} & Counter to reset. \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}!rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample@{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample}}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample@{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample}!rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{stats, }
+\item[{const {\bf rb\+\_\+counters\+\_\+t} $\ast$}]{vcounters}
+\end{DoxyParamCaption}
+)}\label{rb__counters_8h_ac356640f48cdfbe307c14d4fd2250524}
+Extract stats from a counters vector
+
+
+\begin{DoxyParams}{Parameters}
+{\em stats} & Stats \\
+\hline
+{\em vcounters} & Counters \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}!test\+\_\+tb\+\_\+cusum@{test\+\_\+tb\+\_\+cusum}}
+\index{test\+\_\+tb\+\_\+cusum@{test\+\_\+tb\+\_\+cusum}!rb\+\_\+counters.\+h@{rb\+\_\+counters.\+h}}
+\subsubsection[{test\+\_\+tb\+\_\+cusum}]{\setlength{\rightskip}{0pt plus 5cm}void test\+\_\+tb\+\_\+cusum (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{rb__counters_8h_a360473e1139a98094a80b4362c66ad1e}

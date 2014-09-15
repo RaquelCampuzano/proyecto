@@ -1,0 +1,150 @@
+\section{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h File Reference}
+\label{rb__counters__memory__pool_8h}\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+
+
+Counters memory pool declarations.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+counters.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E}~1
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \\*
+{\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+s} {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init} ({\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$pool, size\+\_\+t size)
+\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$ {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push} ({\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$ {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop} ({\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+void {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset} ({\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+void {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done} ({\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+void {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Counters memory pool declarations. 
+
+This pool is able to store a number of counters and push/pop it under demand (it is, is a stack of counters). 
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E@{P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E}}
+\index{P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E@{P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+O\+L\+\_\+\+F\+L\+A\+G\+S\+\_\+\+H\+U\+G\+E~1}\label{rb__counters__memory__pool_8h_afbb1fa1465a941426aac1d6cc66fc6b4}
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+s}  {\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t}}\label{rb__counters__memory__pool_8h_abafeb52beb5fd83edfbb9fe850c1f777}
+Pool type. \begin{DoxyNote}{Note}
+Never use directly. Use auxiliar functions. 
+\end{DoxyNote}
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+done (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__memory__pool_8h_afe3eb8af16f1f08aa1b36d5217499de7}
+Delete a pool 
+\begin{DoxyParams}{Parameters}
+{\em pool} & pool to free. \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$}]{pool, }
+\item[{size\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\label{rb__counters__memory__pool_8h_ada5f883620080322eb2b87864939f653}
+Create a new pool.
+
+If you enable huge pages, it will try to allocate the pool in them. if not enabled, or can't, it will try to allocate it via malloc. if it's not possible, it will fail and return N\+U\+L\+L
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & new pool \\
+\hline
+{\em size} & Size of the pool\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of nodes allocated. 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$ rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+pop (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__memory__pool_8h_ab45cd3dd57d46dcc7a81113e5b7fbc93}
+Get the top counter in the stack
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pool to pop the counter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Counter 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$ rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+push (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__memory__pool_8h_a5803b039a029cea4c9bcc3b312611b52}
+Push a new counter in the stack
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & pool. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+element from pool. N\+U\+L\+L if can't allocate. 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+reset (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__memory__pool_8h_ae0fb690e43de3980e71db9bad14eed02}
+Reset a Pool 
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pool to reset \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests}}
+\index{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests@{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests}!rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+memory\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+counters\+\_\+memory\+\_\+pool\+\_\+tests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{rb__counters__memory__pool_8h_a04de645382368f502330a87712aed715}

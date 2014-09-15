@@ -1,0 +1,172 @@
+\section{global.\+h File Reference}
+\label{global_8h}\index{global.\+h@{global.\+h}}
+
+
+This file hold the declaration of any thing that all application should be aware, and would be too tricky to declare in each use.  
+
+
+{\ttfamily \#include \char`\"{}pfring.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pfring\+\_\+zc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+counters\+\_\+pool.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum\+\_\+pool.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum\+\_\+stats.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+kafka.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/time.\+h$>$}\\*
+{\ttfamily \#include $<$librd/rdqueue.\+h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf read\+Only\+Globals\+\_\+s}
+\item 
+struct {\bf stats}
+\item 
+struct {\bf read\+Write\+Globals\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N}~10
+\begin{DoxyCompactList}\small\item\em Hashtable size is this constant smaller than pool size. \end{DoxyCompactList}\item 
+\#define {\bf C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K}~5
+\item 
+\#define {\bf C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H}~10
+\item 
+\#define {\bf C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H}~{\bf C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H}
+\item 
+\#define {\bf L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S}~2000
+\item 
+\#define {\bf M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S}~1
+\item 
+\#define {\bf P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E}~\{.tv\+\_\+sec = 10, .tv\+\_\+usec = 0\}
+\item 
+\#define {\bf P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M}~\{.tv\+\_\+sec = 5, .tv\+\_\+usec = 0\}
+\begin{DoxyCompactList}\small\item\em Default purge aggressivity (in seconds) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E} \{ {\bf L\+E\+A\+R\+N\+I\+N\+G} =0, 
+{\bf D\+E\+F\+E\+N\+S\+E}, 
+{\bf A\+L\+A\+R\+M}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf init\+Globals} ()
+\item 
+void {\bf save\+Statistics\+Parameters} (const struct {\bf read\+Write\+Globals\+\_\+s} $\ast$rw\+Globals, const char $\ast$filename)
+\item 
+void {\bf load\+Statistics} (struct {\bf read\+Write\+Globals\+\_\+s} $\ast$rw\+Globals, const char $\ast$filename)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf read\+Only\+Globals\+\_\+s} {\bf read\+Only\+Globals}
+\begin{DoxyCompactList}\small\item\em read\+Only\+Globals instance. \end{DoxyCompactList}\item 
+struct {\bf read\+Write\+Globals\+\_\+s} {\bf read\+Write\+Globals}
+\begin{DoxyCompactList}\small\item\em read\+Write\+Globals instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file hold the declaration of any thing that all application should be aware, and would be too tricky to declare in each use. 
+
+Configuration, counters pools, events queues... 
+
+\subsection{Macro Definition Documentation}
+\index{global.\+h@{global.\+h}!C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K@{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K}}
+\index{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K@{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K}!global.\+h@{global.\+h}}
+\subsubsection[{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K~5}\label{global_8h_a84152aad386537505d9470c65d08e554}
+C\+U\+S\+U\+M algorithm\+: C\+\_\+i = max[C\+\_\+\{i-\/1\}+(x\+\_\+i-\/-\/\+K),0] K will be C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+K$\ast$std\+\_\+dev \index{global.\+h@{global.\+h}!C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H@{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H}}
+\index{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H@{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H}!global.\+h@{global.\+h}}
+\subsubsection[{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+N\+E\+G\+\_\+\+H~{\bf C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H}}\label{global_8h_aa5adc84ebdfc9fceae00d095e076c4d7}
+Same as C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+I\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H with negative C\+U\+S\+U\+M \index{global.\+h@{global.\+h}!C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H@{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H}}
+\index{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H@{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H}!global.\+h@{global.\+h}}
+\subsubsection[{C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+P\+O\+S\+\_\+\+H~10}\label{global_8h_ab71f1e93125bc70330d800c106a2acd6}
+C\+U\+S\+U\+M algorithm check if C\+\_\+i $>$ H. H = h$\ast$ H will be C\+U\+S\+U\+M\+\_\+\+A\+L\+G\+O\+R\+T\+H\+M\+\_\+\+H$\ast$std\+\_\+dev \index{global.\+h@{global.\+h}!L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S@{L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S}}
+\index{L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S@{L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S}!global.\+h@{global.\+h}}
+\subsubsection[{L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+E\+A\+R\+N\+\_\+\+T\+I\+M\+E\+\_\+\+S~2000}\label{global_8h_a9ec8358ce27681ff9fa3fe6d343c3bb2}
+Default lean time (in seconds) \index{global.\+h@{global.\+h}!M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S@{M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S}}
+\index{M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S@{M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S}!global.\+h@{global.\+h}}
+\subsubsection[{M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+S\+T\+E\+R\+\_\+\+C\+O\+U\+N\+T\+E\+R\+\_\+\+T\+I\+M\+E\+\_\+\+S~1}\label{global_8h_a6643bbbd59227cfb84b5a2bced4946d9}
+Default alarm time (in seconds) \index{global.\+h@{global.\+h}!P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N@{P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N}}
+\index{P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N@{P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N}!global.\+h@{global.\+h}}
+\subsubsection[{P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+O\+L\+\_\+\+S\+I\+Z\+E\+\_\+\+H\+A\+S\+H\+T\+A\+B\+L\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+R\+E\+L\+A\+T\+I\+O\+N~10}\label{global_8h_a3b083ed382f02727d9fde25b50699ef5}
+
+
+Hashtable size is this constant smaller than pool size. 
+
+\index{global.\+h@{global.\+h}!P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M@{P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M}}
+\index{P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M@{P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M}!global.\+h@{global.\+h}}
+\subsubsection[{P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M~\{.tv\+\_\+sec = 5, .tv\+\_\+usec = 0\}}\label{global_8h_a6a809615b14a0156a482102520c9a2a1}
+
+
+Default purge aggressivity (in seconds) 
+
+In each purge, all cusum with timestamp older than time(\+N\+U\+L\+L)-\/\+P\+U\+R\+G\+E\+\_\+\+P\+A\+R\+A\+M will be deleted from pool. \index{global.\+h@{global.\+h}!P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E@{P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E}}
+\index{P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E@{P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E}!global.\+h@{global.\+h}}
+\subsubsection[{P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+U\+R\+G\+E\+\_\+\+T\+I\+M\+E~\{.tv\+\_\+sec = 10, .tv\+\_\+usec = 0\}}\label{global_8h_a0d3e9c7ceda276035e54d091b850c657}
+Default purge time (in seconds) 
+
+\subsection{Enumeration Type Documentation}
+\index{global.\+h@{global.\+h}!S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E@{S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E}}
+\index{S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E@{S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E}!global.\+h@{global.\+h}}
+\subsubsection[{S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+Y\+S\+T\+E\+M\+\_\+\+S\+T\+A\+T\+E}}\label{global_8h_afeac06fb8e1e94bfba7df88a6e219d71}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+E\+A\+R\+N\+I\+N\+G@{L\+E\+A\+R\+N\+I\+N\+G}!global.\+h@{global.\+h}}\index{global.\+h@{global.\+h}!L\+E\+A\+R\+N\+I\+N\+G@{L\+E\+A\+R\+N\+I\+N\+G}}\item[{\em 
+L\+E\+A\+R\+N\+I\+N\+G\label{global_8h_afeac06fb8e1e94bfba7df88a6e219d71a8a72e6f750c2628008edbe358f9d6af9}
+}]\index{D\+E\+F\+E\+N\+S\+E@{D\+E\+F\+E\+N\+S\+E}!global.\+h@{global.\+h}}\index{global.\+h@{global.\+h}!D\+E\+F\+E\+N\+S\+E@{D\+E\+F\+E\+N\+S\+E}}\item[{\em 
+D\+E\+F\+E\+N\+S\+E\label{global_8h_afeac06fb8e1e94bfba7df88a6e219d71a39aa17dada7083edfffcd66e5245e6bd}
+}]\index{A\+L\+A\+R\+M@{A\+L\+A\+R\+M}!global.\+h@{global.\+h}}\index{global.\+h@{global.\+h}!A\+L\+A\+R\+M@{A\+L\+A\+R\+M}}\item[{\em 
+A\+L\+A\+R\+M\label{global_8h_afeac06fb8e1e94bfba7df88a6e219d71ac4212312865bd8ac6810b9651d9e80df}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{global.\+h@{global.\+h}!init\+Globals@{init\+Globals}}
+\index{init\+Globals@{init\+Globals}!global.\+h@{global.\+h}}
+\subsubsection[{init\+Globals}]{\setlength{\rightskip}{0pt plus 5cm}void init\+Globals (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{global_8h_af3e2e485f3ff008910d925cbb25f3a73}
+Init globals variables with default values \index{global.\+h@{global.\+h}!load\+Statistics@{load\+Statistics}}
+\index{load\+Statistics@{load\+Statistics}!global.\+h@{global.\+h}}
+\subsubsection[{load\+Statistics}]{\setlength{\rightskip}{0pt plus 5cm}void load\+Statistics (
+\begin{DoxyParamCaption}
+\item[{struct {\bf read\+Write\+Globals\+\_\+s} $\ast$}]{rw\+Globals, }
+\item[{const char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}\label{global_8h_abd9b3ce8d88308f6937da14c0e32e950}
+\begin{DoxyNote}{Note}
+remember to extract mean\+\_\+k and threshold form here 
+\end{DoxyNote}
+\index{global.\+h@{global.\+h}!save\+Statistics\+Parameters@{save\+Statistics\+Parameters}}
+\index{save\+Statistics\+Parameters@{save\+Statistics\+Parameters}!global.\+h@{global.\+h}}
+\subsubsection[{save\+Statistics\+Parameters}]{\setlength{\rightskip}{0pt plus 5cm}void save\+Statistics\+Parameters (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf read\+Write\+Globals\+\_\+s} $\ast$}]{rw\+Globals, }
+\item[{const char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}\label{global_8h_a84d98ab630113ad7238bee332dd63a99}
+
+
+\subsection{Variable Documentation}
+\index{global.\+h@{global.\+h}!read\+Only\+Globals@{read\+Only\+Globals}}
+\index{read\+Only\+Globals@{read\+Only\+Globals}!global.\+h@{global.\+h}}
+\subsubsection[{read\+Only\+Globals}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf read\+Only\+Globals\+\_\+s} read\+Only\+Globals}\label{global_8h_a0287cc1577786208f441d117341d050c}
+
+
+read\+Only\+Globals instance. 
+
+\index{global.\+h@{global.\+h}!read\+Write\+Globals@{read\+Write\+Globals}}
+\index{read\+Write\+Globals@{read\+Write\+Globals}!global.\+h@{global.\+h}}
+\subsubsection[{read\+Write\+Globals}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf read\+Write\+Globals\+\_\+s} read\+Write\+Globals}\label{global_8h_ac79977281f2d7d7bf6309d0217bdac60}
+
+
+read\+Write\+Globals instance. 
+

@@ -1,0 +1,65 @@
+\section{rb\+\_\+hashtable.\+h File Reference}
+\label{rb__hashtable_8h}\index{rb\+\_\+hashtable.\+h@{rb\+\_\+hashtable.\+h}}
+
+
+Common utilities for hashtables.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+addr.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhash.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhashtbl.\+h\char`\"{}}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int {\bf rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip} (const void $\ast$node, const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ {\bf rb\+\_\+hashtable\+\_\+locate} (tommy\+\_\+hashtable $\ast$hashtable, const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr, {\bf rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip} $\ast$cmpfun)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Common utilities for hashtables. 
+
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+hashtable.\+h@{rb\+\_\+hashtable.\+h}!rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip@{rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip}}
+\index{rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip@{rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip}!rb\+\_\+hashtable.\+h@{rb\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip}]{\setlength{\rightskip}{0pt plus 5cm}typedef int rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip(const void $\ast$node, const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr)}\label{rb__hashtable_8h_afb3acd3498170dcf3d2763068924d98a}
+Prototype to check if a node has a concrete ip 
+\begin{DoxyParams}{Parameters}
+{\em node} & Node to check \\
+\hline
+{\em addr} & Address to match \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if not match, !=0 if match 
+\end{DoxyReturn}
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+hashtable.\+h@{rb\+\_\+hashtable.\+h}!rb\+\_\+hashtable\+\_\+locate@{rb\+\_\+hashtable\+\_\+locate}}
+\index{rb\+\_\+hashtable\+\_\+locate@{rb\+\_\+hashtable\+\_\+locate}!rb\+\_\+hashtable.\+h@{rb\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+hashtable\+\_\+locate}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ rb\+\_\+hashtable\+\_\+locate (
+\begin{DoxyParamCaption}
+\item[{tommy\+\_\+hashtable $\ast$}]{hashtable, }
+\item[{const {\bf rb\+\_\+addr\+\_\+t} $\ast$}]{addr, }
+\item[{{\bf rb\+\_\+hashtable\+\_\+node\+\_\+has\+\_\+ip} $\ast$}]{cmpfun}
+\end{DoxyParamCaption}
+)}\label{rb__hashtable_8h_aec7985cbef40139c5735ac4ed64c4ba9}
+Search in a tommy\+\_\+hashtable for a specific ip 
+\begin{DoxyParams}{Parameters}
+{\em hashtable} & Hashtable to search in \\
+\hline
+{\em addr} & Address to find \\
+\hline
+{\em cmpfun} & Comparing function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Found node, ot N\+U\+L\+L if not found. 
+\end{DoxyReturn}

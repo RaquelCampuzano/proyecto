@@ -1,0 +1,291 @@
+\section{rb\+\_\+cusum.\+h File Reference}
+\label{rb__cusum_8h}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+
+
+Declarations of all processing that has to be done to the packets.  
+
+
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum\+\_\+list.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum\+\_\+hashtable.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rb\+\_\+addr.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s}
+\item 
+struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}~0x\+A\+B\+C\+D\+A\+B\+C\+D\+L
+\item 
+\#define {\bf S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}~0x\+B\+A\+D\+C\+B\+A\+D\+C\+L
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \\*
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s} {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t}
+\item 
+typedef struct \\*
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S} \{ \\*
+{\bf T\+C\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T} = 0, 
+{\bf U\+D\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}, 
+{\bf I\+C\+M\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}, 
+{\bf T\+C\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}, 
+\\*
+{\bf U\+D\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}, 
+{\bf I\+C\+M\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}, 
+{\bf S\+Y\+N\+\_\+\+A\+C\+K\+\_\+\+R\+A\+T\+E}, 
+{\bf I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+P\+R\+A\+T\+E}, 
+\\*
+{\bf I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+R\+A\+T\+E}, 
+{\bf T\+O\+T\+A\+L\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf rb\+\_\+cusum\+\_\+add} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$s1, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$s2)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+sub} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$s1, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$s2)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+prod} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$s1, double factor)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+iteration} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$sample, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$x\+\_\+i, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$mean\+\_\+k, const struct timeval $\ast$cusum\+\_\+iteration\+\_\+period, const struct timeval $\ast$now)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+complete\+\_\+cmp} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$res, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$s1, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$s2, double eps)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+reset\+\_\+sample} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$sample)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$sample)
+\begin{DoxyCompactList}\small\item\em Overwritting the same memory two times! \end{DoxyCompactList}\item 
+void {\bf rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file} (const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast${\bf stats}, F\+I\+L\+E $\ast$f)
+\item 
+int {\bf rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast${\bf stats}, F\+I\+L\+E $\ast$f)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Declarations of all processing that has to be done to the packets. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C@{S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}}
+\index{S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C@{S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+A\+T\+S\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C~0x\+B\+A\+D\+C\+B\+A\+D\+C\+L}\label{rb__cusum_8h_a2e41e48dd658abcce4f8d82b44b91f46}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C@{S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}}
+\index{S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C@{S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+A\+T\+S\+\_\+\+S\+A\+M\+P\+L\+E\+\_\+\+M\+A\+G\+I\+C~0x\+A\+B\+C\+D\+A\+B\+C\+D\+L}\label{rb__cusum_8h_af332f5097f0706ec41767c66bc0c7c75}
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t@{rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t@{rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}}\label{rb__cusum_8h_a919538096f086726379fe9e34e4748d4}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t@{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+s} {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t}}\label{rb__cusum_8h_a12d547e4748bc25176ee3307c493b76a}
+Structure to hold all needed traffic stats.  Change to vector operations, using R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S 
+
+\subsection{Enumeration Type Documentation}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S@{R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}}
+\index{R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S@{R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf R\+B\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}}\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{T\+C\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{T\+C\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!T\+C\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{T\+C\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}}\item[{\em 
+T\+C\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1a4290d298f3b7194d91bf119b23c7764e}
+}]\index{U\+D\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{U\+D\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!U\+D\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{U\+D\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}}\item[{\em 
+U\+D\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1a6266886c95a0d08d082edb1e65cdbb37}
+}]\index{I\+C\+M\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{I\+C\+M\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!I\+C\+M\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{I\+C\+M\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}}\item[{\em 
+I\+C\+M\+P\+\_\+\+B\+Y\+T\+E\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1a06007bcca3972cee8582fb47bea17969}
+}]\index{T\+C\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{T\+C\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!T\+C\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{T\+C\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}}\item[{\em 
+T\+C\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1af09bfd57a06a703f13eb8a17b3f9479e}
+}]\index{U\+D\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{U\+D\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!U\+D\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{U\+D\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}}\item[{\em 
+U\+D\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1af2b8bb5a872c323fcca7909f5ba3c370}
+}]\index{I\+C\+M\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{I\+C\+M\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!I\+C\+M\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T@{I\+C\+M\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T}}\item[{\em 
+I\+C\+M\+P\+\_\+\+P\+K\+T\+S\+\_\+\+P\+E\+R\+C\+E\+N\+T\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1a3b34e57b18e20f681bad9dd678e5ab52}
+}]\index{S\+Y\+N\+\_\+\+A\+C\+K\+\_\+\+R\+A\+T\+E@{S\+Y\+N\+\_\+\+A\+C\+K\+\_\+\+R\+A\+T\+E}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!S\+Y\+N\+\_\+\+A\+C\+K\+\_\+\+R\+A\+T\+E@{S\+Y\+N\+\_\+\+A\+C\+K\+\_\+\+R\+A\+T\+E}}\item[{\em 
+S\+Y\+N\+\_\+\+A\+C\+K\+\_\+\+R\+A\+T\+E\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1a178b702e4c6e477af34f2723cf123f6b}
+}]\index{I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+P\+R\+A\+T\+E@{I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+P\+R\+A\+T\+E}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+P\+R\+A\+T\+E@{I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+P\+R\+A\+T\+E}}\item[{\em 
+I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+P\+R\+A\+T\+E\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1abcc70fce7e97735ad98c0e5fd256dfd0}
+}]\index{I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+R\+A\+T\+E@{I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+R\+A\+T\+E}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+R\+A\+T\+E@{I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+R\+A\+T\+E}}\item[{\em 
+I\+N\+P\+U\+T\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+R\+A\+T\+E\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1a5fb4567763d7f83b6fee648f650ac17b}
+}]\index{T\+O\+T\+A\+L\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S@{T\+O\+T\+A\+L\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!T\+O\+T\+A\+L\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S@{T\+O\+T\+A\+L\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S}}\item[{\em 
+T\+O\+T\+A\+L\+\_\+\+C\+U\+S\+U\+M\+\_\+\+S\+T\+A\+T\+S\label{rb__cusum_8h_a76c48bbb0c847570221a17f3b9e717a1aef93ed570783ca26dea072eb77f27d73}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+add@{rb\+\_\+cusum\+\_\+add}}
+\index{rb\+\_\+cusum\+\_\+add@{rb\+\_\+cusum\+\_\+add}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+add}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{s1, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{s2}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_a7c6f85890847bbf09a09b34a1a53783e}
+Adds two C\+U\+S\+U\+M stats. Equivalent to s1+=s2.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s1} & Variable to store s1+s2 \\
+\hline
+{\em s2} & Variable to add to s1 \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+complete\+\_\+cmp@{rb\+\_\+cusum\+\_\+complete\+\_\+cmp}}
+\index{rb\+\_\+cusum\+\_\+complete\+\_\+cmp@{rb\+\_\+cusum\+\_\+complete\+\_\+cmp}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+complete\+\_\+cmp}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+complete\+\_\+cmp (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{res, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{s1, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{s2, }
+\item[{double}]{eps}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_a9b1414735d3a20301249f616f9008c7c}
+Compare two counters sample if s1.\+x $<$ s2.\+x =$>$ res.\+x $>$ 0 else if s1.\+x $>$ s2.\+x =$>$ res.\+x $<$ 0 else res.\+x = 0
+
+
+\begin{DoxyParams}{Parameters}
+{\em res} & Result \\
+\hline
+{\em s1} & First stats to compare \\
+\hline
+{\em s2} & Second stats to compare \\
+\hline
+{\em eps} & Epsilon to compare floats \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+iteration@{rb\+\_\+cusum\+\_\+iteration}}
+\index{rb\+\_\+cusum\+\_\+iteration@{rb\+\_\+cusum\+\_\+iteration}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+iteration}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+iteration (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{sample, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{x\+\_\+i, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{mean\+\_\+k, }
+\item[{const struct timeval $\ast$}]{cusum\+\_\+iteration\+\_\+period, }
+\item[{const struct timeval $\ast$}]{now}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_aa515ab42aa16bed13768794f9c69e91d}
+C\+\_\+i = max[C\+\_\+\{i-\/1\} + (x\+\_\+i -\/ mu\+\_\+0 -\/ K),0]
+
+Where C\+\_\+\{i-\/1\} will be overwritten by new C\+\_\+i.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sample} & C\+\_\+\{i-\/1\}, and where to store C\+\_\+i. \\
+\hline
+{\em x\+\_\+i} & x\+\_\+i \\
+\hline
+{\em mean\+\_\+k} & pre-\/calculated mu\+\_\+0 -\/ K \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[{\bf Todo}]Negative processing \end{DoxyRefDesc}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file@{rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file}}
+\index{rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file@{rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file}]{\setlength{\rightskip}{0pt plus 5cm}int rb\+\_\+cusum\+\_\+load\+\_\+from\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{stats, }
+\item[{F\+I\+L\+E $\ast$}]{f}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_a328871708bbdee13b1d5c28ac6e72ad1}
+Load C\+U\+S\+U\+M stats from a file 
+\begin{DoxyParams}{Parameters}
+{\em stats} & Stats to save \\
+\hline
+{\em f} & File to save \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+prod@{rb\+\_\+cusum\+\_\+prod}}
+\index{rb\+\_\+cusum\+\_\+prod@{rb\+\_\+cusum\+\_\+prod}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+prod}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+prod (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{s1, }
+\item[{double}]{factor}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_af128d545cec7d1845b2faf9d6b2a0750}
+Product of two C\+U\+S\+U\+M stats. Equivalent to s1$\ast$=s2.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s1} & Variable to store s1$\ast$f \\
+\hline
+{\em factor} & Variable to multiply to s1 \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample@{rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample}}
+\index{rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample@{rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+reset\+\_\+complete\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{sample}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_ab16d09724e5c0484a843368b169dc557}
+
+
+Overwritting the same memory two times! 
+
+Reset the sample stats 
+\begin{DoxyParams}{Parameters}
+{\em stats} & Stats sample to reset \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+reset\+\_\+sample@{rb\+\_\+cusum\+\_\+reset\+\_\+sample}}
+\index{rb\+\_\+cusum\+\_\+reset\+\_\+sample@{rb\+\_\+cusum\+\_\+reset\+\_\+sample}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+reset\+\_\+sample}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+reset\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{sample}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_a8936a55f25e2b37498cac079311ac187}
+Reset the sample stats 
+\begin{DoxyParams}{Parameters}
+{\em stats} & Stats sample to reset \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file@{rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file}}
+\index{rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file@{rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+save\+\_\+in\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{stats, }
+\item[{F\+I\+L\+E $\ast$}]{f}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_acad83d77cbd357a8d434fb5a436fe8cf}
+Save C\+U\+S\+U\+M stats in a file 
+\begin{DoxyParams}{Parameters}
+{\em stats} & Stats to save \\
+\hline
+{\em f} & File to save \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}!rb\+\_\+cusum\+\_\+sub@{rb\+\_\+cusum\+\_\+sub}}
+\index{rb\+\_\+cusum\+\_\+sub@{rb\+\_\+cusum\+\_\+sub}!rb\+\_\+cusum.\+h@{rb\+\_\+cusum.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+sub}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+sub (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{s1, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{s2}
+\end{DoxyParamCaption}
+)}\label{rb__cusum_8h_aa25bc0a658e1880cdf7b63bea4e8ba12}
+Substract two C\+U\+S\+U\+M stats. Equivalent to s1-\/=s2.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s1} & Variable to store s1-\/s2 \\
+\hline
+{\em s2} & Variable to add to s1 \\
+\hline
+\end{DoxyParams}

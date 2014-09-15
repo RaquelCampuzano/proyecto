@@ -1,0 +1,137 @@
+\section{rb\+\_\+cusum\+\_\+hashtable.\+h File Reference}
+\label{rb__cusum__hashtable_8h}\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+
+
+Hashtable for C\+U\+S\+U\+M nodes.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+addr.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhashtbl.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhash.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}assert.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+init}(hashtable, maxnodes)~tommy\+\_\+hashtable\+\_\+init(hashtable,maxnodes)
+\item 
+\#define {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+done}(hashtable)~tommy\+\_\+hashtable\+\_\+done(hashtable)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef tommy\+\_\+hashtable {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t}
+\begin{DoxyCompactList}\small\item\em C\+U\+S\+U\+M stats hashtable. \end{DoxyCompactList}\item 
+typedef tommy\+\_\+hashtable\+\_\+node {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+insert} ({\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} $\ast$hashtable, struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$cusum)
+\item 
+struct \\*
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$ {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+locate} ({\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} $\ast$hashtable, const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr)
+\item 
+struct \\*
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$ {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+remove} ({\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} $\ast$hashtable, struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$sample)
+\item 
+void {\bf test\+\_\+rb\+\_\+cusum\+\_\+hashtable} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Hashtable for C\+U\+S\+U\+M nodes. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+done@{rb\+\_\+cusum\+\_\+hashtable\+\_\+done}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+done@{rb\+\_\+cusum\+\_\+hashtable\+\_\+done}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+done}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+cusum\+\_\+hashtable\+\_\+done(
+\begin{DoxyParamCaption}
+\item[{}]{hashtable}
+\end{DoxyParamCaption}
+)~tommy\+\_\+hashtable\+\_\+done(hashtable)}\label{rb__cusum__hashtable_8h_a77fad44bb66b53af1c4761e7f05621ef}
+Deallocate a rb\+\_\+cusum\+\_\+hashtable. \index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+init@{rb\+\_\+cusum\+\_\+hashtable\+\_\+init}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+init@{rb\+\_\+cusum\+\_\+hashtable\+\_\+init}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+cusum\+\_\+hashtable\+\_\+init(
+\begin{DoxyParamCaption}
+\item[{}]{hashtable, }
+\item[{}]{maxnodes}
+\end{DoxyParamCaption}
+)~tommy\+\_\+hashtable\+\_\+init(hashtable,maxnodes)}\label{rb__cusum__hashtable_8h_aa239652a99673511f6b1d1bde4630539}
+Starts a cusum hashtable with a given numbers of entries 
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t@{rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t@{rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef tommy\+\_\+hashtable\+\_\+node {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+node\+\_\+t}}\label{rb__cusum__hashtable_8h_a32c41d13e09b1699e3ea0014d3f57943}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+t@{rb\+\_\+cusum\+\_\+hashtable\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+t@{rb\+\_\+cusum\+\_\+hashtable\+\_\+t}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef tommy\+\_\+hashtable {\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t}}\label{rb__cusum__hashtable_8h_aaa0dacc5657fa4ce2542d2e128dc5fff}
+
+
+C\+U\+S\+U\+M stats hashtable. 
+
+In this kind of hashtable, we have an length N array of linked list. Add a C\+U\+S\+U\+M to a table means add it to a specific linked list.
+
+The criteria to choose linked list will be a hash based on extern\+\_\+addr. This way, we identify a flow by the extern address, and applying a hash we minimize the collision chance. 
+
+\subsection{Function Documentation}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+insert@{rb\+\_\+cusum\+\_\+hashtable\+\_\+insert}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+insert@{rb\+\_\+cusum\+\_\+hashtable\+\_\+insert}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+insert}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+hashtable\+\_\+insert (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} $\ast$}]{hashtable, }
+\item[{struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$}]{cusum}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__hashtable_8h_a41c5a8278162fbf99eaa27012586251f}
+Insert a cusum node in the hashtable 
+\begin{DoxyParams}{Parameters}
+{\em hashtable} & Hashtable. \\
+\hline
+{\em cusum} & cusum node \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+locate@{rb\+\_\+cusum\+\_\+hashtable\+\_\+locate}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+locate@{rb\+\_\+cusum\+\_\+hashtable\+\_\+locate}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+locate}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s}$\ast$ rb\+\_\+cusum\+\_\+hashtable\+\_\+locate (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} $\ast$}]{hashtable, }
+\item[{const {\bf rb\+\_\+addr\+\_\+t} $\ast$}]{addr}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__hashtable_8h_a2f9bbece719507fd33ab2e2a669aacbd}
+Locate a node with an specific address 
+\begin{DoxyParams}{Parameters}
+{\em hashtable} & Counters hashtable. \\
+\hline
+{\em addr} & Address of the searched node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Counters, if located. N\+U\+L\+L ioc. 
+\end{DoxyReturn}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!rb\+\_\+cusum\+\_\+hashtable\+\_\+remove@{rb\+\_\+cusum\+\_\+hashtable\+\_\+remove}}
+\index{rb\+\_\+cusum\+\_\+hashtable\+\_\+remove@{rb\+\_\+cusum\+\_\+hashtable\+\_\+remove}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+hashtable\+\_\+remove}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s}$\ast$ rb\+\_\+cusum\+\_\+hashtable\+\_\+remove (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+hashtable\+\_\+t} $\ast$}]{hashtable, }
+\item[{struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$}]{sample}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__hashtable_8h_aca56953db4b22168b44bbe5b567b463b}
+Remove a C\+U\+S\+U\+M sample from the hashtable 
+\begin{DoxyParams}{Parameters}
+{\em hashtable} & Counters hashtable \\
+\hline
+{\em sample} & Sample to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function should return sample. 
+\end{DoxyReturn}
+\index{rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}!test\+\_\+rb\+\_\+cusum\+\_\+hashtable@{test\+\_\+rb\+\_\+cusum\+\_\+hashtable}}
+\index{test\+\_\+rb\+\_\+cusum\+\_\+hashtable@{test\+\_\+rb\+\_\+cusum\+\_\+hashtable}!rb\+\_\+cusum\+\_\+hashtable.\+h@{rb\+\_\+cusum\+\_\+hashtable.\+h}}
+\subsubsection[{test\+\_\+rb\+\_\+cusum\+\_\+hashtable}]{\setlength{\rightskip}{0pt plus 5cm}void test\+\_\+rb\+\_\+cusum\+\_\+hashtable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__hashtable_8h_a6dc88bb8b2d5aa57c0f5ff7216746f99}

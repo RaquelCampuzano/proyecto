@@ -1,0 +1,90 @@
+\section{engine.\+h File Reference}
+\label{engine_8h}\index{engine.\+h@{engine.\+h}}
+
+
+This file holds the declaration of all processing that has to be done to the packets.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \\*
+{\bf pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+s} {\bf pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf direction\+\_\+t} \{ {\bf input}, 
+{\bf output}
+ \}
+\begin{DoxyCompactList}\small\item\em Directions a packet can take. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ {\bf consumer\+\_\+thread} (void $\ast$\+\_\+id)
+\item 
+void {\bf process\+Counters} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file holds the declaration of all processing that has to be done to the packets. 
+
+It relies on more private functions that encapsulate the behaviour, so they can change with little impact in the rest of program.
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{engine.\+c}{p.}{engine_8c} for more detailed description 
+\end{DoxySeeAlso}
+
+
+\subsection{Typedef Documentation}
+\index{engine.\+h@{engine.\+h}!pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t@{pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t}}
+\index{pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t@{pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t}!engine.\+h@{engine.\+h}}
+\subsubsection[{pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+s} {\bf pfring\+\_\+zc\+\_\+pkt\+\_\+buff\+\_\+meta\+\_\+t}}\label{engine_8h_ab161c29cebbaed8a9628454055998542}
+pfring\+\_\+zc\+\_\+pkt\+\_\+buff user metadata 
+
+\subsection{Enumeration Type Documentation}
+\index{engine.\+h@{engine.\+h}!direction\+\_\+t@{direction\+\_\+t}}
+\index{direction\+\_\+t@{direction\+\_\+t}!engine.\+h@{engine.\+h}}
+\subsubsection[{direction\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf direction\+\_\+t}}\label{engine_8h_ae9ae980041e438eed7a3af43ce4e9f6b}
+
+
+Directions a packet can take. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{input@{input}!engine.\+h@{engine.\+h}}\index{engine.\+h@{engine.\+h}!input@{input}}\item[{\em 
+input\label{engine_8h_ae9ae980041e438eed7a3af43ce4e9f6ba37943061a284187ff6e555ac7093f528}
+}]\index{output@{output}!engine.\+h@{engine.\+h}}\index{engine.\+h@{engine.\+h}!output@{output}}\item[{\em 
+output\label{engine_8h_ae9ae980041e438eed7a3af43ce4e9f6bae6eb596f7e638118128651043ff38545}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{engine.\+h@{engine.\+h}!consumer\+\_\+thread@{consumer\+\_\+thread}}
+\index{consumer\+\_\+thread@{consumer\+\_\+thread}!engine.\+h@{engine.\+h}}
+\subsubsection[{consumer\+\_\+thread}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ consumer\+\_\+thread (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{\+\_\+id}
+\end{DoxyParamCaption}
+)}\label{engine_8h_a7b8a6497294fbf8928720122dd4ff263}
+Packet consumer thread main function 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+id} & thread id, that set the counters\+\_\+pool, out queue, and so on. \\
+\hline
+\end{DoxyParams}
+\index{engine.\+h@{engine.\+h}!process\+Counters@{process\+Counters}}
+\index{process\+Counters@{process\+Counters}!engine.\+h@{engine.\+h}}
+\subsubsection[{process\+Counters}]{\setlength{\rightskip}{0pt plus 5cm}void process\+Counters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{engine_8h_a06e61384ff05cf577daa7d8dd9ef9fdf}
+Main thread counters process. It recollect all consumer thread's counters and do actions with them. 

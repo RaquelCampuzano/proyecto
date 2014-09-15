@@ -1,0 +1,143 @@
+\section{rb\+\_\+cusum\+\_\+pool.\+h File Reference}
+\label{rb__cusum__pool_8h}\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+
+
+C\+U\+S\+U\+M pool definitions.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf rb\+\_\+cusum\+\_\+pool\+\_\+s} {\bf rb\+\_\+cusum\+\_\+pool\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Counters pool type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$ {\bf new\+\_\+cusum\+\_\+pool} (size\+\_\+t size, size\+\_\+t hashtable\+\_\+size)
+\item 
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$ {\bf get\+\_\+cusum} ({\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$pool, const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+sample\+\_\+updated} ({\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$pool, {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$complete\+\_\+sample)
+\item 
+size\+\_\+t {\bf rb\+\_\+cusum\+\_\+pool\+\_\+purge} ({\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$pool, const struct timeval $\ast$min\+\_\+tv\+\_\+allowed)
+\item 
+void {\bf delete\+\_\+cusum\+\_\+pool} ({\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+void {\bf test\+\_\+cusum\+\_\+pool} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+C\+U\+S\+U\+M pool definitions. 
+
+The C\+U\+S\+U\+M pool is the main storage system to C\+U\+S\+U\+M stats registers. \doxyref{rb\+\_\+counters\+\_\+pool}{p.}{structrb__counters__pool} is able to allocate a given numbers of counters, return new ones and find one by the extern direction.
+
+In order to be able to do fast counters lookups, it uses internally a hashtable. Bigger hashtable size means less collision probability, and result in fast lookups. However, too big hashtable size means wasted memory. 
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!rb\+\_\+cusum\+\_\+pool\+\_\+t@{rb\+\_\+cusum\+\_\+pool\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+t@{rb\+\_\+cusum\+\_\+pool\+\_\+t}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+pool\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+cusum\+\_\+pool\+\_\+s} {\bf rb\+\_\+cusum\+\_\+pool\+\_\+t}}\label{rb__cusum__pool_8h_aa6214a0c084feb9414eb82a7c154c7f1}
+
+
+Counters pool type. 
+
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!delete\+\_\+cusum\+\_\+pool@{delete\+\_\+cusum\+\_\+pool}}
+\index{delete\+\_\+cusum\+\_\+pool@{delete\+\_\+cusum\+\_\+pool}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{delete\+\_\+cusum\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}void delete\+\_\+cusum\+\_\+pool (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__pool_8h_a9c9538f542f78fef4f7e9100c418d45a}
+Delete a counter pool
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & pool to free. \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!get\+\_\+cusum@{get\+\_\+cusum}}
+\index{get\+\_\+cusum@{get\+\_\+cusum}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{get\+\_\+cusum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t}$\ast$ get\+\_\+cusum (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$}]{pool, }
+\item[{const {\bf rb\+\_\+addr\+\_\+t} $\ast$}]{addr}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__pool_8h_afea2b2d130edf278500c31159bdb337e}
+Get a C\+U\+S\+U\+M parameters with a specific addr from hashtable or pool. If can't locate, it allocate one from pool. 
+\begin{DoxyParams}{Parameters}
+{\em addr} & addr to locate. \\
+\hline
+{\em pool} & Pool to allocate if not found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+C\+U\+S\+U\+M parameters. N\+U\+L\+L if ca't allocate. 
+\end{DoxyReturn}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!new\+\_\+cusum\+\_\+pool@{new\+\_\+cusum\+\_\+pool}}
+\index{new\+\_\+cusum\+\_\+pool@{new\+\_\+cusum\+\_\+pool}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{new\+\_\+cusum\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t}$\ast$ new\+\_\+cusum\+\_\+pool (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{size, }
+\item[{size\+\_\+t}]{hashtable\+\_\+size}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__pool_8h_a0587ff22f11ce03e16815686b96fe6e7}
+Create a new C\+U\+S\+U\+M stats pool.
+
+If you enable huge pages, it will try to allocate the pool in them. if not enabled, or can't, it will try to allocate it via malloc. if it's not possible, it will fail and return N\+U\+L\+L 
+\begin{DoxyParams}{Parameters}
+{\em size} & Size of the pool \\
+\hline
+{\em hashtable\+\_\+size} & Size of the hashtable used to locate counters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New pool, or 0 if fail. 
+\end{DoxyReturn}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!rb\+\_\+cusum\+\_\+pool\+\_\+purge@{rb\+\_\+cusum\+\_\+pool\+\_\+purge}}
+\index{rb\+\_\+cusum\+\_\+pool\+\_\+purge@{rb\+\_\+cusum\+\_\+pool\+\_\+purge}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+pool\+\_\+purge}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t rb\+\_\+cusum\+\_\+pool\+\_\+purge (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$}]{pool, }
+\item[{const struct timeval $\ast$}]{min\+\_\+tv\+\_\+allowed}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__pool_8h_a2ca12f5131fdd6c2077c8ae7ce7d3beb}
+Purge C\+U\+S\+U\+M pool for old C\+U\+S\+U\+M counters
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pool to purge \\
+\hline
+{\em min\+\_\+ts\+\_\+allowed} & Minimum timestamp allowed. statistics with timestamp $<$ mts will be deleted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of cusum cleaned 
+\end{DoxyReturn}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!rb\+\_\+cusum\+\_\+sample\+\_\+updated@{rb\+\_\+cusum\+\_\+sample\+\_\+updated}}
+\index{rb\+\_\+cusum\+\_\+sample\+\_\+updated@{rb\+\_\+cusum\+\_\+sample\+\_\+updated}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+sample\+\_\+updated}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+sample\+\_\+updated (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+pool\+\_\+t} $\ast$}]{pool, }
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{complete\+\_\+sample}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__pool_8h_a45813cc10893db1ff4fcec034eaa4196}
+Signal to the pool that a C\+U\+S\+U\+M has been updated 
+\begin{DoxyParams}{Parameters}
+{\em pool} & C\+U\+S\+U\+M pool \\
+\hline
+{\em sample} & C\+U\+S\+Um sample \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}!test\+\_\+cusum\+\_\+pool@{test\+\_\+cusum\+\_\+pool}}
+\index{test\+\_\+cusum\+\_\+pool@{test\+\_\+cusum\+\_\+pool}!rb\+\_\+cusum\+\_\+pool.\+h@{rb\+\_\+cusum\+\_\+pool.\+h}}
+\subsubsection[{test\+\_\+cusum\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}void test\+\_\+cusum\+\_\+pool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__pool_8h_a1bd0e915437fbd9e4c4615385f7c3784}

@@ -1,0 +1,131 @@
+\section{rb\+\_\+counters\+\_\+pool.\+h File Reference}
+\label{rb__counters__pool_8h}\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+
+
+Counters pool definitions.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+counters.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf rb\+\_\+counters\+\_\+pool} {\bf rb\+\_\+counters\+\_\+pool\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Counters pool type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$ {\bf new\+\_\+counters\+\_\+pool} (size\+\_\+t size, size\+\_\+t hashtable\+\_\+size)
+\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$ {\bf get\+\_\+counter} (const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr, {\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$ {\bf pop\+\_\+counter} ({\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+void {\bf reset\+\_\+counter\+\_\+pool} ({\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$pool)
+\item 
+void {\bf delete\+\_\+counters\+\_\+pool} ({\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$pool)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Counters pool definitions. 
+
+The counters pool is the main storage system to flow counters. \doxyref{rb\+\_\+counters\+\_\+pool}{p.}{structrb__counters__pool} is able to allocate a given numbers of counters, return new ones and find one by the extern direction.
+
+In order to be able to do fast counters lookups, it uses internally a hashtable. Bigger hashtable size means less collision probability, and result in fast lookups. However, too big hashtable size means wasted memory. 
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}!rb\+\_\+counters\+\_\+pool\+\_\+t@{rb\+\_\+counters\+\_\+pool\+\_\+t}}
+\index{rb\+\_\+counters\+\_\+pool\+\_\+t@{rb\+\_\+counters\+\_\+pool\+\_\+t}!rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+pool\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+counters\+\_\+pool} {\bf rb\+\_\+counters\+\_\+pool\+\_\+t}}\label{rb__counters__pool_8h_afaed0707fe65ad5a02b82a110a4aa0e5}
+
+
+Counters pool type. 
+
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}!delete\+\_\+counters\+\_\+pool@{delete\+\_\+counters\+\_\+pool}}
+\index{delete\+\_\+counters\+\_\+pool@{delete\+\_\+counters\+\_\+pool}!rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+\subsubsection[{delete\+\_\+counters\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}void delete\+\_\+counters\+\_\+pool (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__pool_8h_ac7b079e53953681efcd5ccdccf7e6329}
+Delete a counter pool
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & pool to free. \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}!get\+\_\+counter@{get\+\_\+counter}}
+\index{get\+\_\+counter@{get\+\_\+counter}!rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+\subsubsection[{get\+\_\+counter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$ get\+\_\+counter (
+\begin{DoxyParamCaption}
+\item[{const {\bf rb\+\_\+addr\+\_\+t} $\ast$}]{addr, }
+\item[{{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__pool_8h_aa60040cf61774f141bf442302128d8b4}
+Get a counter with a specific addr from hashtable or pool. If can't locate, it allocate one from pool. 
+\begin{DoxyParams}{Parameters}
+{\em addr} & addr to locate. \\
+\hline
+{\em pool} & Pool to allocate if not found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+counter. N\+U\+L\+L if ca't allocate. 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}!new\+\_\+counters\+\_\+pool@{new\+\_\+counters\+\_\+pool}}
+\index{new\+\_\+counters\+\_\+pool@{new\+\_\+counters\+\_\+pool}!rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+\subsubsection[{new\+\_\+counters\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+pool\+\_\+t}$\ast$ new\+\_\+counters\+\_\+pool (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{size, }
+\item[{size\+\_\+t}]{hashtable\+\_\+size}
+\end{DoxyParamCaption}
+)}\label{rb__counters__pool_8h_a9ce31ae67952717a45ed1cab44683ac0}
+Create a new counter pool.
+
+If you enable huge pages, it will try to allocate the pool in them. if not enabled, or can't, it will try to allocate it via malloc. if it's not possible, it will fail and return N\+U\+L\+L 
+\begin{DoxyParams}{Parameters}
+{\em size} & Size of the pool \\
+\hline
+{\em hashtable\+\_\+size} & Size of the hashtable used to locate counters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New pool, or 0 if fail. 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}!pop\+\_\+counter@{pop\+\_\+counter}}
+\index{pop\+\_\+counter@{pop\+\_\+counter}!rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+\subsubsection[{pop\+\_\+counter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$ pop\+\_\+counter (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__pool_8h_a9127d72d114d9494cca32ccf9b3293a8}
+Get the last counter used
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pool to extrat counter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+\+: You can't use hashtable if you use this function, until you reset the pool 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Last counter used 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}!reset\+\_\+counter\+\_\+pool@{reset\+\_\+counter\+\_\+pool}}
+\index{reset\+\_\+counter\+\_\+pool@{reset\+\_\+counter\+\_\+pool}!rb\+\_\+counters\+\_\+pool.\+h@{rb\+\_\+counters\+\_\+pool.\+h}}
+\subsubsection[{reset\+\_\+counter\+\_\+pool}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+\_\+counter\+\_\+pool (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+pool\+\_\+t} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{rb__counters__pool_8h_a27e396393b0d1bed3ff73d73c539cea8}
+Reset a counter pool 
+\begin{DoxyParams}{Parameters}
+{\em pool} & Pool to reset \\
+\hline
+\end{DoxyParams}

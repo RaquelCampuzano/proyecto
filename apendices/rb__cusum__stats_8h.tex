@@ -1,0 +1,98 @@
+\section{rb\+\_\+cusum\+\_\+stats.\+h File Reference}
+\label{rb__cusum__stats_8h}\index{rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}}
+
+
+Definitions of all processing that has to be done to the packets.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C}~0x\+D\+B\+C\+A\+D\+B\+C\+A\+L
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+s} {\bf rb\+\_\+cusum\+\_\+stats\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} $\ast$dst, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$vsamples, size\+\_\+t length)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$mean\+\_\+k, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} $\ast$parameters, double k)
+\item 
+void {\bf rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold} ({\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$h, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} $\ast$parameters, double k)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definitions of all processing that has to be done to the packets. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}!S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C@{S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C}}
+\index{S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C@{S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C}!rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}}
+\subsubsection[{S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+A\+T\+S\+\_\+\+M\+A\+G\+I\+C~0x\+D\+B\+C\+A\+D\+B\+C\+A\+L}\label{rb__cusum__stats_8h_a502b4d945394e2e4f587e00314a6712a}
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}!rb\+\_\+cusum\+\_\+stats\+\_\+t@{rb\+\_\+cusum\+\_\+stats\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+t@{rb\+\_\+cusum\+\_\+stats\+\_\+t}!rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+stats\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+s} {\bf rb\+\_\+cusum\+\_\+stats\+\_\+t}}\label{rb__cusum__stats_8h_a76ea4f21a5e72de701b402dffbf845d1}
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}!rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev@{rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev}}
+\index{rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev@{rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev}!rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+extract\+\_\+mean\+\_\+std\+\_\+dev (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} $\ast$}]{dst, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{vsamples, }
+\item[{size\+\_\+t}]{length}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__stats_8h_ad14884f546af682f93fd6f1438bd0317}
+Extract mean and square deviation for a vector of samples 
+\begin{DoxyParams}{Parameters}
+{\em dst} & Destination to save statistics \\
+\hline
+{\em length} & length of vsamples \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}!rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k@{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k}}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k@{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k}!rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+mean\+\_\+k (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{mean\+\_\+k, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} $\ast$}]{parameters, }
+\item[{double}]{k}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__stats_8h_ad547d730f93b0810b0e017bc628aa839}
+Extract  -\/ K from C\+U\+S\+U\+M algorithm 
+\begin{DoxyParams}{Parameters}
+{\em mean\+\_\+k} & Location to store -\/\+K \\
+\hline
+{\em parameters} & Mean and sqr dev \\
+\hline
+{\em k} & K = k$\ast$sqr\+\_\+dev \\
+\hline
+\end{DoxyParams}
+\index{rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}!rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold@{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold}}
+\index{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold@{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold}!rb\+\_\+cusum\+\_\+stats.\+h@{rb\+\_\+cusum\+\_\+stats.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+cusum\+\_\+stats\+\_\+extract\+\_\+threshold (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+stats\+\_\+sample\+\_\+t} $\ast$}]{h, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+t} $\ast$}]{parameters, }
+\item[{double}]{k}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__stats_8h_a6ba30a556ecf4d27630dd12005f68d74}
+Extract H from C\+U\+S\+U\+M algorithm.
+
+h = K$\ast$std\+\_\+dev 

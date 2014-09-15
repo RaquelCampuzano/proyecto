@@ -1,0 +1,124 @@
+\section{rb\+\_\+cusum\+\_\+list.\+h File Reference}
+\label{rb__cusum__list_8h}\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+
+
+List of cusum registry.  
+
+
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommylist.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf rb\+\_\+cusum\+\_\+list\+\_\+init}(list)~tommy\+\_\+list\+\_\+init (list)
+\begin{DoxyCompactList}\small\item\em Initialize an rb\+\_\+cusum\+\_\+list. \end{DoxyCompactList}\item 
+\#define {\bf rb\+\_\+cusum\+\_\+list\+\_\+head}(list)~tommy\+\_\+list\+\_\+head (list)
+\begin{DoxyCompactList}\small\item\em Get the head of the cusum list. \end{DoxyCompactList}\item 
+\#define {\bf rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head}(list, node, data)~tommy\+\_\+list\+\_\+insert\+\_\+head(list,node,data)
+\begin{DoxyCompactList}\small\item\em Insert a node at the head of the list. \end{DoxyCompactList}\item 
+\#define {\bf rb\+\_\+cusum\+\_\+list\+\_\+remove}(list, node)~tommy\+\_\+list\+\_\+remove\+\_\+existing(list, node)
+\begin{DoxyCompactList}\small\item\em Remove a node from the cusum list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef tommy\+\_\+node {\bf rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t}
+\begin{DoxyCompactList}\small\item\em List node type. \end{DoxyCompactList}\item 
+typedef tommy\+\_\+list {\bf rb\+\_\+cusum\+\_\+list\+\_\+t}
+\begin{DoxyCompactList}\small\item\em List type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \\*
+{\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s} $\ast$ {\bf rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head} ({\bf rb\+\_\+cusum\+\_\+list\+\_\+t} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Pop a node from the head of the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+List of cusum registry. 
+
+\begin{DoxyNote}{Note}
+No need for rb\+\_\+cusum\+\_\+list\+\_\+end. 
+\end{DoxyNote}
+
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+head@{rb\+\_\+cusum\+\_\+list\+\_\+head}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+head@{rb\+\_\+cusum\+\_\+list\+\_\+head}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+head}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+cusum\+\_\+list\+\_\+head(
+\begin{DoxyParamCaption}
+\item[{}]{list}
+\end{DoxyParamCaption}
+)~tommy\+\_\+list\+\_\+head (list)}\label{rb__cusum__list_8h_aa82491ab6263fdfb1849469ff0f68bdd}
+
+
+Get the head of the cusum list. 
+
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+init@{rb\+\_\+cusum\+\_\+list\+\_\+init}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+init@{rb\+\_\+cusum\+\_\+list\+\_\+init}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+cusum\+\_\+list\+\_\+init(
+\begin{DoxyParamCaption}
+\item[{}]{list}
+\end{DoxyParamCaption}
+)~tommy\+\_\+list\+\_\+init (list)}\label{rb__cusum__list_8h_a7d882d271c7ee8f7aca5f509a2f259a7}
+
+
+Initialize an rb\+\_\+cusum\+\_\+list. 
+
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head@{rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head@{rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+cusum\+\_\+list\+\_\+insert\+\_\+head(
+\begin{DoxyParamCaption}
+\item[{}]{list, }
+\item[{}]{node, }
+\item[{}]{data}
+\end{DoxyParamCaption}
+)~tommy\+\_\+list\+\_\+insert\+\_\+head(list,node,data)}\label{rb__cusum__list_8h_ae44d5d2f62cec719364829ab82a3f6ef}
+
+
+Insert a node at the head of the list. 
+
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+remove@{rb\+\_\+cusum\+\_\+list\+\_\+remove}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+remove@{rb\+\_\+cusum\+\_\+list\+\_\+remove}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+remove}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+cusum\+\_\+list\+\_\+remove(
+\begin{DoxyParamCaption}
+\item[{}]{list, }
+\item[{}]{node}
+\end{DoxyParamCaption}
+)~tommy\+\_\+list\+\_\+remove\+\_\+existing(list, node)}\label{rb__cusum__list_8h_a18b1182d4a80cd2123b6b4763577ee1f}
+
+
+Remove a node from the cusum list. 
+
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t@{rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t@{rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef tommy\+\_\+node {\bf rb\+\_\+cusum\+\_\+list\+\_\+node\+\_\+t}}\label{rb__cusum__list_8h_a2906af2380e5e97ceab1b32ae2b37742}
+
+
+List node type. 
+
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+t@{rb\+\_\+cusum\+\_\+list\+\_\+t}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+t@{rb\+\_\+cusum\+\_\+list\+\_\+t}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef tommy\+\_\+list {\bf rb\+\_\+cusum\+\_\+list\+\_\+t}}\label{rb__cusum__list_8h_a006e7ec355edfeff67c8fc1b8a02a953}
+
+
+List type. 
+
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}!rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head@{rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head}}
+\index{rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head@{rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head}!rb\+\_\+cusum\+\_\+list.\+h@{rb\+\_\+cusum\+\_\+list.\+h}}
+\subsubsection[{rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+s}$\ast$ rb\+\_\+cusum\+\_\+list\+\_\+pop\+\_\+head (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+cusum\+\_\+list\+\_\+t} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__list_8h_ad29f96d630aa5745459eea94dbed3b5d}
+
+
+Pop a node from the head of the list. 
+

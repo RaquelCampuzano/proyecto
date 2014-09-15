@@ -1,0 +1,47 @@
+\section{utils.\+h File Reference}
+\label{utils_8h}\index{utils.\+h@{utils.\+h}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$sys/time.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf R\+B\+\_\+\+U\+N\+U\+S\+E\+D}~\+\_\+\+\_\+attribute\+\_\+\+\_\+((unused))
+\item 
+\#define {\bf R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D}~\+\_\+\+\_\+attribute\+\_\+\+\_\+((aligned))
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf get\+\_\+pools\+\_\+sizes} (size\+\_\+t available, size\+\_\+t nthreads, size\+\_\+t $\ast$counters\+\_\+pool, size\+\_\+t $\ast$cusum\+\_\+pool)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{utils.\+h@{utils.\+h}!R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D@{R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D}}
+\index{R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D@{R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D}!utils.\+h@{utils.\+h}}
+\subsubsection[{R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+B\+\_\+\+A\+L\+I\+G\+N\+E\+D~\+\_\+\+\_\+attribute\+\_\+\+\_\+((aligned))}\label{utils_8h_aa0e709ee523d90640a5a85da2f92f490}
+\index{utils.\+h@{utils.\+h}!R\+B\+\_\+\+U\+N\+U\+S\+E\+D@{R\+B\+\_\+\+U\+N\+U\+S\+E\+D}}
+\index{R\+B\+\_\+\+U\+N\+U\+S\+E\+D@{R\+B\+\_\+\+U\+N\+U\+S\+E\+D}!utils.\+h@{utils.\+h}}
+\subsubsection[{R\+B\+\_\+\+U\+N\+U\+S\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+B\+\_\+\+U\+N\+U\+S\+E\+D~\+\_\+\+\_\+attribute\+\_\+\+\_\+((unused))}\label{utils_8h_aed6a24603cc3878dddf16b3c213287ca}
+
+
+\subsection{Function Documentation}
+\index{utils.\+h@{utils.\+h}!get\+\_\+pools\+\_\+sizes@{get\+\_\+pools\+\_\+sizes}}
+\index{get\+\_\+pools\+\_\+sizes@{get\+\_\+pools\+\_\+sizes}!utils.\+h@{utils.\+h}}
+\subsubsection[{get\+\_\+pools\+\_\+sizes}]{\setlength{\rightskip}{0pt plus 5cm}void get\+\_\+pools\+\_\+sizes (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{available, }
+\item[{size\+\_\+t}]{nthreads, }
+\item[{size\+\_\+t $\ast$}]{counters\+\_\+pool, }
+\item[{size\+\_\+t $\ast$}]{cusum\+\_\+pool}
+\end{DoxyParamCaption}
+)}\label{utils_8h_a2bb11ced80c577b8acfbeb4a0e986835}
+Let a memory pool size available and the number of threads, this function gives the size for the C\+U\+S\+U\+M pool and counters pool. 
+\begin{DoxyParams}{Parameters}
+{\em available} & Memory size available \\
+\hline
+{\em nthreads} & Number of threads \\
+\hline
+{\em counters\+\_\+pool} & Re \\
+\hline
+\end{DoxyParams}

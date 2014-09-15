@@ -1,0 +1,97 @@
+\section{rb\+\_\+counters\+\_\+hashtable.\+h File Reference}
+\label{rb__counters__hashtable_8h}\index{rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}}
+
+
+Counters hashtable.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+counters.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhashtbl.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tommyds/tommyhash.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}assert.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf rb\+\_\+counters\+\_\+hashtable\+\_\+init}(hashtable, maxnodes)~tommy\+\_\+hashtable\+\_\+init(hashtable,maxnodes)
+\item 
+\#define {\bf rb\+\_\+counters\+\_\+hashtable\+\_\+done}(hashtable)~tommy\+\_\+hashtable\+\_\+done(hashtable)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef tommy\+\_\+hashtable {\bf rb\+\_\+counters\+\_\+hashtable\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf rb\+\_\+hashtable\+\_\+insert} ({\bf rb\+\_\+counters\+\_\+hashtable\+\_\+t} $\ast$hashtable, {\bf rb\+\_\+counters\+\_\+t} $\ast$counters)
+\item 
+{\bf rb\+\_\+counters\+\_\+t} $\ast$ {\bf rb\+\_\+counters\+\_\+hashtable\+\_\+locate} ({\bf rb\+\_\+counters\+\_\+hashtable\+\_\+t} $\ast$hashtable, const {\bf rb\+\_\+addr\+\_\+t} $\ast$addr)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Counters hashtable. 
+
+In this kind of hashtable, we have an length N array of linked list. Add a counter to a table means add it to a specific linked list.
+
+The criteria to choose linked list will be a hash based on extern\+\_\+addr. This way, we identify a flow by the extern address, and applying a hash we minimize the collision chance. 
+
+\subsection{Macro Definition Documentation}
+\index{rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}!rb\+\_\+counters\+\_\+hashtable\+\_\+done@{rb\+\_\+counters\+\_\+hashtable\+\_\+done}}
+\index{rb\+\_\+counters\+\_\+hashtable\+\_\+done@{rb\+\_\+counters\+\_\+hashtable\+\_\+done}!rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+hashtable\+\_\+done}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+counters\+\_\+hashtable\+\_\+done(
+\begin{DoxyParamCaption}
+\item[{}]{hashtable}
+\end{DoxyParamCaption}
+)~tommy\+\_\+hashtable\+\_\+done(hashtable)}\label{rb__counters__hashtable_8h_a9b52d58e9880107b802df968b501b88e}
+Deallocate a rb\+\_\+counters\+\_\+hashtable. \index{rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}!rb\+\_\+counters\+\_\+hashtable\+\_\+init@{rb\+\_\+counters\+\_\+hashtable\+\_\+init}}
+\index{rb\+\_\+counters\+\_\+hashtable\+\_\+init@{rb\+\_\+counters\+\_\+hashtable\+\_\+init}!rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+hashtable\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}\#define rb\+\_\+counters\+\_\+hashtable\+\_\+init(
+\begin{DoxyParamCaption}
+\item[{}]{hashtable, }
+\item[{}]{maxnodes}
+\end{DoxyParamCaption}
+)~tommy\+\_\+hashtable\+\_\+init(hashtable,maxnodes)}\label{rb__counters__hashtable_8h_a565e665cab68aeadd08917575c932ba0}
+Starts a counters hashtable with a given numbers of entries 
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}!rb\+\_\+counters\+\_\+hashtable\+\_\+t@{rb\+\_\+counters\+\_\+hashtable\+\_\+t}}
+\index{rb\+\_\+counters\+\_\+hashtable\+\_\+t@{rb\+\_\+counters\+\_\+hashtable\+\_\+t}!rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+hashtable\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef tommy\+\_\+hashtable {\bf rb\+\_\+counters\+\_\+hashtable\+\_\+t}}\label{rb__counters__hashtable_8h_a6e4f5896b36606e94825172070275692}
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}!rb\+\_\+counters\+\_\+hashtable\+\_\+locate@{rb\+\_\+counters\+\_\+hashtable\+\_\+locate}}
+\index{rb\+\_\+counters\+\_\+hashtable\+\_\+locate@{rb\+\_\+counters\+\_\+hashtable\+\_\+locate}!rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+counters\+\_\+hashtable\+\_\+locate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+counters\+\_\+t}$\ast$ rb\+\_\+counters\+\_\+hashtable\+\_\+locate (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+hashtable\+\_\+t} $\ast$}]{hashtable, }
+\item[{const {\bf rb\+\_\+addr\+\_\+t} $\ast$}]{addr}
+\end{DoxyParamCaption}
+)}\label{rb__counters__hashtable_8h_a61c5b966ff8df5a632989f09fae32a8b}
+Locate a node with an specific address 
+\begin{DoxyParams}{Parameters}
+{\em hashtable} & Counters hashtable. \\
+\hline
+{\em addr} & Address of the searched node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Counters, if located. N\+U\+L\+L ioc. 
+\end{DoxyReturn}
+\index{rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}!rb\+\_\+hashtable\+\_\+insert@{rb\+\_\+hashtable\+\_\+insert}}
+\index{rb\+\_\+hashtable\+\_\+insert@{rb\+\_\+hashtable\+\_\+insert}!rb\+\_\+counters\+\_\+hashtable.\+h@{rb\+\_\+counters\+\_\+hashtable.\+h}}
+\subsubsection[{rb\+\_\+hashtable\+\_\+insert}]{\setlength{\rightskip}{0pt plus 5cm}void rb\+\_\+hashtable\+\_\+insert (
+\begin{DoxyParamCaption}
+\item[{{\bf rb\+\_\+counters\+\_\+hashtable\+\_\+t} $\ast$}]{hashtable, }
+\item[{{\bf rb\+\_\+counters\+\_\+t} $\ast$}]{counters}
+\end{DoxyParamCaption}
+)}\label{rb__counters__hashtable_8h_a87242dc2a4d18922d804db4315bc2742}
+Insert a counters node in the hashtable 
+\begin{DoxyParams}{Parameters}
+{\em hashtable} & Hashtable. \\
+\hline
+{\em counters} & Counters node \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,56 @@
+\section{rb\+\_\+cusum\+\_\+ddos.\+h File Reference}
+\label{rb__cusum__ddos_8h}\index{rb\+\_\+cusum\+\_\+ddos.\+h@{rb\+\_\+cusum\+\_\+ddos.\+h}}
+
+
+Declarations of all processing that has to be done to C\+U\+S\+U\+M statistics in order to check ddos attacks.  
+
+
+{\ttfamily \#include \char`\"{}rb\+\_\+cusum.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}librbutils/rbstring.\+h\char`\"{}}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef strbuffer\+\_\+t {\bf rb\+\_\+string}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf rb\+\_\+string} $\ast$ {\bf check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg} (const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast${\bf stats}, const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$threshold, const struct timeval $\ast$now, double h)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Declarations of all processing that has to be done to C\+U\+S\+U\+M statistics in order to check ddos attacks. 
+
+
+
+\subsection{Typedef Documentation}
+\index{rb\+\_\+cusum\+\_\+ddos.\+h@{rb\+\_\+cusum\+\_\+ddos.\+h}!rb\+\_\+string@{rb\+\_\+string}}
+\index{rb\+\_\+string@{rb\+\_\+string}!rb\+\_\+cusum\+\_\+ddos.\+h@{rb\+\_\+cusum\+\_\+ddos.\+h}}
+\subsubsection[{rb\+\_\+string}]{\setlength{\rightskip}{0pt plus 5cm}typedef strbuffer\+\_\+t {\bf rb\+\_\+string}}\label{rb__cusum__ddos_8h_a0a26c37beee5b438531be71616f19fe2}
+
+
+\subsection{Function Documentation}
+\index{rb\+\_\+cusum\+\_\+ddos.\+h@{rb\+\_\+cusum\+\_\+ddos.\+h}!check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg@{check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg}}
+\index{check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg@{check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg}!rb\+\_\+cusum\+\_\+ddos.\+h@{rb\+\_\+cusum\+\_\+ddos.\+h}}
+\subsubsection[{check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rb\+\_\+string}$\ast$ check\+\_\+threshold\+\_\+and\+\_\+gen\+\_\+msg (
+\begin{DoxyParamCaption}
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{stats, }
+\item[{const {\bf rb\+\_\+cusum\+\_\+stats\+\_\+complete\+\_\+sample\+\_\+t} $\ast$}]{threshold, }
+\item[{const struct timeval $\ast$}]{now, }
+\item[{double}]{h}
+\end{DoxyParamCaption}
+)}\label{rb__cusum__ddos_8h_a8dbf6aff33a821071826eb095a15b3c4}
+Test the sample agains the effective threshold. In case of be bigger than, it will produce a json message with the attack information
+
+
+\begin{DoxyParams}{Parameters}
+{\em stats} & Stats to compare \\
+\hline
+{\em threshold} & Threshold to compare to \\
+\hline
+{\em h} & Threshold = h$\ast$std\+\_\+dev -\/$>$ std\+\_\+dev = threshold/h. This makes possible gives relative measures \\
+\hline
+{\em now} & Current timestamp \\
+\hline
+\end{DoxyParams}
