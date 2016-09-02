@@ -1,0 +1,237 @@
+%:Clase del documento
+\documentclass[11pt,twoside,notitlepage,twocolumn]{article}
+
+%:Paquete de estilos propuesto
+%\usepackage{libroETSI}
+
+%:Paquete específico para cargar tikz (y sus librerías) y pgfplots
+%\usepackage{dtsc-creafig}
+
+%:Paquete para notaciones específicas
+%\usepackage{notacion}
+
+%:Paquete para incorporar aspectos concretos de la edición
+%\usepackage{edicionPFC}
+
+%:Estas líneas de código son INNECESARIAS excepto para mostrar determinadas características en este manual. Pueden eliminarse o comentarse sin ningún problema.
+%Se usan para compilar el capítulo estilolibroetsi.tex
+%\usepackage[final]{showexpl}
+%\lstset{explpreset={frame=none,rframe={}, numbers=none,numbersep=3pt, columns=flexible,language={[LaTeX]TeX},basicstyle=\ttfamily,keywordstyle=\color{blue}}}%numberstyle=\tiny,
+
+%:Para modificar fácilmente la fuente del texto.
+\makeatletter
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{hyperref}
+\hypersetup{
+%  	bookmarks=true, %Already used warning
+      bookmarksnumbered=false,
+      bookmarksopen=false,	
+      unicode = true,
+	colorlinks=true,
+	linktoc=all,
+% 	hyperfootnotes=true, %Already used warning
+%	urlbordercolor=black,
+	plainpages=false,
+	pdfpagemode=UseOutlines,
+	pdfview=FitH,
+	pdfstartview=FitH,
+	linkcolor=refcolor,
+	breaklinks=true,
+	citecolor=refcolor,
+      anchorcolor=black,
+	urlcolor=refcolor,
+	pdfdisplaydoctitle=true
+	}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{glossaries}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\renewcommand{\lstlistingname}{Código}
+
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\colorlet{punct}{red!60!black}
+
+\lstdefinelanguage{json}{
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+\newacronym[type=main]{DoS}{DoS}{Denial of Service}
+\newacronym[type=main]{DDoS}{DDoS}{Distributed DoS}
+\newacronym[type=main]{SO}{SO}{Sistema Operativo}
+\newacronym[type=main]{IP}{IP}{Internet Protocol}
+\newacronym[type=main]{IPv6}{IPv6}{IP versión 6}
+\newglossaryentry{MAC}
+{
+  name=Medium Access Control,
+  description={El control de acceso al medio permite sincronizar el acceso a un enlace entre varios nodos. La dirección 
+MAC es la que usa el dispositivo del nodo para identificarse en el enlace o medio compartido}
+}
+\newacronym[type=main]{ARP}{ARP}{Address Resolution Protocol}
+\newacronym[type=main]{TCP}{TCP}{Transmission Control Protocol}
+\newacronym[type=main]{UDP}{UCP}{User Datagram Protocol}
+\newacronym[type=main]{ICMP}{ICMP}{Internet Control Message Protocol}
+\newacronym[type=main]{HTTP}{HTTP}{Hyper Text Transfer Protocol}
+\newacronym[type=main]{ITU-T}{ITU-T}{International Telecommunications Union}
+\newacronym[type=main]{CNSS}{CNSS}{Committee on National Security Systems}
+% TODO TCP SYN, TCP ACK
+\newacronym[type=main]{OSI}{OSI}{Open System Interconnection}
+\newacronym[type=main]{SYN}{SYN}{Synchronize}
+\newacronym[type=main]{ACK}{ACK}{Acknowledge}
+\newacronym[type=main]{DNS}{DNS}{Domain Name Server}
+
+\newacronym[type=main]{CdP}{CdP}{Control de Procesos}
+\newacronym[type=main]{SCP}{SCP}{Sistema de Control de Procesos}
+\newacronym[type=main]{CUSUM}{CUSUM}{Cummulative SUM}
+\newacronym[type=main]{VI}{VI}{Variable de Interés}
+\newacronym[type=main]{OWCD}{OWCD}{One Way Connection Density}
+\newacronym[type=main]{PCAP}{PCAP}{Packet CAPture}
+\newacronym[type=main]{pthreads}{Pthreads}{POSIX threads}
+\newacronym[type=main]{LIFO}{LIFO}{Last In, First Out}
+\newacronym[type=main]{IPC}{IPC}{Inter Process Communication}
+\newacronym[type=main]{SIGSEGV}{\texttt{SIGSEGV}}{SIGnal SEGment Violation}
+\newacronym[type=main]{SIGTSTP}{\texttt{SIGTSTP}}{SIGnal Terminal STOP}
+\newacronym[type=main]{SIGALRM}{\texttt{SIGALRM}}{SIGnal ALARM}
+
+\newacronym[type=main]{PFRING}{PF\_RING}{Packet Filter RING}
+\newacronym[type=main]{NIC}{NIC}{Network Interface Controller}
+\newacronym[type=main]{DMA}{DMA}{Direct Memory Access}
+\newacronym[type=main]{NAPI}{NAPI}{New API}
+\newacronym[type=main]{libpcap}{libpcap}{Packet CAPture LIBrary}
+\newacronym[type=main]{ssh}{ssh}{Secure SHell}
+\newacronym[type=main]{mmap}{MMAP}{Memory MAPping}
+\newacronym[type=main]{DUT}{DUT}{Device Under Test}
+\newglossaryentry{controlador}
+{
+  name=Controlador,
+  description={Módulo del núcleo Linux que maneja la comunicación entre un dispositivo y el software que lo usa}
+}
+\newglossaryentry{json}
+{
+  name=JavaScript Object Notation,
+  description={JavaScript es un lenguaje de tipado dinámico. En él se pueden declarar objetos con una estructura 
+determinada, que no tienen por qué pertenecer a una clase. El lenguaje descriptivo json es el lenguaje de definición de 
+dichos objetos}
+  symbol={json}
+}
+\newglossaryentry{netfilter}
+{
+	name=Netfilter,
+	description={Netfilter es la parte ``cortafuegos'' del núcleo Linux. En él, se pueden definir reglas que afectan a la 
+recepción, envío y reenvío de paquetes.}
+}
+\newglossaryentry{socket}
+{
+	name=socket,
+	description={Extremo de una conexión o flujo de paquetes desde el espacio de usuario.}
+}
+
+\newacronym[type=main]{IPS}{IPS}{Intrusion Prevention System}
+\newacronym[type=main]{API}{API}{Application Programming Interface}
+
+
+% Formato A4
+%\geometry
+%{paperheight=297mm,%
+%paperwidth=210mm,%
+%top=25mm,%
+%headsep=8.5mm,%
+%includefoot, 
+%textheight=240mm, 
+%textwidth=150mm, 
+%bindingoffset=0mm, 
+%twoside}
+
+\usepackage[a4,center]{crop}%para poner las cruces de esquina de página, poner la opción cross
+\newcommand{\redborderddos}{RedBorder DDoS}
+
+
+%:Empieza el documento
+
+\begin{document}
+%:Para incluir toda la referencia bibliográfica aunque no se cite, descomente la siguiente línea
+%\nocite{*}
+
+
+%PORTADA
+%ver edicionPFC.sty para modificaciones
+
+% @TODO ttitulo
+%:Para crear la portada y la portada interior (pagina titular)
+\newcommand{\thetitle}{Funcionamiento y estructura de redBorder DDoS}
+\newcommand{\theautor}{Eugenio Pérez Martín}
+\title{\thetitle} %\mbox evita que se divida una palabra al cambiar de línea
+\author{\theautor}
+
+\hypersetup
+	{
+ 	linkcolor=black, %Tocar para poner color en enlaces
+	pdfauthor={\theautor},
+	pdftitle={\thetitle}, 
+	pdfkeywords={Latex, edición, formato de texto}	
+	 }
+
+\maketitle
+
+\input{resumen/resumen} 
+
+% \include{notacion/notacion} %No incluir si no se quiere, comentándolo
+
+%:Los diferentes capítulos, en carpetas separadas
+%
+\input{introduccion/introduccion}
+%
+\input{CapituloDDoS/CapituloDDoS}
+%
+\input{CapituloCusum/CapituloCusum}
+%
+\input{CapituloEstructura/CapituloEstructura}
+%
+\input{CapituloPruebas/CapituloPruebas}
+%
+%\include{Conclusiones/Conclusiones}
+% 
+%%:Empezamos con los apéndices, que irían en uno o más ficheros. Es necesario incluir estos ficheros entre el entorno \begin{appendices}....\end{appendices} debido a que se ha deseado utilizar un formato diferente para el título de los apéndices, incluyendo la palabra apéndice, para la numeración de los apéndices, alfabético, y para las cabeceras de las páginas.
+%
+%\begin{appendices}
+%
+%% Fichero en el que se incluyen los apéndices
+%\include{apendices/Doxygen} %Ver este fichero para incluir ahí los apéndices.
+%
+%\end{appendices}
+%:Fin de la inclusión de apéndices
+
+%:Bibliografía con biblatex y biber
+%\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{listasb}{\bibname}
+%\pagestyle{especial}
+%BIBER
+%\printbibliography[heading=etsi]La mecánica del a
+%BIBTEX
+%\bibliographystyle{IEEEtran}
+%\bibliographystyle{amsplain} %flexbib amsplain alpha
+%:Fichero con la bibliografía, BIBTEX
+%\bibliography{bibliografiaLibroETSI}
+
+\end{document}
