@@ -1,0 +1,30 @@
+% !TEX root =../articulo.tex
+\section{Conclusiones}
+
+Tras haber investigado sobre la taxonomía de los distintos ataques \gls{DoS}, el método seguido para detectar parte de
+ellos, el uso de PF\_RING como acelerador de captura y las diversas 
+pruebas realizadas, plasmamos en esta sección las principales conclusiones.
+
+\redborderddos{} Es un sistema de detección por descubrimiento de cambios en tráfico, esto es, se deben extraer 
+las características \emph{normales} del tráfico, y analizar si el tráfico instantáneo entra dentro de esos parámetros o 
+no. Por tanto, es incapaz de detectar ataques dirigidos a vulnerabilidades en los distintos elementos de la comunicación,
+ya que no investiga el paquete a partir de la capa 4.
+
+El algoritmo CUSUM es un sistema de control de procesos con memoria, esto es, un sistema de monitorización que permite 
+detectar variaciones en la norma no solo basándose en el instante actual, sino en el comportamiento de la variable a lo 
+largo del tiempo, sin requerir para ello almacenar todos sus estados anteriores.
+
+De entre los posibles valores a monitorizar, se han escogido ocho valores que han demostrado ser representativos: 
+Paquetes y bytes TCP, ICMP, UDP, densidad de conexiones de un solo sentido y relación entre paquetes entrantes y 
+salientes.
+
+Sin embargo, es necesario indicarle al algoritmo qué norma debe seguir el tráfico, y es la parte compleja de la 
+situación. En las pruebas realizadas, el tráfico es sintético y predecible, pero el tráfico IP real varía mucho para un 
+mismo segmento a diferentes horas del día, día de la semana, y periodos del año. Por ello, lo que se ha aprendido a una 
+hora, no tiene por qué ser válido a la siguiente hora, y un tráfico legítimo puede ser clasificado rápidamente como 
+ilegítimo. 
+
+Así, CUSUM aplicado directamente no resulta una solución eficaz para la detección de anomalías en el tráfico de red y, 
+por tanto, para detectar ataques \gls{DDoS}.
+
+\endinput

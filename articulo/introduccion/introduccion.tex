@@ -22,9 +22,26 @@ sistemas, como Google \cite{Google+_DDoS_attack}, Amazon \cite{Amazon_DDoS_attac
 marzo de 2013), y fue capaz de congestionar los routers de los proveedores TIER-1, esto es aquellos que
 forman el nucleo de internet \cite{spamhaus_DDoS_attack}. 
 
-% TODO artículo?
 A lo largo de este artículo describiremos cómo funciona \redborderddos, una herramienta diseñada 
-para detectar y detener este tipo de ataques.
+para detectar y detener este tipo de ataques. Daremos la
+definición de \gls{DoS} en la \autoref{sec:Denegacion de Servicio},
+a fin de entender qué es y qué podemos esperar de \redborderddos{}
+frente a ellos. A continuación, describiremos en la 
+\autoref{sec:CUSUM} el algoritmo
+CUSUM, usado por \redborderddos{} para detectar los ataques.
+
+Con este conocimiento, describiremos cómo funciona 
+\redborderddos{}, en qué tipo de red podemos usarlo, qué
+tecnologías emplea para lograr un alto rendimiento y cómo está
+estructurado en la \autoref{sec:estructura}.
+
+Finalmente, describiremos las pruebas usadas, tanto en
+laboratorio como en un entorno real, un ataque de \gls{DoS}
+que ocurrió en Santander en mayo de 2013 en la
+\autoref{sec:pruebas}.
+
+
+
 
 % TODO Describir cada sección
 %detallaremos y definiremos mejor lo que representa un 
