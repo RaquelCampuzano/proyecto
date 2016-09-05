@@ -1,26 +1,26 @@
 % !TEX root =../LibroTipoETSI.tex
 %El anterior comando permite compilar este documento llamando al documento raíz 
-\section{Introducción}\label{introduccion} %TODO Insertar las siguientes secciones para adaptar al formato requerido: lead, what will you learn, what you should know. 
-El funcionamiento de la sociedad actual está cada vez más basado en 
-información y, por tanto, en los sistemas que hacen posible su almacenamiento, procesado y comunicación. El bajo coste 
-que supone hace que cada vez más empresas migren su infraestructura y operaciones a Internet.
+\section{Introducción}\label{introduccion} %TODO Insertar las siguientes secciones para adaptar al formato requerido: lead (el resumen puede servir como tal), what will you learn, what you should know. 
+El funcionamiento de la sociedad actual se basa cada vez más en la generación, tratamiento y transmisión de información.
+Por tanto los sistemas que hacen posible su almacenamiento, procesado y comunicación adquieren cada vez mayor importancia.
+El bajo coste de este tipo de tecnologías provoca que cada vez más empresas migren su infraestructura y operaciones a Internet.
 
 Esta dependencia se hace palpable cuando estos servicios fallan, incluso cuando lo hacen por un breve periodo de tiempo. 
-En él, el servicio ofrecido tiene un agujero en el que no produce, y, por tanto, el servicio no es capaz de generar 
-dichos beneficios: El servicio no está disponible. Por otro lado, si el servicio está orientado a clientes externos, al 
-observar el mismo que el servicio no está disponible, puede que piense que éste no es fiable o no ofrece un servicio 
-de calidad, por lo que existe la posibilidad de generar desconfianza y rechazo.
+Si el servicio ofrecido tiene un agujero y deja de producir, este servicio no es capaz de generar beneficios: El servicio no
+está disponible. En caso de que el servicio esté orientado a clientes externos y estos descubran que el servicio no está
+disponible, se provocará una falla en la confianza (puede pensar que el servicio no es fiable o no es de calidad) y un posible
+rechazo al uso de estas tecnologías. 
 
 Esta situación, en la que un cliente legítimo (esto es, con autorización para acceder al servicio) no es capaz de 
 acceder a su servicio contratado debido a la acción intencionada de una persona, colectivo o empresa se denomina ataque 
-de denegación de servicio (DoS attack). \cite{Raghavan}.
+de denegación de servicio (DDoS attack). \cite{Raghavan}. %En algunos casos pones ataque DoS y en otros DDoS. ¿Cuál es el correcto?
 
-En los últimos años, internet ha experimentado un aumento significativo en la frecuencia e intensidad de ataques de 
+En los últimos años, Internet ha experimentado un aumento significativo en la frecuencia e intensidad de ataques de 
 Denegación de Servicio (DoS) \cite{kakaspersky_2H2011_DDoS_analisis}. Han afectado tanto a pequeños como a enormes 
 sistemas, como Google \cite{Google+_DDoS_attack}, Amazon \cite{Amazon_DDoS_attack}, Paypal e incluso al FBI 
 \cite{FBI_DDoS_attack}. El ataque más potente registrado hasta la fecha se produjo recientemente (entre el 18 y el 19 de 
 marzo de 2013), y fue capaz de congestionar los routers de los proveedores TIER-1, esto es aquellos que
-forman el nucleo de internet \cite{spamhaus_DDoS_attack}. 
+forman el nucleo de Internet \cite{spamhaus_DDoS_attack}. 
 
 A lo largo de este artículo describiremos cómo funciona \redborderddos, una herramienta diseñada 
 para detectar y detener este tipo de ataques. Daremos la
@@ -30,14 +30,14 @@ frente a ellos. A continuación, describiremos en la
 \autoref{sec:CUSUM} el algoritmo
 CUSUM, usado por \redborderddos{} para detectar los ataques.
 
-Con este conocimiento, describiremos cómo funciona 
+Con este conocimiento, conoceremos cómo funciona 
 \redborderddos{}, en qué tipo de red podemos usarlo, qué
 tecnologías emplea para lograr un alto rendimiento y cómo está
 estructurado en la \autoref{sec:estructura}.
 
-Finalmente, describiremos las pruebas usadas, tanto en
+Finalmente, se enumerarán las pruebas usadas, tanto en
 laboratorio como en un entorno real, un ataque de \gls{DoS}
-que ocurrió en Santander en mayo de 2013 en la
+que ocurrió en el Banco Santander en mayo de 2013 en la
 \autoref{sec:pruebas}.
 
 
