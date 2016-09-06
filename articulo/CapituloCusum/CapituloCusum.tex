@@ -4,7 +4,7 @@
 \subsection{Control de procesos}
 El objetivo del \gls{CdP} es el de establecer un sistema de observación permanente e inteligente,
 que detecte la aparición de variabilidad sobre la norma de un parámetro e identifique su origen, de forma que 
-sea posible evitar su reaparición \cite{Control_de_procesos}.
+sea posible evitar su reaparición \cite{Control_de_procesos}. %TODO: ¿debería definirse antes el algoritmo CUSUM? Queda raro y hasta leer el siguiente epígrafe no se entiende la relación con el título de la sección. Quizá la definición del CdP podría ir simplemente como una nota al pie. 
 
 \subsection{Algoritmo CUSUM}
 El algoritmo CUSUM es un sistema de \gls{CdP} con memoria, es decir, la salida del
@@ -36,7 +36,7 @@ a lo largo de las muestras:
 \label{fig:cusum_descontrolado} 
 \end{figure}
 
-Esto es, si las distintas muestras oscilan alrededor de $\mu_0$, $C_i$ tenderá a valer 0,
+Esto es, si las distintas muestras oscilan alrededor de $\mu_0$, $C_i$ tenderá a valer 0, %me suena rara esta expresión. Tenderá a ser igual a 0. 
 como vemos en \autoref{fig:cusum_controlado}. Por su parte, si las muestras presentan 
 una desviación $k$ sobre $mu_0$, $C_i$ seguirá una recta $C_i=ik$ de pendiente $k$, 
 como vemos en la \autoref{fig:cusum_descontrolado}. De esta forma, podemos definir una
@@ -50,13 +50,13 @@ forma que sólo sumemos a $C_i$ las desviaciones superiores a $C_i^{min}$.
 
 \subsection{Algoritmo CUSUM aplicado al control del tráfico}
 \label{ssec:cusum_aplicado_trafico}
-El tráfico de red es un proceso especialmente caótico, tanto por número de posibles
-parámetros a controlar como la alta variabilidad de éstos,
-haciendo imposible decidir un valor ``normal'' para éstos como ya se dijo en el 
+El tráfico de red es un proceso especialmente caótico, tanto por el número de posibles
+parámetros a controlar como por la alta variabilidad de éstos,
+haciendo imposible definir un valor ``normal'' para éstos, tal y como se señaló en la 
 \autoref{sssec:ddos_deteccion_inundacion}.
 
-S.V. Raghvan y E.Dawson señalan los siguientes como los parámetros más importantes a la hora de detectar un ataque 
-\gls{DoS}:
+S.V. Raghvan y E.Dawson establecen como parámetros más importantes a la hora de detectar un ataque 
+\gls{DoS} los siguientes:
 
 % TODO Quizás deberíamos decir: Todos en relación al número de paquetes IP excepto X, Y, Z?
 
@@ -69,7 +69,7 @@ S.V. Raghvan y E.Dawson señalan los siguientes como los parámetros más import
  \item Longitud media de paquetes: 
    $\langle L\rangle_{\text{flow}} = \frac{\sum\text{Long paquetes IP}}{\sum\text{Paquetes IP}}$
  
- \item Relación paquetes entrantes y salientes: 
+ \item Relación entre paquetes entrantes y salientes: 
    $\frac{\sum\text{Paquetes entrantes}}{\sum\text{Paquetes salientes}}$
  
  \item \% de paquetes TCP: $\frac{\sum\text{Paquetes TCP}}{\sum\text{Paquetes IP}}$ 
@@ -89,28 +89,28 @@ S.V. Raghvan y E.Dawson señalan los siguientes como los parámetros más import
 
 El sistema de defensa \redborderddos monitoriza periódicamente estos parámetros
 para cada dirección IP externa a la red y para el tráfico normal que atraviesa
-la misma. El sistema podrá estar en tres estados distintos, que se ven reflejados
+la misma. El sistema podrá encontrarse en tres estados distintos, que se ven reflejados
 en la \autoref{}
 
-El primero de ellos es el de aprendizaje, al
-inicio del programa y durante un tiempo determinado\footnote{Decidir dicho
-periodo es importante para la precisión de la media obtenida, ya que incluso en
-verano o invierno se puede observar diferencias en una red corporativa, por ejemplo.}
-en el que el sistema averiguará los parámetros de los estadísticos descritos en la 
+El primero de ellos es el de aprendizaje: al
+inicio del programa y durante un tiempo determinado\footnote{Definir dicho
+periodo es importante para la precisión de la media obtenida, ya que, por ejemplo, incluso en
+verano o en invierno se pueden observar diferencias en una red corporativa.}
+el sistema averiguará los parámetros de los estadísticos descritos en la 
 \autoref{ssec:cusum_aplicado_trafico}. Es importante que no ocurra ningún
-ataque durante este periodo, ya que en ese caso el sistema tomará como normal
-los valores de los estadísticos bajo ataque.
+ataque durante este periodo, ya que en ese caso el sistema tomará como normales
+los valores de los resultados estadísticos bajo ataque. %TODO: para mayor claridad haría listado con viñetas (Aprendizaje/ Defensa) o destacaría en negrita. 
 
-El segundo estado es el de defensa, en el que, durante un periodo determinado, el programa comparará
+El segundo estado es el de defensa: durante un periodo determinado, el programa comparará
 los parámetros en tiempo real contra la media obtenida en el anterior periodo y
 unos parámetros de desviación $C_i^+$ y $C_i^{min}$ especificados en forma de múltiplos
 de la desviación típica obtenida. Si durante este periodo no se detecta ningún ataque, los nuevos
-valores $\mu_0$ y $\sigma$ obtenidos para cada estadístico pasarán a ser los estándares, de
-forma que las variaciones normales no cuenten como un ataque. En otro
-caso, el sistema pasará al modo alerta en el mismo momento que un estadístico supera su umbral.
+valores $\mu_0$ y $\sigma$ obtenidos para cada resultado estadístico pasarán a ser los estándares, de
+forma que las variaciones normales no cuenten como un ataque. En caso contrario, el sistema pasará al modo alerta en el mismo
+momento que un estadístico supera su umbral. %Revisar el uso de la palabra estadístico. 
 
-Por último, tenemos el estado de alerta, al que se pasará cuando algún parámetro supere su umbral, y del que se
-saldrá cuando los parámetros vuelvan a la normalidad. En este caso, se bloqueará el tráfico desde
+Por último, tenemos el estado de alerta, al que se pasará cuando algún parámetro supere su umbral. Este estado finaliza en el
+momento en el que los parámetros vuelven a la normalidad. En este caso, se bloqueará el tráfico desde
 las direcciones IP detectadas, y sólo cuando el parámetro vuelva a estar bajo el límite\footnote{Teniendo
 en cuenta el tráfico bloqueado en el conteo de estadísticos.} se volverá al modo defensa.
 
