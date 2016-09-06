@@ -14,45 +14,44 @@ Por su parte, el \gls{CNSS} ofrece una definición más general \cite{CCNS_DDoS_
  Any action or series of actions that prevents any part of an information system from functioning.
 \end{quote}
 
-Así pues, una denegación de servicio impide directamente la disponibilidad, ya sea debido 
-a acciones maliciosas (ataque) o no, originadas de manera local al sistema que se desea 
-proteger o remotamente. De esa forma, el que ofrece el recurso se queda sin los 
-beneficios que el mismo genera durante un periodo de tiempo. 
+Así pues, una denegación de servicio impide directamente la disponibilidad de dicho servicio, ya sea debido o no 
+a acciones maliciosas (ataque) originadas de manera local o remota y que afectan al sistema que se desea 
+proteger. 
+De esa forma, el que ofrece el recurso se queda sin los beneficios que el mismo genera durante un periodo de tiempo. %TODO: Reescribir.Esta última frase es muy confusa.  
 
 \subsection{Taxonomía}\label{ssec:dos taxonomia}
 
-La causa del ataque puede ser cualquier elemento de la comunicación, desde agotar
-la capacidad del sistema servidor o el canal, es decir, ataque por inundación,
+La causa del ataque puede ser cualquier elemento de la comunicación: desde agotar
+la capacidad del sistema servidor o el canal (ataque por inundación)
 hasta un ataque dirigido a alguna vulnerabilidad del protocolo de red o la aplicación usada,
 en cuyo caso hablamos de un ataque por una petición malformada.
 \cite{Raghavan}. 
 % TODO Destacar el tipo inundación en lugar del tipo 0-day?
-Si bien el segundo tipo requiere de muchos menos recursos computacionales para
-ser llevado a cabo, es necesario encontrar el fallo a explotar, y el ataque dejará de estar
-disponible en cuanto se corrija, por lo que con un sistema actualizado estamos menos expuestos
-a este tipo de ataques
+Si bien el segundo tipo  de ataque requiere de muchos menos recursos computacionales para
+ser llevado a cabo es necesario encontrar el fallo a explotar y el ataque dejará de estar
+disponible en cuanto se corrija: con un sistema actualizado estamos menos expuestos
+a este tipo de ataques.
 
 Por su parte, se habla de un ataque \gls{DoS} distribuido si hay más de un elemento 
-atacante\footnote{No confundir con los tipos \emph{Spoofing}, en los que se falsean el origen del ataque}. 
+atacante\footnote{No confundir con los tipos \emph{Spoofing}, en los que se falsea el origen del ataque.} 
 No es raro ver que en estos casos los atacantes son cientos o miles, y se han llegado a registrar ataques 
 con millones de atacantes. Existen métodos para aumentar el éxito del ataque:
 \begin{description}
-  \item[Ataques sincronizados] En el que muchos atacantes se sincronizan para acceder a un mismo recurso el
+  \item[Ataques sincronizados:] Muchos atacantes se sincronizan para acceder a un mismo recurso el
   mismo día.
-  \item[Botnets] Redes de nodos infectados que realizan el ataque controlados remotamente, sin conocimiento del
+  \item[Botnets:] Redes de nodos infectados que realizan el ataque controlado remotamente, sin conocimiento del
   dueño del nodo. Este tipo de redes se llegan incluso a alquilar o vender al atacante.
-  \item[Sistemas de amplificación o reflexión] En los que se utiliza algún sistema para multiplicar el efecto del ataque,
+  \item[Sistemas de amplificación o reflexión:] EnUso de algún sistema para multiplicar el efecto del ataque,
   como el ataque \emph{Smurf}\index{Smurf}\footnote{Enviar un ping a una red entera con la dirección de respuesta 
-  de la víctima}
+  de la víctima.}
 \end{description}
 
-\subsection{Técnicas de detección y mitigación de un ataque DDoS}\label{sec:dos Deteccion y mitigacion}
+\subsection{Técnicas de detección y mitigación de un ataque DDoS}\label{sec:dos Deteccion y mitigación}
 % TODO otro nombre para el apartado?
 \subsubsection{Introducción}
-Según el tipo de ataque, resumidos en la sección \ref{ssec:dos taxonomia}, tendremos que 
-detectar el ataque de una forma distinta. Ambos adolecen de posibles falsos positivos y negativos,
-y son complementarios, es decir, (la mayoría de) los ataques que un método detecta pasan inadvertidos
-por el otro método.
+Según el tipo de ataque (consultar la sección \ref{ssec:dos taxonomia}) la detección del mismo se realiza de un modo diferente.
+Todos los casos adolecen de posibles falsos positivos y negativos. Además, son complementarios, es decir, (la mayoría de) los
+ataques que un método detecta pasan inadvertidos por otro método.
 
 \subsubsection{Ataques a vulnerabilidades}
 Si el ataque está dirigido a un fallo en el canal de la comunicación o el servidor,
