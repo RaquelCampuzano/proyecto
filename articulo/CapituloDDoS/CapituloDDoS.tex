@@ -58,15 +58,15 @@ Si el ataque está dirigido a un fallo en el canal de la comunicación o el serv
 tendremos que examinar los paquetes de la comunicación a fin de encontrar los elementos de la
 comunicación que buscan explotar ese fallo, es decir, la \emph{firma} del ataque\footnote{La firma no tiene
 por qué ser sólo una expresión regular, sino que podría ser el enviar los paquetes de una forma determinada.}.
-Este es el sistema de detección usado por IPS tales como snort \cite{snort} o suricata \cite{suricata}.
+Este es el sistema de detección usado por IPS tales como Snort \cite{snort} o Suricata \cite{suricata}.
 
 Como principales desventajas, es necesario mantener actualizada la base de datos de firmas, y esta
-puede crecer en exceso haciendo que la búsqueda consuma recursos excesivos, siendo necesario entonces
+puede crecer en exceso haciendo que la búsqueda consuma recursos excesivos siendo necesario entonces
 seleccionar contra qué reglas vamos a analizar el flujo de datos.
 
 \subsubsection{Ataques por inundación}\label{sssec:ddos_deteccion_inundacion}
 Por su parte, si el ataque es por inundación, será necesario analizar el flujo en busca de anormalidades
-en el perfil de tráfico, por ejemplo, mucho tráfico recibido. La principal dificultad de este método radica
+en el perfil de tráfico, por ejemplo, detectar mucho tráfico recibido. La principal dificultad de este método radica
 en definir cuál es el tráfico ``normal'' de un sitio.
 
 Un ejemplo claro es el efecto \emph{slashdot}\footnote{Efecto Barrapunto en español.}. El servidor de noticias
@@ -76,10 +76,10 @@ enlaza al segundo, y pese a ser tráfico legítimo, el pequeño no puede aguanta
 Es decir, no se puede definir un valor de tráfico ``normal'' válido para todos los servidores, sino que es
 necesario hacer una medición del mismo a fin de detectar anomalías. Esto nos lleva a la segunda dificultad:
 ¿Qué parámetros debemos medir y cómo? Otra dificultad añadida comparada con el anterior método es 
-seleccionar qué tráfico bloquear, ya
-que si cortamos demasiado el ataque habrá tenido éxito gracias, precisamente, a la herramienta de defensa.
+seleccionar qué tráfico bloquear ya
+que si cortamos demasiado las comunicaciones el ataque habrá tenido éxito gracias, precisamente, a la herramienta de defensa.
 
-Es el método seguido por \redborderddos, y a lo largo del artículo expondremos las soluciones usadas para 
+Es el método seguido por \redborderddos; a continuación, expondremos las soluciones usadas para
 resolver dichas dificultades.
 
 \endinput
