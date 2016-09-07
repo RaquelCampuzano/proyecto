@@ -11,7 +11,7 @@ El algoritmo CUSUM es un sistema de \gls{CdP} con memoria, es decir, la salida d
 sistema no solo depende del estado actual de la variable de control, sino también del
 estado anterior de la misma. De esta forma, restamos importancia a las desviaciones 
 puntuales de la variable, y al mismo tiempo logramos resaltar los cambios pequeños
-pero prolongados en el tiempo \cite{CUSUM_Carlos_III}.
+pero prolongados en el tiempo. \cite{CUSUM_Carlos_III}.
 
 Ante una Variable de Interés $x_i$, que sigue una distribución normal 
 $x_i \sim\mathcal{N}\left(\mu_0,\sigma^2\right)$, 
@@ -36,7 +36,7 @@ a lo largo de las muestras:
 \label{fig:cusum_descontrolado} 
 \end{figure}
 
-Esto es, si las distintas muestras oscilan alrededor de $\mu_0$, $C_i$ tenderá a valer 0, %me suena rara esta expresión. Tenderá a ser igual a 0. 
+Esto es, si las distintas muestras oscilan alrededor de $\mu_0$, $C_i$ tenderá a valer 0, %TODO me suena rara esta expresión. Tenderá a ser igual a 0. 
 como vemos en \autoref{fig:cusum_controlado}. Por su parte, si las muestras presentan 
 una desviación $k$ sobre $mu_0$, $C_i$ seguirá una recta $C_i=ik$ de pendiente $k$, 
 como vemos en la \autoref{fig:cusum_descontrolado}. De esta forma, podemos definir una
@@ -92,7 +92,7 @@ para cada dirección IP externa a la red y para el tráfico normal que atraviesa
 la misma. El sistema podrá encontrarse en tres estados distintos, que se ven reflejados
 en la \autoref{}
 
-El primero de ellos es el de aprendizaje: al
+El primero de ellos es el de \textbf{aprendizaje:} al
 inicio del programa y durante un tiempo determinado\footnote{Definir dicho
 periodo es importante para la precisión de la media obtenida, ya que, por ejemplo, incluso en
 verano o en invierno se pueden observar diferencias en una red corporativa.}
@@ -101,7 +101,7 @@ el sistema averiguará los parámetros de los estadísticos descritos en la
 ataque durante este periodo, ya que en ese caso el sistema tomará como normales
 los valores de los resultados estadísticos bajo ataque. %TODO: para mayor claridad haría listado con viñetas (Aprendizaje/ Defensa) o destacaría en negrita. 
 
-El segundo estado es el de defensa: durante un periodo determinado, el programa comparará
+El segundo estado es el de \textbf{defensa:} durante un periodo determinado, el programa comparará
 los parámetros en tiempo real contra la media obtenida en el anterior periodo y
 unos parámetros de desviación $C_i^+$ y $C_i^{min}$ especificados en forma de múltiplos
 de la desviación típica obtenida. Si durante este periodo no se detecta ningún ataque, los nuevos
@@ -109,7 +109,7 @@ valores $\mu_0$ y $\sigma$ obtenidos para cada resultado estadístico pasarán a
 forma que las variaciones normales no cuenten como un ataque. En caso contrario, el sistema pasará al modo alerta en el mismo
 momento que un estadístico supera su umbral. %Revisar el uso de la palabra estadístico. 
 
-Por último, tenemos el estado de alerta, al que se pasará cuando algún parámetro supere su umbral. Este estado finaliza en el
+Por último, tenemos el estado de \textbf{alerta,} al que se pasará cuando algún parámetro supere su umbral. Este estado finaliza en el
 momento en el que los parámetros vuelven a la normalidad. En este caso, se bloqueará el tráfico desde
 las direcciones IP detectadas, y sólo cuando el parámetro vuelva a estar bajo el límite\footnote{Teniendo
 en cuenta el tráfico bloqueado en el conteo de estadísticos.} se volverá al modo defensa.
