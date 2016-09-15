@@ -1,15 +1,22 @@
 % !TEX root =../LibroTipoETSI.tex
 \section{Estructura de \redborderddos}\label{sec:estructura}
 \subsection{Configuración de red}\label{ssec:estructura_red}
-%TODO explicar "recibir tráfico entrante y saliente por distintos puertos"
-Desde el punto de vista de la arquitectura de red, \redborderddos{} debe colocarse en dos puertos SPAN\index{Puerto 
-SPAN} del conmutador que llegue al activo protegido, tal y como muestra la \autoref{fig:diagramaArquitectura}. Cada uno de los 
-puertos SPAN clonará los paquetes dirigidos hacia el activo a proteger, y los paquetes desde el activo a proteger 
-respectivamente, y los enviará hacia \redborderddos. %TODO Frase confusa: ¿qué dos tipos de paquetes se clonan?
+Dado que uno de los estadísticos que \redborderddos{} debe controlar es la
+relación entre el número de paquetes entrantes y salientes (como se vio en
+la \ref{ssec:cusum_aplicado_trafico}), necesitamos una forma de distinguir el
+sentido en el que el viaja el paquete. La forma escogida fue usar una interfaz
+para los entrantes y otra interfaz distinta para los salientes, por lo que es
+necesario, como mínimo, dos interfaces (+1 de gestión) para ejecutar
+\redborderddos.
+
+Desde el punto de vista de la arquitectura de red, \redborderddos{} debe colocarse en dos puertos SPAN\index{Puerto
+SPAN} del conmutador que llegue al activo protegido, tal y como muestra la \autoref{fig:diagramaArquitectura}. Cada uno de los
+puertos SPAN clonará los paquetes dirigidos hacia el activo a proteger, y los paquetes desde el activo a proteger
+respectivamente, y los enviará hacia \redborderddos.
 Si, además, se desea bloquear el tráfico, es necesario
-un sistema que filtre las direcciones IP que se deben bloquear. 
+un sistema que filtre las direcciones IP que se deben bloquear.
 En ese momento es importante que el tráfico escaneado sea
-previo al bloqueo, ya que de otra forma será imposible detectar el momento en el que el ataque ha sido detenido. %TODO Frase muy confusa
+previo al bloqueo, ya que de otra forma será imposible detectar el momento en el que el ataque ha sido detenido.
 
 \begin{figure}[htbp]
 \centering
